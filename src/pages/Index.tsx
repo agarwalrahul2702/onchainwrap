@@ -55,14 +55,14 @@ const Index = () => {
               </span>
             </h1>
 
-            {/* Card - exact 517×341.66 ratio */}
-            <div className="liquid-glass-card w-[517px] h-[342px] my-0 mx-0 px-[20px] py-[16px] flex-col flex items-center justify-center">
-              <div className="space-y-5 text-center">
+            {/* Card - 35% width × 36% height of viewport */}
+            <div className="liquid-glass-card w-[35vw] h-[36vh] my-0 mx-0 px-[2vw] py-[2vh] flex-col flex items-center justify-center">
+              <div className="space-y-[2vh] text-center">
                 <div className="space-y-0">
-                  <p className="text-foreground font-sans whitespace-nowrap text-2xl font-medium pt-0 pr-[40px] pl-[40px] text-left px-[30px] py-[2px]">
+                  <p className="text-foreground font-sans whitespace-nowrap text-[1.6vw] font-medium pt-0 pr-[2.5vw] pl-[2.5vw] text-left px-[2vw] py-[0.2vh]">
                     See everything your wallet cooked
                   </p>
-                  <p className="text-foreground font-sans text-2xl font-medium">(or not)</p>
+                  <p className="text-foreground font-sans text-[1.6vw] font-medium">(or not)</p>
                 </div>
                 <AddressInput onGenerate={handleGenerate} isLoading={false} />
               </div>

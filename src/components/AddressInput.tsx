@@ -39,29 +39,29 @@ const AddressInput = ({
       handleSubmit();
     }
   };
-  return <div className="space-y-4 mx-0 my-[20px]">
+  return <div className="space-y-[1.2vh] mx-0 my-[1.5vh] w-full">
       {/* Input field */}
       <div className="relative">
-        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground">
-          <ClipboardList size={18} />
+        <div className="absolute left-[1vw] top-1/2 -translate-y-1/2 text-muted-foreground">
+          <ClipboardList className="w-[1.2vw] h-[1.2vw]" />
         </div>
         <input type="text" value={address} onChange={e => {
         setAddress(e.target.value);
         setError("");
-      }} onKeyDown={handleKeyDown} onClick={handlePaste} placeholder="Paste any EVM wallet address" className="w-full bg-[#1a1d2e] border border-border/30 rounded-lg pl-12 pr-4 py-4 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-[#3B82F6]/30 transition-all font-mono text-sm" disabled={isLoading} />
+      }} onKeyDown={handleKeyDown} onClick={handlePaste} placeholder="Paste any EVM wallet address" className="w-full bg-[#1a1d2e] border border-border/30 rounded-lg pl-[2.5vw] pr-[1vw] py-[1.2vh] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-[#3B82F6]/30 transition-all font-mono text-[0.9vw]" disabled={isLoading} />
       </div>
 
       {/* Error message */}
-      {error && <p className="text-destructive text-sm text-center">{error}</p>}
+      {error && <p className="text-destructive text-[0.85vw] text-center">{error}</p>}
 
       {/* Generate button */}
-      <button onClick={handleSubmit} disabled={isLoading} className="w-full bg-[#3B82F6] hover:bg-[#2563EB] text-white font-semibold py-4 px-6 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed my-[20px]">
-        <Sparkles size={18} />
+      <button onClick={handleSubmit} disabled={isLoading} className="w-full bg-[#3B82F6] hover:bg-[#2563EB] text-white font-semibold py-[1.2vh] px-[1.5vw] rounded-lg transition-all duration-200 flex items-center justify-center gap-[0.5vw] disabled:opacity-50 disabled:cursor-not-allowed my-[1.5vh] text-[1vw]">
+        <Sparkles className="w-[1.2vw] h-[1.2vw]" />
         {isLoading ? "Generating..." : "Generate Wrap"}
       </button>
 
       {/* Footer text */}
-      <p className="text-muted-foreground text-sm text-center mt-[80px] mb-[30px] px-0">
+      <p className="text-muted-foreground text-[0.85vw] text-center mt-[2vh] mb-[1vh] px-0">
         Works with all EVM wallets · No login needed
       </p>
     </div>;
