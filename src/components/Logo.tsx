@@ -6,8 +6,8 @@ const Logo = () => {
       target="_blank"
       rel="noopener noreferrer"
       style={{
-        width: "190px",
-        height: "58px",
+        width: "237.5px",
+        height: "72.5px",
       }}
       className="flex items-center gap-2.5 hover:opacity-80 transition-opacity text-lg"
     >
