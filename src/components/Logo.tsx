@@ -9,10 +9,7 @@ const Logo = () => {
       className="flex flex-col items-center gap-1.5 hover:opacity-80 transition-opacity"
     >
       <img src={logoSvg} alt="0xPPL Logo" className="h-14 w-14 object-contain" />
-      <div className="flex flex-col items-center leading-tight text-center">
-        <span className="text-foreground font-sans text-lg font-medium">Your onchain</span>
-        <span className="text-foreground font-sans text-lg font-medium">superapp</span>
-      </div>
+      <span className="text-foreground font-sans text-lg font-medium">Your onchain superapp</span>
     </a>
   );
 };
