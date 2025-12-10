@@ -98,6 +98,38 @@
     backdrop-filter: blur(20px);
   }
 
+  .liquid-glass-card {
+    @apply relative overflow-hidden rounded-3xl;
+    background: linear-gradient(
+      135deg,
+      hsl(220 30% 18% / 0.6) 0%,
+      hsl(240 20% 12% / 0.7) 50%,
+      hsl(260 25% 15% / 0.6) 100%
+    );
+    border: 1px solid hsl(0 0% 100% / 0.12);
+    backdrop-filter: blur(40px);
+    box-shadow: 
+      0 8px 32px hsl(0 0% 0% / 0.3),
+      inset 0 1px 0 hsl(0 0% 100% / 0.1),
+      inset 0 -1px 0 hsl(0 0% 0% / 0.1);
+  }
+
+  .liquid-glass-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(
+      180deg,
+      hsl(0 0% 100% / 0.08) 0%,
+      hsl(0 0% 100% / 0) 100%
+    );
+    border-radius: inherit;
+    pointer-events: none;
+  }
+
   .gradient-text {
     @apply bg-clip-text text-transparent;
     background-image: var(--gradient-primary);
