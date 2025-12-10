@@ -30,7 +30,7 @@ const Index = () => {
     setStats(null);
     setAppState("input");
   };
-  return <main className="relative w-[1440px] h-[932px] mx-auto flex flex-col overflow-hidden">
+  return <main className="relative w-[1440px] h-[932px] mx-auto flex-col overflow-hidden flex items-center justify-center">
       <BackgroundVideo />
 
       {/* Header */}
@@ -41,7 +41,7 @@ const Index = () => {
       </header>
 
       {/* Main content */}
-      <div className="relative z-10 flex-1 flex-col pb-8 flex items-center justify-center px-[3px]">
+      <div className="relative z-10 flex-1 pb-8 items-center justify-center flex flex-col px-0">
         {appState === "input" && <>
             {/* Title - 489×72 dimensions */}
             <h1 className="font-sans font-bold text-center mb-6 animate-fade-in" style={{
@@ -56,7 +56,7 @@ const Index = () => {
             </h1>
 
             {/* Card - 35% width × 36% height of viewport */}
-            <div className="liquid-glass-card w-[35vw] h-[36vh] my-0 mx-0 px-[2vw] py-[2vh] flex-col flex items-center justify-center">
+            <div className="liquid-glass-card w-[35vw] h-[36vh] my-0 mx-0 py-[2vh] flex-col px-0 flex items-center justify-center">
               <div className="space-y-[2vh] text-center">
                 <div className="space-y-0">
                   <p className="text-foreground font-sans whitespace-nowrap text-[1.6vw] font-medium pt-0 pr-[2.5vw] pl-[2.5vw] text-left px-[2vw] py-[0.2vh]">
