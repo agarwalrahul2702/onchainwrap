@@ -35,13 +35,13 @@ const Index = () => {
 
       {/* Header */}
       <header className="relative z-10 pt-8 pb-4">
-        <div className="container flex justify-center">
+        <div className="container px-0 flex items-center justify-center py-0 mt-[30px]">
           <Logo />
         </div>
       </header>
 
       {/* Main content */}
-      <div className="relative z-10 flex-1 flex-col pb-8 px-0 flex items-center justify-center">
+      <div className="relative z-10 flex-1 flex-col pb-8 flex items-center justify-center px-[3px]">
         {appState === "input" && <>
             {/* Title - 489×72 dimensions */}
             <h1 className="font-sans font-bold text-center mb-6 animate-fade-in" style={{
@@ -59,7 +59,7 @@ const Index = () => {
             <div className="liquid-glass-card w-[517px] h-[342px] my-0 mx-0 px-[20px] py-[16px] flex-col flex items-center justify-center">
               <div className="space-y-5 text-center">
                 <div className="space-y-0">
-                  <p className="text-foreground font-sans whitespace-nowrap text-2xl font-medium text-justify pt-0 pr-[40px] pl-[40px] px-0">
+                  <p className="text-foreground font-sans whitespace-nowrap text-2xl font-medium pt-0 pr-[40px] pl-[40px] text-left">
                     See everything your wallet cooked
                   </p>
                   <p className="text-foreground font-sans text-2xl font-medium">(or not)</p>
