@@ -13,8 +13,8 @@ const Logo = () => {
     >
       <img src={logoSvg} alt="0xPPL Logo" className="h-20 w-20 object-contain" />
       <div className="flex flex-col leading-tight">
-        <span className="text-foreground font-sans text-base font-medium">Your onchain</span>
-        <span className="text-foreground font-sans text-base font-medium">superapp</span>
+        <span className="text-foreground font-sans text-lg font-medium">Your onchain</span>
+        <span className="text-foreground font-sans text-lg font-medium">superapp</span>
       </div>
     </a>
   );
