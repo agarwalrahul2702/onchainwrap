@@ -6,12 +6,13 @@ const Logo = () => {
       href="https://0xppl.com/"
       target="_blank"
       rel="noopener noreferrer"
-      className="flex items-center gap-3 hover:opacity-80 transition-opacity"
+      className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+      style={{ width: '173px', height: '53px' }}
     >
-      <img src={logoSvg} alt="0xPPL Logo" className="w-10 h-10" />
-      <div className="flex flex-col leading-tight">
-        <span className="text-foreground text-sm font-medium">Your onchain</span>
-        <span className="text-foreground text-sm font-medium">superapp</span>
+      <img src={logoSvg} alt="0xPPL Logo" className="h-8 w-8" />
+      <div className="flex flex-col leading-none">
+        <span className="text-foreground text-xs font-medium">Your onchain</span>
+        <span className="text-foreground text-xs font-medium">superapp</span>
       </div>
     </a>
   );
