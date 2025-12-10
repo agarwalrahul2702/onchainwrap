@@ -56,7 +56,7 @@ const Index = () => {
             </h1>
 
             {/* Card - exact 517×341.66 ratio */}
-            <div className="liquid-glass-card w-[517px] h-[342px] flex flex-col justify-center px-10 py-8">
+            <div className="liquid-glass-card w-[517px] h-[342px] flex-col flex items-center justify-center my-0 mx-0 px-[20px] py-[16px]">
               <div className="space-y-5 text-center">
                 <div className="space-y-0">
                   <p className="text-foreground font-sans whitespace-nowrap text-2xl font-medium">
