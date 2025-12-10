@@ -48,44 +48,38 @@ const Index = () => {
       </header>
 
       {/* Main content */}
-      <div className="relative z-10 flex-1 flex items-center justify-center px-4 pb-8">
-        <div className="glass-card p-8 w-full max-w-lg">
-          {appState === "input" && (
-            <div className="space-y-6">
-              <div className="text-center space-y-2 animate-fade-in">
-                <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground">
-                  Your <span className="gradient-text">Onchain</span> Year
-                </h1>
-                <p className="text-muted-foreground">
-                  Discover your 2024 trading stats in one beautiful wrap
-                </p>
+      <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-4 pb-8">
+        {appState === "input" && (
+          <>
+            {/* Title - outside card */}
+            <h1 className="font-display text-4xl md:text-5xl font-bold text-center mb-8 animate-fade-in">
+              <span className="bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] bg-clip-text text-transparent">
+                2025 Onchain Wrap
+              </span>
+            </h1>
+
+            {/* Card */}
+            <div className="glass-card p-8 w-full max-w-md">
+              <div className="space-y-6">
+                <h2 className="text-foreground text-xl md:text-2xl font-semibold text-center">
+                  See everything your wallet cooked<br />(or not)
+                </h2>
+                <AddressInput onGenerate={handleGenerate} isLoading={false} />
               </div>
-              <AddressInput onGenerate={handleGenerate} isLoading={false} />
             </div>
-          )}
+          </>
+        )}
 
-          {appState === "loading" && <LoaderScreen />}
+        {appState === "loading" && (
+          <div className="glass-card p-8 w-full max-w-md">
+            <LoaderScreen />
+          </div>
+        )}
 
-          {appState === "result" && stats && (
-            <WrapCard stats={stats} onReset={handleReset} />
-          )}
-        </div>
+        {appState === "result" && stats && (
+          <WrapCard stats={stats} onReset={handleReset} />
+        )}
       </div>
-
-      {/* Footer */}
-      <footer className="relative z-10 py-4 text-center">
-        <p className="text-muted-foreground text-xs">
-          Powered by{" "}
-          <a
-            href="https://0xppl.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-primary hover:underline"
-          >
-            0xPPL
-          </a>
-        </p>
-      </footer>
     </main>
   );
 };
