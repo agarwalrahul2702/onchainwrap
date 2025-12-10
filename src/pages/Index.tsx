@@ -51,8 +51,11 @@ const Index = () => {
       <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-4 pb-8">
         {appState === "input" && (
           <>
-            {/* Title - outside card */}
-            <h1 className="font-display text-2xl font-bold text-center mb-5 animate-fade-in">
+            {/* Title - 489×72 dimensions */}
+            <h1 
+              className="font-sans font-bold text-center mb-6 animate-fade-in"
+              style={{ width: '489px', height: '72px', fontSize: '48px', lineHeight: '72px' }}
+            >
               <span className="bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] bg-clip-text text-transparent">
                 2025 Onchain Wrap
               </span>
@@ -60,12 +63,12 @@ const Index = () => {
 
             {/* Card - exact 517×341.66 ratio */}
             <div className="liquid-glass-card w-[517px] h-[342px] flex flex-col justify-center px-10 py-8">
-              <div className="space-y-4 text-center">
-                <div className="space-y-1">
-                  <h2 className="text-foreground text-lg font-semibold whitespace-nowrap">
+              <div className="space-y-5 text-center">
+                <div className="space-y-0">
+                  <p className="text-foreground font-sans text-xl font-semibold whitespace-nowrap">
                     See everything your wallet cooked
-                  </h2>
-                  <p className="text-foreground text-lg font-semibold">(or not)</p>
+                  </p>
+                  <p className="text-foreground font-sans text-xl font-semibold">(or not)</p>
                 </div>
                 <AddressInput onGenerate={handleGenerate} isLoading={false} />
               </div>
