@@ -39,7 +39,7 @@ const AddressInput = ({
       handleSubmit();
     }
   };
-  return <div className="space-y-[1.2vh] mx-0 my-[1.5vh] w-full">
+  return <div className="space-y-[1.2vh] mx-0 w-full my-[31px]">
       {/* Input field */}
       <div className="relative">
         <div className="absolute left-[1vw] top-1/2 -translate-y-1/2 text-muted-foreground">
@@ -55,7 +55,7 @@ const AddressInput = ({
       {error && <p className="text-destructive text-[0.85vw] text-center">{error}</p>}
 
       {/* Generate button */}
-      <button onClick={handleSubmit} disabled={isLoading} className="w-full bg-[#3B82F6] hover:bg-[#2563EB] text-white font-semibold py-[1.2vh] px-[1.5vw] rounded-lg transition-all duration-200 flex items-center justify-center gap-[0.5vw] disabled:opacity-50 disabled:cursor-not-allowed my-[1.5vh] text-[1vw]">
+      <button onClick={handleSubmit} disabled={isLoading} className="w-full bg-[#3B82F6] hover:bg-[#2563EB] text-white font-semibold py-[1.2vh] px-[1.5vw] rounded-lg transition-all duration-200 flex items-center justify-center gap-[0.5vw] disabled:opacity-50 disabled:cursor-not-allowed text-[1vw] my-[15px]">
         <Sparkles className="w-[1.2vw] h-[1.2vw]" />
         {isLoading ? "Generating..." : "Generate Wrap"}
       </button>
