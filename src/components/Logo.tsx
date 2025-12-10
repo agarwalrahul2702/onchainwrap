@@ -11,10 +11,10 @@ const Logo = () => {
       }}
       className="flex items-center gap-2.5 hover:opacity-80 transition-opacity text-lg"
     >
-      <img src={logoSvg} alt="0xPPL Logo" className="h-16 w-16 object-contain" />
+      <img src={logoSvg} alt="0xPPL Logo" className="h-20 w-20 object-contain" />
       <div className="flex flex-col leading-tight">
-        <span className="text-foreground font-sans text-sm font-medium">Your onchain</span>
-        <span className="text-foreground font-sans text-sm font-medium">superapp</span>
+        <span className="text-foreground font-sans text-base font-medium">Your onchain</span>
+        <span className="text-foreground font-sans text-base font-medium">superapp</span>
       </div>
     </a>
   );
