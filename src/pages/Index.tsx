@@ -37,7 +37,7 @@ const Index = () => {
   };
 
   return (
-    <main className="relative min-h-screen flex flex-col">
+    <main className="relative w-[1440px] h-[932px] mx-auto flex flex-col overflow-hidden">
       <BackgroundVideo />
 
       {/* Header */}
@@ -52,19 +52,21 @@ const Index = () => {
         {appState === "input" && (
           <>
             {/* Title - outside card */}
-            <h1 className="font-display text-3xl md:text-4xl font-bold text-center mb-6 animate-fade-in">
+            <h1 className="font-display text-2xl font-bold text-center mb-5 animate-fade-in">
               <span className="bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] bg-clip-text text-transparent">
                 2025 Onchain Wrap
               </span>
             </h1>
 
-            {/* Card */}
-            <div className="glass-card p-6 w-full max-w-sm">
-              <div className="space-y-5">
-                <h2 className="text-foreground text-lg md:text-xl font-semibold text-center whitespace-nowrap">
-                  See everything your wallet cooked
-                </h2>
-                <p className="text-muted-foreground text-sm text-center -mt-3">(or not)</p>
+            {/* Card - exact 517×341.66 ratio */}
+            <div className="liquid-glass-card w-[517px] h-[342px] flex flex-col justify-center px-10 py-8">
+              <div className="space-y-4 text-center">
+                <div className="space-y-1">
+                  <h2 className="text-foreground text-lg font-semibold whitespace-nowrap">
+                    See everything your wallet cooked
+                  </h2>
+                  <p className="text-foreground text-lg font-semibold">(or not)</p>
+                </div>
                 <AddressInput onGenerate={handleGenerate} isLoading={false} />
               </div>
             </div>
