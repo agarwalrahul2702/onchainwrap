@@ -61,7 +61,7 @@ const AddressInput = ({
       </button>
 
       {/* Footer text */}
-      <p className="text-muted-foreground text-sm text-center my-[30px] px-0">
+      <p className="text-muted-foreground text-sm text-center mt-[40px] mb-[30px] px-0">
         Works with all EVM wallets · No login needed
       </p>
     </div>;
