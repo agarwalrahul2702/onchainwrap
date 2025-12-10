@@ -39,7 +39,7 @@ const AddressInput = ({
       handleSubmit();
     }
   };
-  return <div className="space-y-[1.2vh] mx-0 w-full my-[31px]">
+  return <div className="space-y-[1.2vh] mx-0 w-full my-[31px] mb-[30px]">
       {/* Input field */}
       <div className="relative">
         <div className="absolute left-[1vw] top-1/2 -translate-y-1/2 text-muted-foreground">
@@ -55,13 +55,13 @@ const AddressInput = ({
       {error && <p className="text-destructive text-[0.85vw] text-center">{error}</p>}
 
       {/* Generate button */}
-      <button onClick={handleSubmit} disabled={isLoading} className="w-full bg-[#3B82F6] hover:bg-[#2563EB] text-white font-semibold py-[1.2vh] px-[1.5vw] rounded-lg transition-all duration-200 flex items-center justify-center gap-[0.5vw] disabled:opacity-50 disabled:cursor-not-allowed text-[1vw] my-[15px]">
+      <button onClick={handleSubmit} disabled={isLoading} className="w-full bg-[#3B82F6] hover:bg-[#2563EB] text-white font-semibold py-[1.2vh] px-[1.5vw] rounded-lg transition-all duration-200 flex items-center justify-center gap-[0.5vw] disabled:opacity-50 disabled:cursor-not-allowed text-[1vw] my-[15px] mb-0">
         <Sparkles className="w-[1.2vw] h-[1.2vw]" />
         {isLoading ? "Generating..." : "Generate Wrap"}
       </button>
 
       {/* Footer text */}
-      <p className="text-muted-foreground text-[0.85vw] text-center mt-[2vh] mb-[1vh] px-0">
+      <p className="text-muted-foreground text-[0.85vw] text-center mb-[1vh] px-0 mt-[20px]">
         Works with all EVM wallets · No login needed
       </p>
     </div>;
