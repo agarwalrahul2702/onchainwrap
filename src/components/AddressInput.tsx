@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Clipboard, AlertCircle } from "lucide-react";
+import { ClipboardList, Sparkles } from "lucide-react";
 
 interface AddressInputProps {
   onGenerate: (address: string) => void;
@@ -26,12 +26,12 @@ const AddressInput = ({ onGenerate, isLoading }: AddressInputProps) => {
 
   const handleSubmit = () => {
     if (!address.trim()) {
-      setError("Please enter your wallet address");
+      setError("Please enter an address");
       return;
     }
-    
+
     if (!isValidEVMAddress(address.trim())) {
-      setError("Invalid EVM address. Must be 0x followed by 40 hex characters");
+      setError("Please enter a valid EVM address");
       return;
     }
 
@@ -46,8 +46,12 @@ const AddressInput = ({ onGenerate, isLoading }: AddressInputProps) => {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto space-y-4 animate-fade-in" style={{ animationDelay: "0.2s" }}>
+    <div className="space-y-4">
+      {/* Input field */}
       <div className="relative">
+        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground">
+          <ClipboardList size={18} />
+        </div>
         <input
           type="text"
           value={address}
@@ -56,33 +60,32 @@ const AddressInput = ({ onGenerate, isLoading }: AddressInputProps) => {
             setError("");
           }}
           onKeyDown={handleKeyDown}
-          placeholder="Paste your EVM address"
-          className="input-glass w-full pr-12 font-mono text-sm"
+          onClick={handlePaste}
+          placeholder="Paste any EVM wallet address"
+          className="w-full bg-[#1a1d2e] border border-border/30 rounded-lg pl-12 pr-4 py-4 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-[#3B82F6]/30 transition-all font-mono text-sm"
           disabled={isLoading}
         />
-        <button
-          onClick={handlePaste}
-          className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-primary transition-colors"
-          title="Paste from clipboard"
-        >
-          <Clipboard size={18} />
-        </button>
       </div>
 
+      {/* Error message */}
       {error && (
-        <div className="flex items-center gap-2 text-destructive text-sm animate-fade-in">
-          <AlertCircle size={14} />
-          <span>{error}</span>
-        </div>
+        <p className="text-destructive text-sm text-center">{error}</p>
       )}
 
+      {/* Generate button */}
       <button
         onClick={handleSubmit}
         disabled={isLoading}
-        className="btn-primary w-full py-4 rounded-xl text-primary-foreground font-display text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full bg-[#3B82F6] hover:bg-[#2563EB] text-white font-semibold py-4 px-6 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
       >
+        <Sparkles size={18} />
         {isLoading ? "Generating..." : "Generate Wrap"}
       </button>
+
+      {/* Footer text */}
+      <p className="text-muted-foreground text-sm text-center">
+        Works with all EVM wallets · No login needed
+      </p>
     </div>
   );
 };
