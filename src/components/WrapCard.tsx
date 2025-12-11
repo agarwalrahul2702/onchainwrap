@@ -131,7 +131,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
         <div 
           className="absolute font-general-sans"
           style={{
-            top: '15%',
+            top: 'calc(15% + 20px)',
             left: '50%',
             transform: 'translateX(-50%)',
           }}
