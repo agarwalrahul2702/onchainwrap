@@ -146,7 +146,10 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
         >
           <span 
             style={{
-              color: '#ffffff',
+              background: 'linear-gradient(90deg, #C4C9FF 0%, #4873FF 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
               fontSize: 'clamp(24px, 3.5vw, 35px)',
               fontWeight: 700,
               lineHeight: '100%',
@@ -167,7 +170,10 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
         >
           <span 
             style={{
-              color: '#9CA3AF',
+              background: 'linear-gradient(90deg, #C4C9FF 0%, #4873FF 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
               fontSize: 'clamp(10px, 1.4vw, 14px)',
               fontWeight: 500,
               lineHeight: '130%',
