@@ -174,7 +174,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
-              fontSize: 'clamp(10px, 1.4vw, 14px)',
+              fontSize: 'clamp(10.6px, 1.48vw, 14.84px)',
               fontWeight: 500,
               lineHeight: '130%',
             }}
