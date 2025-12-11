@@ -2,9 +2,10 @@ import { WrapStats, TokenInfo } from "@/components/WrapCard";
 
 const API_ENDPOINT = "https://0xppl.com/api/v4/get_yearly_highlights";
 
-interface ApiTokenInfo {
-  logo?: string;
-  symbol?: string;
+interface ApiProfile {
+  display_name?: string;
+  display_picture?: string;
+  token_symbol?: string;
 }
 
 interface ApiResponse {
@@ -13,11 +14,11 @@ interface ApiResponse {
     volume?: { value: number; display_value: string };
     biggest_profit?: { 
       amount: { value: number; display_value: string };
-      token?: ApiTokenInfo;
+      profile?: ApiProfile;
     };
     biggest_loss?: { 
       amount: { value: number; display_value: string };
-      token?: ApiTokenInfo;
+      profile?: ApiProfile;
     };
     win_rate?: { value: number; display_value: string };
     overall_pnl?: { value: number; display_value: string };
@@ -195,9 +196,9 @@ export const fetchWrapStats = async (addresses: string[]): Promise<WrapStats> =>
     if (profit > aggregated.biggestProfit) {
       aggregated.biggestProfit = profit;
       aggregated.biggestProfitDisplay = data.biggest_profit?.amount?.display_value || "No data";
-      aggregated.biggestProfitToken = data.biggest_profit?.token ? {
-        logo: data.biggest_profit.token.logo,
-        symbol: data.biggest_profit.token.symbol,
+      aggregated.biggestProfitToken = data.biggest_profit?.profile ? {
+        logo: data.biggest_profit.profile.display_picture,
+        symbol: data.biggest_profit.profile.display_name,
       } : undefined;
     }
 
@@ -206,9 +207,9 @@ export const fetchWrapStats = async (addresses: string[]): Promise<WrapStats> =>
     if (loss < aggregated.biggestLoss) {
       aggregated.biggestLoss = loss;
       aggregated.biggestLossDisplay = data.biggest_loss?.amount?.display_value || "No data";
-      aggregated.biggestLossToken = data.biggest_loss?.token ? {
-        logo: data.biggest_loss.token.logo,
-        symbol: data.biggest_loss.token.symbol,
+      aggregated.biggestLossToken = data.biggest_loss?.profile ? {
+        logo: data.biggest_loss.profile.display_picture,
+        symbol: data.biggest_loss.profile.display_name,
       } : undefined;
     }
   });
