@@ -24,8 +24,10 @@ export interface WrapStats {
   totalVolume: string;
   biggestProfit: string;
   biggestProfitToken?: TokenInfo;
+  biggestProfitPnlPercent?: string;
   biggestLoss: string;
   biggestLossToken?: TokenInfo;
+  biggestLossPnlPercent?: string;
   winRate: string;
   overallPnL: string;
   pnlPositive: boolean;
@@ -157,97 +159,127 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
 
         {/* Biggest profit value with token */}
         <div 
-          className="absolute font-general-sans flex items-center gap-1.5"
+          className="absolute font-general-sans flex flex-col"
           style={{
             top: 'calc(55% + 5px)',
             left: 'calc(44% + 15px)',
           }}
         >
-          <span 
-            style={{
-              color: '#22c55e',
-              fontSize: 'clamp(15px, 2.08vw, 20.84px)',
-              fontWeight: 500,
-              fontVariant: 'small-caps',
-              lineHeight: '100%',
-            }}
-          >
-            +{stats.biggestProfit}
-          </span>
-          {stats.biggestProfitToken && (
-            <div className="flex items-center gap-1">
-              {stats.biggestProfitToken.logo && (
-                <img 
-                  src={stats.biggestProfitToken.logo} 
-                  alt={stats.biggestProfitToken.symbol || 'token'} 
-                  style={{
-                    width: 'clamp(14px, 1.8vw, 18px)',
-                    height: 'clamp(14px, 1.8vw, 18px)',
-                  }}
-                  className="rounded-full object-cover"
-                />
-              )}
-              {stats.biggestProfitToken.symbol && (
-                <span 
-                  style={{
-                    color: '#9CA3AF',
-                    fontSize: 'clamp(12px, 1.6vw, 16px)',
-                    fontWeight: 500,
-                    lineHeight: '100%',
-                  }}
-                >
-                  {stats.biggestProfitToken.symbol}
-                </span>
-              )}
-            </div>
+          <div className="flex items-center gap-1.5">
+            <span 
+              style={{
+                color: '#22c55e',
+                fontSize: 'clamp(15px, 2.08vw, 20.84px)',
+                fontWeight: 500,
+                fontVariant: 'small-caps',
+                lineHeight: '100%',
+              }}
+            >
+              +{stats.biggestProfit}
+            </span>
+            {stats.biggestProfitToken && (
+              <div className="flex items-center gap-1">
+                {stats.biggestProfitToken.logo && (
+                  <img 
+                    src={stats.biggestProfitToken.logo} 
+                    alt={stats.biggestProfitToken.symbol || 'token'} 
+                    style={{
+                      width: 'clamp(14px, 1.8vw, 18px)',
+                      height: 'clamp(14px, 1.8vw, 18px)',
+                    }}
+                    className="rounded-full object-cover"
+                  />
+                )}
+                {stats.biggestProfitToken.symbol && (
+                  <span 
+                    style={{
+                      color: '#9CA3AF',
+                      fontSize: 'clamp(12px, 1.6vw, 16px)',
+                      fontWeight: 500,
+                      lineHeight: '100%',
+                    }}
+                  >
+                    {stats.biggestProfitToken.symbol}
+                  </span>
+                )}
+              </div>
+            )}
+          </div>
+          {stats.biggestProfitPnlPercent && (
+            <span 
+              style={{
+                color: '#22c55e',
+                fontSize: 'clamp(12px, 1.6vw, 16px)',
+                fontWeight: 500,
+                lineHeight: '100%',
+                marginTop: '2px',
+              }}
+            >
+              {stats.biggestProfitPnlPercent}
+            </span>
           )}
         </div>
 
         {/* Biggest loss value with token */}
         <div 
-          className="absolute font-general-sans flex items-center gap-1.5"
+          className="absolute font-general-sans flex flex-col"
           style={{
             top: 'calc(55% + 5px)',
             left: 'calc(71% + 10px)',
           }}
         >
-          <span 
-            style={{
-              color: '#ef4444',
-              fontSize: 'clamp(15px, 2.08vw, 20.84px)',
-              fontWeight: 500,
-              fontVariant: 'small-caps',
-              lineHeight: '100%',
-            }}
-          >
-            {stats.biggestLoss}
-          </span>
-          {stats.biggestLossToken && (
-            <div className="flex items-center gap-1">
-              {stats.biggestLossToken.logo && (
-                <img 
-                  src={stats.biggestLossToken.logo} 
-                  alt={stats.biggestLossToken.symbol || 'token'} 
-                  style={{
-                    width: 'clamp(14px, 1.8vw, 18px)',
-                    height: 'clamp(14px, 1.8vw, 18px)',
-                  }}
-                  className="rounded-full object-cover"
-                />
-              )}
-              {stats.biggestLossToken.symbol && (
-                <span 
-                  style={{
-                    color: '#9CA3AF',
-                    fontSize: 'clamp(12px, 1.6vw, 16px)',
-                    fontWeight: 500,
-                    lineHeight: '100%',
-                  }}
-                >
-                  {stats.biggestLossToken.symbol}
-                </span>
-              )}
-            </div>
+          <div className="flex items-center gap-1.5">
+            <span 
+              style={{
+                color: '#ef4444',
+                fontSize: 'clamp(15px, 2.08vw, 20.84px)',
+                fontWeight: 500,
+                fontVariant: 'small-caps',
+                lineHeight: '100%',
+              }}
+            >
+              {stats.biggestLoss}
+            </span>
+            {stats.biggestLossToken && (
+              <div className="flex items-center gap-1">
+                {stats.biggestLossToken.logo && (
+                  <img 
+                    src={stats.biggestLossToken.logo} 
+                    alt={stats.biggestLossToken.symbol || 'token'} 
+                    style={{
+                      width: 'clamp(14px, 1.8vw, 18px)',
+                      height: 'clamp(14px, 1.8vw, 18px)',
+                    }}
+                    className="rounded-full object-cover"
+                  />
+                )}
+                {stats.biggestLossToken.symbol && (
+                  <span 
+                    style={{
+                      color: '#9CA3AF',
+                      fontSize: 'clamp(12px, 1.6vw, 16px)',
+                      fontWeight: 500,
+                      lineHeight: '100%',
+                    }}
+                  >
+                    {stats.biggestLossToken.symbol}
+                  </span>
+                )}
+              </div>
+            )}
+          </div>
+          {stats.biggestLossPnlPercent && (
+            <span 
+              style={{
+                color: '#ef4444',
+                fontSize: 'clamp(12px, 1.6vw, 16px)',
+                fontWeight: 500,
+                lineHeight: '100%',
+                marginTop: '2px',
+              }}
+            >
+              {stats.biggestLossPnlPercent}
+            </span>
           )}
         </div>
 

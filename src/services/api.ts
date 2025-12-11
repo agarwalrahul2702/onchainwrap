@@ -14,10 +14,12 @@ interface ApiResponse {
     volume?: { value: number; display_value: string };
     biggest_profit?: { 
       amount: { value: number; display_value: string };
+      pnl_percent?: { value: number; display_value: string };
       profile?: ApiProfile;
     };
     biggest_loss?: { 
       amount: { value: number; display_value: string };
+      pnl_percent?: { value: number; display_value: string };
       profile?: ApiProfile;
     };
     win_rate?: { value: number; display_value: string };
@@ -60,9 +62,11 @@ interface AggregatedData {
   biggestProfit: number;
   biggestProfitDisplay: string;
   biggestProfitToken?: TokenInfo;
+  biggestProfitPnlPercent?: string;
   biggestLoss: number;
   biggestLossDisplay: string;
   biggestLossToken?: TokenInfo;
+  biggestLossPnlPercent?: string;
   totalWinTrades: number;
   totalTrades: number;
   overallPnl: number;
@@ -172,9 +176,11 @@ export const fetchWrapStats = async (addresses: string[]): Promise<WrapStats> =>
     biggestProfit: 0,
     biggestProfitDisplay: "No data",
     biggestProfitToken: undefined,
+    biggestProfitPnlPercent: undefined,
     biggestLoss: 0,
     biggestLossDisplay: "No data",
     biggestLossToken: undefined,
+    biggestLossPnlPercent: undefined,
     totalWinTrades: 0,
     totalTrades: 0,
     overallPnl: 0,
@@ -200,6 +206,7 @@ export const fetchWrapStats = async (addresses: string[]): Promise<WrapStats> =>
         logo: data.biggest_profit.profile.display_picture,
         symbol: data.biggest_profit.profile.token_symbol,
       } : undefined;
+      aggregated.biggestProfitPnlPercent = data.biggest_profit?.pnl_percent?.display_value;
     }
 
     // Track biggest loss (most negative)
@@ -211,6 +218,7 @@ export const fetchWrapStats = async (addresses: string[]): Promise<WrapStats> =>
         logo: data.biggest_loss.profile.display_picture,
         symbol: data.biggest_loss.profile.token_symbol,
       } : undefined;
+      aggregated.biggestLossPnlPercent = data.biggest_loss?.pnl_percent?.display_value;
     }
   });
 
@@ -224,8 +232,10 @@ export const fetchWrapStats = async (addresses: string[]): Promise<WrapStats> =>
     totalVolume: formatCurrency(aggregated.volume),
     biggestProfit: aggregated.biggestProfitDisplay,
     biggestProfitToken: aggregated.biggestProfitToken,
+    biggestProfitPnlPercent: aggregated.biggestProfitPnlPercent,
     biggestLoss: aggregated.biggestLossDisplay,
     biggestLossToken: aggregated.biggestLossToken,
+    biggestLossPnlPercent: aggregated.biggestLossPnlPercent,
     winRate: `${aggregatedWinRate}%`,
     overallPnL: formatCurrency(aggregated.overallPnl),
     pnlPositive,
