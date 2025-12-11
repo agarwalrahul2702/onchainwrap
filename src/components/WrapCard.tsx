@@ -252,19 +252,6 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
               </div>
             )}
           </div>
-          {stats.biggestProfitPnlPercent && (
-            <span 
-              style={{
-                color: '#22c55e',
-                fontSize: 'clamp(9.6px, 1.28vw, 12.8px)',
-                fontWeight: 500,
-                lineHeight: '100%',
-                marginTop: '2px',
-              }}
-            >
-              {stats.biggestProfitPnlPercent}
-            </span>
-          )}
         </div>
 
         {/* Biggest loss value with token */}
@@ -315,19 +302,6 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
               </div>
             )}
           </div>
-          {stats.biggestLossPnlPercent && (
-            <span 
-              style={{
-                color: '#ef4444',
-                fontSize: 'clamp(9.6px, 1.28vw, 12.8px)',
-                fontWeight: 500,
-                lineHeight: '100%',
-                marginTop: '2px',
-              }}
-            >
-              {stats.biggestLossPnlPercent}
-            </span>
-          )}
         </div>
 
         {/* Win rate value */}
