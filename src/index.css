@@ -162,7 +162,7 @@
   .video-overlay {
     @apply fixed inset-0;
     z-index: -5;
-    background: linear-gradient(180deg, hsl(240 10% 4% / 0.8) 0%, hsl(240 10% 4% / 0.92) 100%);
+    background: linear-gradient(180deg, hsl(240 10% 4% / 0.68) 0%, hsl(240 10% 4% / 0.78) 100%);
   }
 }
 
