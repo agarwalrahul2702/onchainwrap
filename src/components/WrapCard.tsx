@@ -94,10 +94,10 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
             {/* Persona section */}
             <div className="pt-10">
               <p className="text-[#8b9cb3] text-sm mb-2 tracking-wide">Your onchain persona :</p>
-              <h2 className="text-[56px] leading-none font-bold text-[#22c55e] mb-2">
+              <h2 className="text-[56px] leading-none font-bold text-white mb-2">
                 {archetype}
               </h2>
-              <p className="text-[#22c55e] text-lg">{oneliner}</p>
+              <p className="text-[#4ade80] text-lg">{oneliner}</p>
             </div>
 
             {/* Overall PnL - top right */}
@@ -110,30 +110,42 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           </div>
 
           {/* Stats box */}
-          <div className="bg-[#0f1729]/90 rounded-xl p-6 mt-auto border border-[#1e293b]/50">
-            <div className="grid grid-cols-2 gap-x-20 gap-y-6">
+          <div className="bg-[#0a101c]/95 rounded-2xl p-6 mt-auto border border-[#1a2744]">
+            <div className="grid grid-cols-2 gap-x-16 gap-y-5">
               {/* Biggest profit */}
               <div>
-                <p className="text-[#64748b] text-xs mb-2 uppercase tracking-wider">Biggest profit</p>
-                <p className="text-[#22c55e] text-3xl font-bold">{stats.biggestProfit}</p>
+                <p className="text-[#64748b] text-xs mb-2">Biggest profit</p>
+                <div className="flex items-center gap-2">
+                  <p className="text-[#22c55e] text-2xl font-bold">{stats.biggestProfit}</p>
+                  <span className="flex items-center gap-1 bg-[#1a2744] rounded-full px-2 py-0.5">
+                    <span className="w-4 h-4 rounded-full bg-gradient-to-br from-purple-500 to-blue-500" />
+                    <span className="text-[#8b9cb3] text-xs">SZARA</span>
+                  </span>
+                </div>
               </div>
               
               {/* Biggest loss */}
               <div>
-                <p className="text-[#64748b] text-xs mb-2 uppercase tracking-wider">Biggest loss</p>
-                <p className="text-[#ef4444] text-3xl font-bold">{stats.biggestLoss}</p>
+                <p className="text-[#64748b] text-xs mb-2">Biggest loss</p>
+                <div className="flex items-center gap-2">
+                  <p className="text-[#ef4444] text-2xl font-bold">{stats.biggestLoss}</p>
+                  <span className="flex items-center gap-1 bg-[#1a2744] rounded-full px-2 py-0.5">
+                    <span className="w-4 h-4 rounded-full bg-gradient-to-br from-purple-500 to-blue-500" />
+                    <span className="text-[#8b9cb3] text-xs">SZARA</span>
+                  </span>
+                </div>
               </div>
               
               {/* Win rate */}
               <div>
-                <p className="text-[#64748b] text-xs mb-2 uppercase tracking-wider">Win rate</p>
-                <p className="text-white text-3xl font-bold">{stats.winRate}</p>
+                <p className="text-[#64748b] text-xs mb-2">Win rate</p>
+                <p className="text-white text-2xl font-bold">{stats.winRate}</p>
               </div>
               
               {/* Trading volume */}
               <div>
-                <p className="text-[#64748b] text-xs mb-2 uppercase tracking-wider">Trading volume</p>
-                <p className="text-white text-3xl font-bold">{stats.totalVolume}</p>
+                <p className="text-[#64748b] text-xs mb-2">Trading volume</p>
+                <p className="text-white text-2xl font-bold">{stats.totalVolume}</p>
               </div>
             </div>
           </div>
