@@ -110,57 +110,61 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
 
   return (
     <div className="w-full flex flex-col items-center animate-scale-in">
-      {/* Main card container - uses full template as background */}
+      {/* Main card container - fixed aspect ratio matching template */}
       <div 
         ref={cardRef}
         id="wrap-card"
-        className="relative w-full max-w-[1000px]"
+        className="relative w-full max-w-[1000px] overflow-hidden"
         style={{ aspectRatio: '1000 / 700' }}
       >
-        {/* Full template image as background */}
+        {/* Full template image as background - NO cropping */}
         <img 
           src={templateImage} 
           alt={`${archetype} card template`}
-          className="absolute inset-0 w-full h-full object-contain"
-          style={{ pointerEvents: 'none' }}
+          className="absolute inset-0 w-full h-full object-cover"
+          draggable={false}
         />
         
-        {/* Dynamic text overlays - positioned to match template exactly */}
-        {/* All positions are in percentages relative to the 1000x700 template */}
+        {/* ===== DYNAMIC TEXT OVERLAYS ===== */}
+        {/* Each overlay has a matching background to cover placeholder text */}
         
-        {/* One-liner text (below archetype name) */}
+        {/* One-liner text overlay */}
         <div 
           className="absolute font-general-sans"
           style={{
-            top: '26%',
+            top: '24.5%',
             left: '42%',
-            width: '40%',
+            backgroundColor: 'transparent',
           }}
         >
           <span 
-            className="text-[#4ade80]"
             style={{
-              fontSize: 'clamp(10px, 2vw, 18px)',
+              color: '#9CA3AF',
+              fontSize: 'clamp(8px, 1.8vw, 18px)',
               fontWeight: 500,
+              fontStyle: 'italic',
             }}
           >
             {stats.oneliner}
           </span>
         </div>
 
-        {/* Overall PnL value */}
+        {/* Overall PnL value - top right */}
         <div 
-          className="absolute text-right font-general-sans"
+          className="absolute font-general-sans text-right"
           style={{
-            top: '15%',
+            top: '14%',
             right: '3%',
-            width: '15%',
+            minWidth: '12%',
+            backgroundColor: '#0a0f1a',
+            padding: '2px 8px',
+            borderRadius: '4px',
           }}
         >
           <span 
-            className={stats.pnlPositive ? "text-[#22c55e]" : "text-[#ef4444]"}
             style={{
-              fontSize: 'clamp(16px, 4vw, 42px)',
+              color: stats.pnlPositive ? '#22c55e' : '#ef4444',
+              fontSize: 'clamp(16px, 4vw, 48px)',
               fontWeight: 700,
             }}
           >
@@ -168,18 +172,23 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           </span>
         </div>
 
+        {/* Stats box overlays - positioned inside the dark stats panel */}
+        
         {/* Biggest profit value */}
         <div 
           className="absolute font-general-sans"
           style={{
-            top: '44%',
+            top: '42%',
             left: '44%',
+            backgroundColor: '#1a1f2e',
+            padding: '2px 6px',
+            borderRadius: '4px',
           }}
         >
           <span 
-            className="text-[#22c55e]"
             style={{
-              fontSize: 'clamp(12px, 2.8vw, 28px)',
+              color: '#22c55e',
+              fontSize: 'clamp(10px, 2.5vw, 28px)',
               fontWeight: 700,
             }}
           >
@@ -191,14 +200,17 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
         <div 
           className="absolute font-general-sans"
           style={{
-            top: '44%',
+            top: '42%',
             left: '73%',
+            backgroundColor: '#1a1f2e',
+            padding: '2px 6px',
+            borderRadius: '4px',
           }}
         >
           <span 
-            className="text-[#ef4444]"
             style={{
-              fontSize: 'clamp(12px, 2.8vw, 28px)',
+              color: '#ef4444',
+              fontSize: 'clamp(10px, 2.5vw, 28px)',
               fontWeight: 700,
             }}
           >
@@ -212,12 +224,15 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           style={{
             top: '58%',
             left: '44%',
+            backgroundColor: '#1a1f2e',
+            padding: '2px 6px',
+            borderRadius: '4px',
           }}
         >
           <span 
-            className="text-white"
             style={{
-              fontSize: 'clamp(14px, 3.5vw, 36px)',
+              color: '#ffffff',
+              fontSize: 'clamp(12px, 3.2vw, 38px)',
               fontWeight: 700,
             }}
           >
@@ -231,12 +246,15 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           style={{
             top: '58%',
             left: '73%',
+            backgroundColor: '#1a1f2e',
+            padding: '2px 6px',
+            borderRadius: '4px',
           }}
         >
           <span 
-            className="text-white"
             style={{
-              fontSize: 'clamp(14px, 3.5vw, 36px)',
+              color: '#ffffff',
+              fontSize: 'clamp(12px, 3.2vw, 38px)',
               fontWeight: 700,
             }}
           >
@@ -244,18 +262,22 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           </span>
         </div>
 
-        {/* Wallet address */}
+        {/* Wallet address - bottom left */}
         <div 
-          className="absolute font-mono"
+          className="absolute font-general-sans"
           style={{
-            bottom: '3%',
-            left: '3%',
+            bottom: '5%',
+            left: '6.5%',
+            backgroundColor: '#1d4ed8',
+            padding: '2px 6px',
+            borderRadius: '4px',
           }}
         >
           <span 
-            className="text-white font-semibold"
             style={{
-              fontSize: 'clamp(10px, 1.8vw, 18px)',
+              color: '#ffffff',
+              fontSize: 'clamp(10px, 1.6vw, 16px)',
+              fontWeight: 600,
             }}
           >
             {formatAddress(stats.address)}
