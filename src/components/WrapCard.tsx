@@ -184,8 +184,8 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
                     src={stats.biggestProfitToken.logo} 
                     alt={stats.biggestProfitToken.symbol || 'token'} 
                     style={{
-                      width: 'clamp(14px, 1.8vw, 18px)',
-                      height: 'clamp(14px, 1.8vw, 18px)',
+                      width: 'clamp(11.2px, 1.44vw, 14.4px)',
+                      height: 'clamp(11.2px, 1.44vw, 14.4px)',
                     }}
                     className="rounded-full object-cover"
                   />
@@ -194,7 +194,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
                   <span 
                     style={{
                       color: '#9CA3AF',
-                      fontSize: 'clamp(12px, 1.6vw, 16px)',
+                      fontSize: 'clamp(9.6px, 1.28vw, 12.8px)',
                       fontWeight: 500,
                       lineHeight: '100%',
                     }}
@@ -247,8 +247,8 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
                     src={stats.biggestLossToken.logo} 
                     alt={stats.biggestLossToken.symbol || 'token'} 
                     style={{
-                      width: 'clamp(14px, 1.8vw, 18px)',
-                      height: 'clamp(14px, 1.8vw, 18px)',
+                      width: 'clamp(11.2px, 1.44vw, 14.4px)',
+                      height: 'clamp(11.2px, 1.44vw, 14.4px)',
                     }}
                     className="rounded-full object-cover"
                   />
@@ -257,7 +257,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
                   <span 
                     style={{
                       color: '#9CA3AF',
-                      fontSize: 'clamp(12px, 1.6vw, 16px)',
+                      fontSize: 'clamp(9.6px, 1.28vw, 12.8px)',
                       fontWeight: 500,
                       lineHeight: '100%',
                     }}
