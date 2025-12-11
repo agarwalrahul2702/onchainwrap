@@ -139,7 +139,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           <span 
             style={{
               color: '#ffffff',
-              fontSize: 'clamp(32px, 6.5vw, 65px)',
+              fontSize: 'clamp(19px, 3.9vw, 39px)',
               fontWeight: 600,
               fontVariant: 'small-caps',
               lineHeight: '100%',
