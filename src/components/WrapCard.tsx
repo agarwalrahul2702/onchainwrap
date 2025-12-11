@@ -42,12 +42,12 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
 
   return (
     <div className="w-full flex flex-col items-center animate-scale-in">
-      {/* Main card container - 16:9 aspect ratio */}
+      {/* Main card container - matches reference design proportions */}
       <div 
-        className="relative w-full overflow-hidden"
+        className="relative w-full rounded-xl overflow-hidden"
         style={{
           background: 'linear-gradient(135deg, #0a1628 0%, #0d1a2d 40%, #0f1e35 70%, #0a1628 100%)',
-          aspectRatio: '16 / 9',
+          aspectRatio: '780 / 480',
         }}
       >
         {/* Blue glow effect at bottom-left */}
