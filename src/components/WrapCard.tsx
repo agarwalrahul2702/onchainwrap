@@ -1,4 +1,5 @@
 import { TrendingUp, TrendingDown, Target, DollarSign, Percent, Sparkles } from "lucide-react";
+import whaleImage from "@/assets/archetypes/whale.png";
 
 export interface WrapStats {
   totalVolume: string;
@@ -8,6 +9,7 @@ export interface WrapStats {
   overallPnL: string;
   pnlPositive: boolean;
   oneliner: string;
+  archetype?: string;
   address: string;
 }
 
@@ -16,10 +18,17 @@ interface WrapCardProps {
   onReset: () => void;
 }
 
+// Archetype image mapping (add more as images are provided)
+const archetypeImages: Record<string, string> = {
+  "Whale": whaleImage,
+};
+
 const WrapCard = ({ stats, onReset }: WrapCardProps) => {
   const formatAddress = (addr: string) => {
     return `${addr.slice(0, 6)}...${addr.slice(-4)}`;
   };
+
+  const archetypeImage = stats.archetype ? archetypeImages[stats.archetype] : undefined;
 
   return (
     <div className="w-full max-w-lg mx-auto space-y-6 animate-scale-in">
@@ -34,6 +43,17 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
             Your 2024 Onchain Wrap
           </h2>
         </div>
+
+        {/* Archetype image if available */}
+        {archetypeImage && (
+          <div className="flex justify-center">
+            <img 
+              src={archetypeImage} 
+              alt={stats.archetype} 
+              className="w-48 h-48 object-contain rounded-lg"
+            />
+          </div>
+        )}
 
         {/* Stats grid */}
         <div className="grid grid-cols-2 gap-4">
@@ -96,8 +116,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           rel="noopener noreferrer"
           className="btn-primary inline-flex items-center gap-2 px-6 py-3 rounded-xl text-primary-foreground font-semibold"
         >
-          Try 0xPPL
-          <span className="text-lg">→</span>
+          Try 0xPPL →
         </a>
         <button
           onClick={onReset}
