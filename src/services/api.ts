@@ -24,10 +24,24 @@ type ArchetypeType =
   | "Only W's" 
   | "Rug Maxi" 
   | "Few-Trade Wonder" 
-  | "Fresh Spawn" 
+  | "Freshly Spawned" 
   | "Active Farmer" 
   | "Casual Degen" 
-  | "Average Crypto BD";
+  | "Average Crypto Bro";
+
+// Archetype taglines
+const archetypeTaglines: Record<ArchetypeType, string> = {
+  "Whale": "Your size is size",
+  "Trencher": "No token left unturned",
+  "Swing Trader": "TA over everything",
+  "Only W's": "Clean entries, cleaner exits",
+  "Rug Maxi": "You buy tops with confidence",
+  "Few-Trade Wonder": "Sniper with a day job",
+  "Freshly Spawned": "Welcome onchain, traveler",
+  "Active Farmer": "You touch more tokens than influencers shill",
+  "Casual Degen": "You trade enough to matter, not enough to stress",
+  "Average Crypto Bro": "You talk crypto more than you trade",
+};
 
 const detectArchetype = (data: ApiResponse["data"]): ArchetypeType => {
   const volume = data.volume?.value ?? 0;
@@ -69,9 +83,9 @@ const detectArchetype = (data: ApiResponse["data"]): ArchetypeType => {
     return "Few-Trade Wonder";
   }
 
-  // Priority 7: Fresh Spawn - < 5 trades, doesn't meet other criteria
+  // Priority 7: Freshly Spawned - < 5 trades, doesn't meet other criteria
   if (numTrades < 5) {
-    return "Fresh Spawn";
+    return "Freshly Spawned";
   }
 
   // Priority 8: Active Farmer - Tokens Interacted 30-99
@@ -84,8 +98,8 @@ const detectArchetype = (data: ApiResponse["data"]): ArchetypeType => {
     return "Casual Degen";
   }
 
-  // Priority 10: Average Crypto BD (Fallback)
-  return "Average Crypto BD";
+  // Priority 10: Average Crypto Bro (Fallback)
+  return "Average Crypto Bro";
 };
 
 export const fetchWrapStats = async (address: string): Promise<WrapStats> => {
@@ -117,7 +131,7 @@ export const fetchWrapStats = async (address: string): Promise<WrapStats> => {
     winRate: data.win_rate?.display_value || "No data",
     overallPnL: data.overall_pnl?.display_value || "No data",
     pnlPositive,
-    oneliner: detectedArchetype,
+    oneliner: archetypeTaglines[detectedArchetype],
     archetype: detectedArchetype,
     address: address,
   };
