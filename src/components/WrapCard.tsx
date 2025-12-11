@@ -1,5 +1,9 @@
+import { useRef, useState } from "react";
 import whaleImage from "@/assets/archetypes/whale.png";
 import logoImage from "@/assets/logo-0xppl.svg";
+import { captureElementAsBlob, downloadBlob, shareOnTwitter } from "@/utils/imageExport";
+import { useToast } from "@/hooks/use-toast";
+import { Loader2 } from "lucide-react";
 
 export interface WrapStats {
   totalVolume: string;
@@ -33,6 +37,10 @@ const archetypeImages: Record<string, string> = {
 };
 
 const WrapCard = ({ stats, onReset }: WrapCardProps) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [isExporting, setIsExporting] = useState(false);
+  const { toast } = useToast();
+
   const formatAddress = (addr: string) => {
     return `${addr.slice(0, 4)}...${addr.slice(-4)}`;
   };
@@ -40,10 +48,65 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
   const archetype = stats.archetype || "Average Crypto Bro";
   const archetypeImage = archetypeImages[archetype] || whaleImage;
 
+  const handleDownload = async () => {
+    if (!cardRef.current || isExporting) return;
+    
+    setIsExporting(true);
+    try {
+      const blob = await captureElementAsBlob(cardRef.current);
+      const shortAddress = stats.address.slice(0, 8);
+      downloadBlob(blob, `onchain_wrap_${shortAddress}.png`);
+      toast({
+        title: "Image downloaded!",
+        description: "Your wrap card has been saved.",
+      });
+    } catch (error) {
+      console.error("Failed to download image:", error);
+      toast({
+        title: "Something went wrong",
+        description: "Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
+  const handleShareOnX = async () => {
+    if (!cardRef.current || isExporting) return;
+    
+    setIsExporting(true);
+    try {
+      // Generate image first (for user to download if they want)
+      await captureElementAsBlob(cardRef.current);
+      
+      // Share text on Twitter
+      const shareText = "Got my 2025 onchain wrap from @0xPPL_. Check yours!";
+      const shareUrl = "https://0xppl.com";
+      shareOnTwitter(shareText, shareUrl);
+      
+      toast({
+        title: "Opening Twitter...",
+        description: "Share your wrap with the world!",
+      });
+    } catch (error) {
+      console.error("Failed to share:", error);
+      toast({
+        title: "Something went wrong",
+        description: "Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
   return (
     <div className="w-full flex flex-col items-center animate-scale-in">
       {/* Main card container - matches reference design proportions */}
       <div 
+        ref={cardRef}
+        id="wrap-card"
         className="relative w-full rounded-xl overflow-hidden"
         style={{
           background: 'linear-gradient(135deg, #0a1628 0%, #0d1a2d 40%, #0f1e35 70%, #0a1628 100%)',
@@ -152,18 +215,34 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
 
           {/* Action buttons */}
           <div className="flex items-center gap-3">
-            <button className="bg-[#1d4ed8] hover:bg-[#1e40af] transition-colors rounded-lg px-4 py-2 flex items-center gap-2 font-medium text-white text-[1.4vw] md:text-sm">
-              <svg className="w-3 h-3 md:w-4 md:h-4" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-              </svg>
+            <button 
+              onClick={handleShareOnX}
+              disabled={isExporting}
+              className="bg-[#1d4ed8] hover:bg-[#1e40af] disabled:opacity-50 disabled:cursor-not-allowed transition-colors rounded-lg px-4 py-2 flex items-center gap-2 font-medium text-white text-[1.4vw] md:text-sm"
+            >
+              {isExporting ? (
+                <Loader2 className="w-3 h-3 md:w-4 md:h-4 animate-spin" />
+              ) : (
+                <svg className="w-3 h-3 md:w-4 md:h-4" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                </svg>
+              )}
               Share on X
             </button>
-            <button className="border border-[#3b82f6] text-[#60a5fa] hover:bg-[#1d4ed8]/20 transition-colors rounded-lg px-4 py-2 font-medium text-[1.4vw] md:text-sm flex items-center gap-2">
-              <svg className="w-3 h-3 md:w-4 md:h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                <polyline points="7 10 12 15 17 10" />
-                <line x1="12" y1="15" x2="12" y2="3" />
-              </svg>
+            <button 
+              onClick={handleDownload}
+              disabled={isExporting}
+              className="border border-[#3b82f6] text-[#60a5fa] hover:bg-[#1d4ed8]/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors rounded-lg px-4 py-2 font-medium text-[1.4vw] md:text-sm flex items-center gap-2"
+            >
+              {isExporting ? (
+                <Loader2 className="w-3 h-3 md:w-4 md:h-4 animate-spin" />
+              ) : (
+                <svg className="w-3 h-3 md:w-4 md:h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7 10 12 15 17 10" />
+                  <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
+              )}
               Download Image
             </button>
           </div>

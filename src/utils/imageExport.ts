@@ -1,0 +1,70 @@
+import { toPng } from 'html-to-image';
+
+export interface ExportOptions {
+  pixelRatio?: number;
+  backgroundColor?: string;
+}
+
+/**
+ * Captures a DOM element as a PNG blob
+ */
+export const captureElementAsBlob = async (
+  element: HTMLElement,
+  options: ExportOptions = {}
+): Promise<Blob> => {
+  const { pixelRatio = 2, backgroundColor = '#0a1628' } = options;
+
+  const dataUrl = await toPng(element, {
+    pixelRatio,
+    backgroundColor,
+    cacheBust: true,
+    skipAutoScale: true,
+    filter: (node) => {
+      // Skip any elements that might cause issues
+      if (node instanceof HTMLElement) {
+        const tagName = node.tagName?.toLowerCase();
+        // Skip video elements if any
+        if (tagName === 'video') return false;
+      }
+      return true;
+    },
+  });
+
+  // Convert data URL to blob
+  const response = await fetch(dataUrl);
+  return response.blob();
+};
+
+/**
+ * Downloads a blob as a file
+ */
+export const downloadBlob = (blob: Blob, filename: string): void => {
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+};
+
+/**
+ * Generates the Twitter/X share intent URL
+ */
+export const generateTwitterShareUrl = (text: string, url?: string): string => {
+  const params = new URLSearchParams();
+  params.set('text', text);
+  if (url) {
+    params.set('url', url);
+  }
+  return `https://twitter.com/intent/tweet?${params.toString()}`;
+};
+
+/**
+ * Opens Twitter share intent in a new tab
+ */
+export const shareOnTwitter = (text: string, url?: string): void => {
+  const shareUrl = generateTwitterShareUrl(text, url);
+  window.open(shareUrl, '_blank', 'noopener,noreferrer');
+};
