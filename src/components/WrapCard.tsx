@@ -150,7 +150,6 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
               fontSize: 'clamp(24px, 3.5vw, 35px)',
               fontWeight: 700,
               lineHeight: '100%',
-              textTransform: 'uppercase',
             }}
           >
             {archetype}
