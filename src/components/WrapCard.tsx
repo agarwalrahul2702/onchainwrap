@@ -247,10 +247,10 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
 
         {/* Wallet address - bottom area */}
         <div 
-          className="absolute font-general-sans"
+          className="absolute font-general-sans text-right"
           style={{
             bottom: '4%',
-            left: '4%',
+            right: '20px',
           }}
         >
           <span 
