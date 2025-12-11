@@ -186,7 +186,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
               lineHeight: '100%',
             }}
           >
-            {stats.pnlPositive ? "+" : "-"}{stats.overallPnL}
+            {stats.pnlPositive ? "+" : ""}{stats.overallPnL}
           </span>
         </div>
 
