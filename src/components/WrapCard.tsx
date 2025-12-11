@@ -136,6 +136,48 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
         
         {/* ===== DYNAMIC TEXT OVERLAYS - No backgrounds, transparent ===== */}
         
+        {/* Archetype name */}
+        <div 
+          className="absolute font-general-sans"
+          style={{
+            top: '18%',
+            left: '5%',
+          }}
+        >
+          <span 
+            style={{
+              color: '#ffffff',
+              fontSize: 'clamp(24px, 3.5vw, 35px)',
+              fontWeight: 700,
+              lineHeight: '100%',
+              textTransform: 'uppercase',
+            }}
+          >
+            {archetype}
+          </span>
+        </div>
+
+        {/* One-liner */}
+        <div 
+          className="absolute font-general-sans"
+          style={{
+            top: '26%',
+            left: '5%',
+            maxWidth: '35%',
+          }}
+        >
+          <span 
+            style={{
+              color: '#9CA3AF',
+              fontSize: 'clamp(10px, 1.4vw, 14px)',
+              fontWeight: 500,
+              lineHeight: '130%',
+            }}
+          >
+            {stats.oneliner}
+          </span>
+        </div>
+        
         {/* Overall PnL value */}
         <div 
           className="absolute font-general-sans"
