@@ -161,10 +161,9 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           <span 
             style={{
               color: '#9CA3AF',
-              fontSize: 'clamp(12px, 2.4vw, 24px)',
-              fontWeight: 400,
-              fontVariant: 'small-caps',
-              lineHeight: '100%',
+              fontSize: 'clamp(10px, 1.4vw, 14px)',
+              fontWeight: 500,
+              fontStyle: 'italic',
             }}
           >
             "{stats.oneliner}"
@@ -177,16 +176,13 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           style={{
             top: '26%',
             right: '4%',
-            textAlign: 'center',
           }}
         >
           <span 
             style={{
               color: stats.pnlPositive ? '#22c55e' : '#ef4444',
-              fontSize: 'clamp(19px, 3.8vw, 38px)',
-              fontWeight: 600,
-              fontVariant: 'small-caps',
-              lineHeight: '100%',
+              fontSize: 'clamp(18px, 4vw, 40px)',
+              fontWeight: 700,
             }}
           >
             {stats.pnlPositive ? "+" : "-"}{stats.overallPnL}
@@ -204,10 +200,8 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           <span 
             style={{
               color: '#22c55e',
-              fontSize: 'clamp(18px, 3.6vw, 36px)',
-              fontWeight: 500,
-              fontVariant: 'small-caps',
-              lineHeight: '100%',
+              fontSize: 'clamp(14px, 2.8vw, 28px)',
+              fontWeight: 700,
             }}
           >
             +{stats.biggestProfit}
@@ -225,10 +219,8 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           <span 
             style={{
               color: '#ef4444',
-              fontSize: 'clamp(18px, 3.6vw, 36px)',
-              fontWeight: 500,
-              fontVariant: 'small-caps',
-              lineHeight: '100%',
+              fontSize: 'clamp(14px, 2.8vw, 28px)',
+              fontWeight: 700,
             }}
           >
             -{stats.biggestLoss}
@@ -246,10 +238,8 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           <span 
             style={{
               color: '#ffffff',
-              fontSize: 'clamp(18px, 3.6vw, 36px)',
-              fontWeight: 500,
-              fontVariant: 'small-caps',
-              lineHeight: '100%',
+              fontSize: 'clamp(14px, 2.8vw, 28px)',
+              fontWeight: 700,
             }}
           >
             {stats.winRate}
@@ -267,10 +257,8 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           <span 
             style={{
               color: '#ffffff',
-              fontSize: 'clamp(18px, 3.6vw, 36px)',
-              fontWeight: 500,
-              fontVariant: 'small-caps',
-              lineHeight: '100%',
+              fontSize: 'clamp(14px, 2.8vw, 28px)',
+              fontWeight: 700,
             }}
           >
             {stats.totalVolume}
