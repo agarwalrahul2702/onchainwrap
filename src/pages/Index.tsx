@@ -20,7 +20,7 @@ const Index = () => {
       console.error("Failed to fetch stats:", error);
       toast({
         title: "Error",
-        description: "Failed to generate your wrap. Please try again.",
+        description: "Invalid address or no data found",
         variant: "destructive"
       });
       setAppState("input");
