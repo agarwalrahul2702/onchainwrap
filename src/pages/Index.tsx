@@ -73,7 +73,11 @@ const Index = () => {
             <LoaderScreen />
           </div>}
 
-        {appState === "result" && stats && <WrapCard stats={stats} onReset={handleReset} />}
+        {appState === "result" && stats && (
+          <div className="w-[780px] max-w-[90vw]">
+            <WrapCard stats={stats} onReset={handleReset} />
+          </div>
+        )}
       </div>
     </main>;
 };
