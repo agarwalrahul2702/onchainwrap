@@ -115,124 +115,110 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
         ref={cardRef}
         id="wrap-card"
         className="relative w-full max-w-[1000px] overflow-hidden"
-        style={{ aspectRatio: '1000 / 700' }}
+        style={{ aspectRatio: '1000 / 600' }}
       >
-        {/* Full template image as background - NO cropping */}
+        {/* Full template image as background */}
         <img 
           src={templateImage} 
           alt={`${archetype} card template`}
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-contain"
           draggable={false}
         />
         
-        {/* ===== DYNAMIC TEXT OVERLAYS ===== */}
-        {/* Each overlay has a matching background to cover placeholder text */}
+        {/* ===== DYNAMIC TEXT OVERLAYS - No backgrounds, transparent ===== */}
         
-        {/* One-liner text overlay */}
+        {/* Archetype one-liner - below "Your onchain persona:" */}
         <div 
           className="absolute font-general-sans"
           style={{
-            top: '24.5%',
-            left: '42%',
-            backgroundColor: 'transparent',
+            top: '23%',
+            left: '50%',
+            transform: 'translateX(-50%)',
           }}
         >
           <span 
             style={{
               color: '#9CA3AF',
-              fontSize: 'clamp(8px, 1.8vw, 18px)',
+              fontSize: 'clamp(10px, 1.4vw, 14px)',
               fontWeight: 500,
               fontStyle: 'italic',
             }}
           >
-            {stats.oneliner}
+            "{stats.oneliner}"
           </span>
         </div>
 
-        {/* Overall PnL value - top right */}
+        {/* Overall PnL value - below "Overall pnl" label */}
         <div 
-          className="absolute font-general-sans text-right"
+          className="absolute font-general-sans"
           style={{
-            top: '14%',
-            right: '3%',
-            minWidth: '12%',
-            backgroundColor: '#0a0f1a',
-            padding: '2px 8px',
-            borderRadius: '4px',
+            top: '26%',
+            right: '4%',
           }}
         >
           <span 
             style={{
               color: stats.pnlPositive ? '#22c55e' : '#ef4444',
-              fontSize: 'clamp(16px, 4vw, 48px)',
+              fontSize: 'clamp(18px, 4vw, 40px)',
               fontWeight: 700,
             }}
           >
-            {stats.pnlPositive ? "" : "-"}{stats.overallPnL}
+            {stats.pnlPositive ? "+" : "-"}{stats.overallPnL}
           </span>
         </div>
 
-        {/* Stats box overlays - positioned inside the dark stats panel */}
+        {/* Stats panel values - positioned below each label */}
         
-        {/* Biggest profit value */}
+        {/* Biggest profit value - below "Biggest profit" label */}
         <div 
           className="absolute font-general-sans"
           style={{
-            top: '42%',
+            top: '55%',
             left: '44%',
-            backgroundColor: '#1a1f2e',
-            padding: '2px 6px',
-            borderRadius: '4px',
           }}
         >
           <span 
             style={{
               color: '#22c55e',
-              fontSize: 'clamp(10px, 2.5vw, 28px)',
+              fontSize: 'clamp(14px, 2.8vw, 28px)',
               fontWeight: 700,
             }}
           >
-            {stats.biggestProfit}
+            +{stats.biggestProfit}
           </span>
         </div>
 
-        {/* Biggest loss value */}
+        {/* Biggest loss value - below "Biggest loss" label */}
         <div 
           className="absolute font-general-sans"
           style={{
-            top: '42%',
-            left: '73%',
-            backgroundColor: '#1a1f2e',
-            padding: '2px 6px',
-            borderRadius: '4px',
+            top: '55%',
+            left: '71%',
           }}
         >
           <span 
             style={{
               color: '#ef4444',
-              fontSize: 'clamp(10px, 2.5vw, 28px)',
+              fontSize: 'clamp(14px, 2.8vw, 28px)',
               fontWeight: 700,
             }}
           >
-            {stats.biggestLoss}
+            -{stats.biggestLoss}
           </span>
         </div>
 
-        {/* Win rate value */}
+        {/* Win rate value - below "Win rate" label */}
         <div 
           className="absolute font-general-sans"
           style={{
-            top: '58%',
+            top: '75%',
             left: '44%',
-            backgroundColor: '#1a1f2e',
-            padding: '2px 6px',
-            borderRadius: '4px',
           }}
         >
           <span 
             style={{
               color: '#ffffff',
-              fontSize: 'clamp(12px, 3.2vw, 38px)',
+              fontSize: 'clamp(14px, 2.8vw, 28px)',
               fontWeight: 700,
             }}
           >
@@ -240,21 +226,18 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           </span>
         </div>
 
-        {/* Trading volume value */}
+        {/* Trading volume value - below "Trading volume" label */}
         <div 
           className="absolute font-general-sans"
           style={{
-            top: '58%',
-            left: '73%',
-            backgroundColor: '#1a1f2e',
-            padding: '2px 6px',
-            borderRadius: '4px',
+            top: '75%',
+            left: '71%',
           }}
         >
           <span 
             style={{
               color: '#ffffff',
-              fontSize: 'clamp(12px, 3.2vw, 38px)',
+              fontSize: 'clamp(14px, 2.8vw, 28px)',
               fontWeight: 700,
             }}
           >
@@ -262,21 +245,18 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           </span>
         </div>
 
-        {/* Wallet address - bottom left */}
+        {/* Wallet address - bottom area */}
         <div 
           className="absolute font-general-sans"
           style={{
-            bottom: '5%',
-            left: '6.5%',
-            backgroundColor: '#1d4ed8',
-            padding: '2px 6px',
-            borderRadius: '4px',
+            bottom: '4%',
+            left: '4%',
           }}
         >
           <span 
             style={{
-              color: '#ffffff',
-              fontSize: 'clamp(10px, 1.6vw, 16px)',
+              color: '#60a5fa',
+              fontSize: 'clamp(10px, 1.4vw, 14px)',
               fontWeight: 600,
             }}
           >
@@ -285,7 +265,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
         </div>
       </div>
 
-      {/* Action buttons - outside the card for export */}
+      {/* Action buttons - outside the card */}
       <div className="flex items-center gap-3 mt-6">
         <button 
           onClick={handleShareOnX}
