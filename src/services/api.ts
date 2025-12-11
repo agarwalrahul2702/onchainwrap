@@ -1,13 +1,24 @@
-import { WrapStats } from "@/components/WrapCard";
+import { WrapStats, TokenInfo } from "@/components/WrapCard";
 
 const API_ENDPOINT = "https://0xppl.com/api/v4/get_yearly_highlights";
+
+interface ApiTokenInfo {
+  logo?: string;
+  symbol?: string;
+}
 
 interface ApiResponse {
   status: string;
   data: {
     volume?: { value: number; display_value: string };
-    biggest_profit?: { amount: { value: number; display_value: string } };
-    biggest_loss?: { amount: { value: number; display_value: string } };
+    biggest_profit?: { 
+      amount: { value: number; display_value: string };
+      token?: ApiTokenInfo;
+    };
+    biggest_loss?: { 
+      amount: { value: number; display_value: string };
+      token?: ApiTokenInfo;
+    };
     win_rate?: { value: number; display_value: string };
     overall_pnl?: { value: number; display_value: string };
     archetype?: string;
@@ -47,8 +58,10 @@ interface AggregatedData {
   volume: number;
   biggestProfit: number;
   biggestProfitDisplay: string;
+  biggestProfitToken?: TokenInfo;
   biggestLoss: number;
   biggestLossDisplay: string;
+  biggestLossToken?: TokenInfo;
   totalWinTrades: number;
   totalTrades: number;
   overallPnl: number;
@@ -157,8 +170,10 @@ export const fetchWrapStats = async (addresses: string[]): Promise<WrapStats> =>
     volume: 0,
     biggestProfit: 0,
     biggestProfitDisplay: "No data",
+    biggestProfitToken: undefined,
     biggestLoss: 0,
     biggestLossDisplay: "No data",
+    biggestLossToken: undefined,
     totalWinTrades: 0,
     totalTrades: 0,
     overallPnl: 0,
@@ -180,6 +195,10 @@ export const fetchWrapStats = async (addresses: string[]): Promise<WrapStats> =>
     if (profit > aggregated.biggestProfit) {
       aggregated.biggestProfit = profit;
       aggregated.biggestProfitDisplay = data.biggest_profit?.amount?.display_value || "No data";
+      aggregated.biggestProfitToken = data.biggest_profit?.token ? {
+        logo: data.biggest_profit.token.logo,
+        symbol: data.biggest_profit.token.symbol,
+      } : undefined;
     }
 
     // Track biggest loss (most negative)
@@ -187,6 +206,10 @@ export const fetchWrapStats = async (addresses: string[]): Promise<WrapStats> =>
     if (loss < aggregated.biggestLoss) {
       aggregated.biggestLoss = loss;
       aggregated.biggestLossDisplay = data.biggest_loss?.amount?.display_value || "No data";
+      aggregated.biggestLossToken = data.biggest_loss?.token ? {
+        logo: data.biggest_loss.token.logo,
+        symbol: data.biggest_loss.token.symbol,
+      } : undefined;
     }
   });
 
@@ -199,7 +222,9 @@ export const fetchWrapStats = async (addresses: string[]): Promise<WrapStats> =>
   const stats: WrapStats = {
     totalVolume: formatCurrency(aggregated.volume),
     biggestProfit: aggregated.biggestProfitDisplay,
+    biggestProfitToken: aggregated.biggestProfitToken,
     biggestLoss: aggregated.biggestLossDisplay,
+    biggestLossToken: aggregated.biggestLossToken,
     winRate: `${aggregatedWinRate}%`,
     overallPnL: formatCurrency(aggregated.overallPnl),
     pnlPositive,

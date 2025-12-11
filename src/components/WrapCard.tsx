@@ -15,10 +15,17 @@ import activeFarmerTemplate from "@/assets/card-templates/active-farmer.png";
 import casualDegenTemplate from "@/assets/card-templates/casual-degen.png";
 import averageCryptoBroTemplate from "@/assets/card-templates/average-crypto-bro.png";
 
+export interface TokenInfo {
+  logo?: string;
+  symbol?: string;
+}
+
 export interface WrapStats {
   totalVolume: string;
   biggestProfit: string;
+  biggestProfitToken?: TokenInfo;
   biggestLoss: string;
+  biggestLossToken?: TokenInfo;
   winRate: string;
   overallPnL: string;
   pnlPositive: boolean;
@@ -148,9 +155,9 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           </span>
         </div>
 
-        {/* Biggest profit value */}
+        {/* Biggest profit value with token */}
         <div 
-          className="absolute font-general-sans"
+          className="absolute font-general-sans flex items-center gap-1.5"
           style={{
             top: 'calc(55% + 5px)',
             left: 'calc(44% + 15px)',
@@ -167,11 +174,38 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           >
             +{stats.biggestProfit}
           </span>
+          {stats.biggestProfitToken && (
+            <div className="flex items-center gap-1">
+              {stats.biggestProfitToken.logo && (
+                <img 
+                  src={stats.biggestProfitToken.logo} 
+                  alt={stats.biggestProfitToken.symbol || 'token'} 
+                  style={{
+                    width: 'clamp(14px, 1.8vw, 18px)',
+                    height: 'clamp(14px, 1.8vw, 18px)',
+                  }}
+                  className="rounded-full object-cover"
+                />
+              )}
+              {stats.biggestProfitToken.symbol && (
+                <span 
+                  style={{
+                    color: '#9CA3AF',
+                    fontSize: 'clamp(12px, 1.6vw, 16px)',
+                    fontWeight: 500,
+                    lineHeight: '100%',
+                  }}
+                >
+                  {stats.biggestProfitToken.symbol}
+                </span>
+              )}
+            </div>
+          )}
         </div>
 
-        {/* Biggest loss value */}
+        {/* Biggest loss value with token */}
         <div 
-          className="absolute font-general-sans"
+          className="absolute font-general-sans flex items-center gap-1.5"
           style={{
             top: 'calc(55% + 5px)',
             left: 'calc(71% + 10px)',
@@ -188,6 +222,33 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           >
             {stats.biggestLoss}
           </span>
+          {stats.biggestLossToken && (
+            <div className="flex items-center gap-1">
+              {stats.biggestLossToken.logo && (
+                <img 
+                  src={stats.biggestLossToken.logo} 
+                  alt={stats.biggestLossToken.symbol || 'token'} 
+                  style={{
+                    width: 'clamp(14px, 1.8vw, 18px)',
+                    height: 'clamp(14px, 1.8vw, 18px)',
+                  }}
+                  className="rounded-full object-cover"
+                />
+              )}
+              {stats.biggestLossToken.symbol && (
+                <span 
+                  style={{
+                    color: '#9CA3AF',
+                    fontSize: 'clamp(12px, 1.6vw, 16px)',
+                    fontWeight: 500,
+                    lineHeight: '100%',
+                  }}
+                >
+                  {stats.biggestLossToken.symbol}
+                </span>
+              )}
+            </div>
+          )}
         </div>
 
         {/* Win rate value */}
