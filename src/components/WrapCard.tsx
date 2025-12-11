@@ -140,8 +140,8 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
         <div 
           className="absolute font-general-sans"
           style={{
-            top: '18%',
-            left: 'calc(5% + 320px)',
+            top: 'calc(18% + 5px)',
+            left: 'calc(5% + 290px)',
           }}
         >
           <span 
@@ -161,8 +161,8 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
         <div 
           className="absolute font-general-sans"
           style={{
-            top: '26%',
-            left: 'calc(5% + 320px)',
+            top: 'calc(26% + 5px)',
+            left: 'calc(5% + 290px)',
             maxWidth: '35%',
           }}
         >
