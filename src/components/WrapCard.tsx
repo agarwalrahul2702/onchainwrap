@@ -228,7 +228,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
               lineHeight: '100%',
             }}
           >
-            -{stats.biggestLoss}
+            {stats.biggestLoss}
           </span>
         </div>
 
