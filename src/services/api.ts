@@ -198,7 +198,7 @@ export const fetchWrapStats = async (addresses: string[]): Promise<WrapStats> =>
       aggregated.biggestProfitDisplay = data.biggest_profit?.amount?.display_value || "No data";
       aggregated.biggestProfitToken = data.biggest_profit?.profile ? {
         logo: data.biggest_profit.profile.display_picture,
-        symbol: data.biggest_profit.profile.display_name,
+        symbol: data.biggest_profit.profile.token_symbol,
       } : undefined;
     }
 
@@ -209,7 +209,7 @@ export const fetchWrapStats = async (addresses: string[]): Promise<WrapStats> =>
       aggregated.biggestLossDisplay = data.biggest_loss?.amount?.display_value || "No data";
       aggregated.biggestLossToken = data.biggest_loss?.profile ? {
         logo: data.biggest_loss.profile.display_picture,
-        symbol: data.biggest_loss.profile.display_name,
+        symbol: data.biggest_loss.profile.token_symbol,
       } : undefined;
     }
   });
