@@ -209,7 +209,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
             <span 
               style={{
                 color: '#22c55e',
-                fontSize: 'clamp(12px, 1.6vw, 16px)',
+                fontSize: 'clamp(9.6px, 1.28vw, 12.8px)',
                 fontWeight: 500,
                 lineHeight: '100%',
                 marginTop: '2px',
@@ -272,7 +272,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
             <span 
               style={{
                 color: '#ef4444',
-                fontSize: 'clamp(12px, 1.6vw, 16px)',
+                fontSize: 'clamp(9.6px, 1.28vw, 12.8px)',
                 fontWeight: 500,
                 lineHeight: '100%',
                 marginTop: '2px',
