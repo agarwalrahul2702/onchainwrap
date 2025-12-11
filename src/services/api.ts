@@ -43,15 +43,27 @@ const archetypeTaglines: Record<ArchetypeType, string> = {
   "Average Crypto Bro": "You talk crypto more than you trade",
 };
 
-const detectArchetype = (data: ApiResponse["data"]): ArchetypeType => {
-  const volume = data.volume?.value ?? 0;
-  const tokensInteracted = data.tokens_interacted ?? 0;
-  const numTrades = data.num_trades ?? 0;
-  const winRateValue = data.win_rate?.value ?? 0;
-  const pnlValue = data.overall_pnl?.value ?? 0;
+interface AggregatedData {
+  volume: number;
+  biggestProfit: number;
+  biggestProfitDisplay: string;
+  biggestLoss: number;
+  biggestLossDisplay: string;
+  totalWinTrades: number;
+  totalTrades: number;
+  overallPnl: number;
+  tokensInteracted: number;
+}
+
+const detectArchetype = (data: AggregatedData): ArchetypeType => {
+  const volume = data.volume;
+  const tokensInteracted = data.tokensInteracted;
+  const numTrades = data.totalTrades;
+  const winRateValue = numTrades > 0 ? (data.totalWinTrades / numTrades) * 100 : 0;
+  const pnlValue = data.overallPnl;
   
   // Calculate win/loss trades
-  const winTrades = Math.round((winRateValue / 100) * numTrades);
+  const winTrades = data.totalWinTrades;
   const lossTrades = numTrades - winTrades;
 
   // Priority 1: Whale - Volume >= 2,000,000
@@ -77,8 +89,8 @@ const detectArchetype = (data: ApiResponse["data"]): ArchetypeType => {
   }
 
   // Priority 6: Few-Trade Wonder - <= 5 trades, profit >= 2x loss
-  const biggestProfit = data.biggest_profit?.amount?.value ?? 0;
-  const biggestLoss = Math.abs(data.biggest_loss?.amount?.value ?? 0);
+  const biggestProfit = data.biggestProfit;
+  const biggestLoss = Math.abs(data.biggestLoss);
   if (numTrades <= 5 && biggestProfit >= 2 * biggestLoss && pnlValue > 0) {
     return "Few-Trade Wonder";
   }
@@ -102,41 +114,101 @@ const detectArchetype = (data: ApiResponse["data"]): ArchetypeType => {
   return "Average Crypto Bro";
 };
 
-export const fetchWrapStats = async (address: string): Promise<WrapStats> => {
+const formatCurrency = (value: number): string => {
+  if (Math.abs(value) >= 1000000) {
+    return `$${(value / 1000000).toFixed(2)}M`;
+  } else if (Math.abs(value) >= 1000) {
+    return `$${(value / 1000).toFixed(2)}K`;
+  }
+  return `$${value.toFixed(2)}`;
+};
+
+const fetchSingleWrapStats = async (address: string): Promise<ApiResponse["data"] | null> => {
   const response = await fetch(`${API_ENDPOINT}?user_address=${encodeURIComponent(address)}`);
 
   if (!response.ok) {
-    throw new Error("Invalid address or no data found");
+    return null;
   }
 
   const json: ApiResponse = await response.json();
   
-  console.log("API Response:", JSON.stringify(json, null, 2));
-
   if (!json || json.status !== "ok" || !json.data) {
+    return null;
+  }
+
+  return json.data;
+};
+
+export const fetchWrapStats = async (addresses: string[]): Promise<WrapStats> => {
+  // Fetch data for all addresses in parallel
+  const results = await Promise.all(addresses.map(addr => fetchSingleWrapStats(addr)));
+  
+  // Filter out failed requests
+  const validResults = results.filter((r): r is ApiResponse["data"] => r !== null);
+  
+  if (validResults.length === 0) {
     throw new Error("Invalid address or no data found");
   }
 
-  const data = json.data;
-  const pnlValue = data.overall_pnl?.value ?? 0;
-  const pnlPositive = pnlValue >= 0;
-  
-  // Detect archetype based on priority rules
-  const detectedArchetype = detectArchetype(data);
+  console.log("API Responses:", JSON.stringify(validResults, null, 2));
+
+  // Aggregate the data
+  const aggregated: AggregatedData = {
+    volume: 0,
+    biggestProfit: 0,
+    biggestProfitDisplay: "No data",
+    biggestLoss: 0,
+    biggestLossDisplay: "No data",
+    totalWinTrades: 0,
+    totalTrades: 0,
+    overallPnl: 0,
+    tokensInteracted: 0,
+  };
+
+  validResults.forEach(data => {
+    aggregated.volume += data.volume?.value ?? 0;
+    aggregated.overallPnl += data.overall_pnl?.value ?? 0;
+    aggregated.tokensInteracted += data.tokens_interacted ?? 0;
+    
+    const numTrades = data.num_trades ?? 0;
+    const winRateValue = data.win_rate?.value ?? 0;
+    aggregated.totalTrades += numTrades;
+    aggregated.totalWinTrades += Math.round((winRateValue / 100) * numTrades);
+
+    // Track biggest profit
+    const profit = data.biggest_profit?.amount?.value ?? 0;
+    if (profit > aggregated.biggestProfit) {
+      aggregated.biggestProfit = profit;
+      aggregated.biggestProfitDisplay = data.biggest_profit?.amount?.display_value || "No data";
+    }
+
+    // Track biggest loss (most negative)
+    const loss = data.biggest_loss?.amount?.value ?? 0;
+    if (loss < aggregated.biggestLoss) {
+      aggregated.biggestLoss = loss;
+      aggregated.biggestLossDisplay = data.biggest_loss?.amount?.display_value || "No data";
+    }
+  });
+
+  const pnlPositive = aggregated.overallPnl >= 0;
+  const detectedArchetype = detectArchetype(aggregated);
+  const aggregatedWinRate = aggregated.totalTrades > 0 
+    ? Math.round((aggregated.totalWinTrades / aggregated.totalTrades) * 100) 
+    : 0;
 
   const stats: WrapStats = {
-    totalVolume: data.volume?.display_value || "No data",
-    biggestProfit: data.biggest_profit?.amount?.display_value || "No data",
-    biggestLoss: data.biggest_loss?.amount?.display_value || "No data",
-    winRate: data.win_rate?.display_value || "No data",
-    overallPnL: data.overall_pnl?.display_value || "No data",
+    totalVolume: formatCurrency(aggregated.volume),
+    biggestProfit: aggregated.biggestProfitDisplay,
+    biggestLoss: aggregated.biggestLossDisplay,
+    winRate: `${aggregatedWinRate}%`,
+    overallPnL: formatCurrency(aggregated.overallPnl),
     pnlPositive,
     oneliner: archetypeTaglines[detectedArchetype],
     archetype: detectedArchetype,
-    address: address,
+    address: addresses.length === 1 ? addresses[0] : `${addresses.length} wallets`,
   };
 
-  console.log("Mapped Stats:", stats);
+  console.log("Aggregated Stats:", stats);
   console.log("Detected Archetype:", detectedArchetype);
 
   return stats;

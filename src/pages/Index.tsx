@@ -10,10 +10,10 @@ type AppState = "input" | "loading" | "result";
 const Index = () => {
   const [appState, setAppState] = useState<AppState>("input");
   const [stats, setStats] = useState<WrapStats | null>(null);
-  const handleGenerate = async (address: string) => {
+  const handleGenerate = async (addresses: string[]) => {
     setAppState("loading");
     try {
-      const result = await fetchWrapStats(address);
+      const result = await fetchWrapStats(addresses);
       setStats(result);
       setAppState("result");
     } catch (error) {
