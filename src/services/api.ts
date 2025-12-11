@@ -1,40 +1,46 @@
 import { WrapStats } from "@/components/WrapCard";
 
-// Mock API - Replace with real endpoint
-const MOCK_DELAY = 8000; // Simulates ~8 second loading
+const API_ENDPOINT = "https://0xppl.com/api/v4/get_yearly_highlights";
 
-// One-liners for different trader types
-const oneliners = [
-  "Degen by day, diamond hands by night.",
-  "You turned 'buy high, sell low' into an art form.",
-  "The charts fear your unpredictable moves.",
-  "Master of catching falling knives.",
-  "Your portfolio is more volatile than a meme coin.",
-  "Professional bag holder since 2024.",
-  "You don't FOMO, you ARE the FOMO.",
-  "Touch grass? You'd rather touch new ATHs.",
-];
+interface ApiResponse {
+  total_trading_volume?: string;
+  biggest_profit?: string;
+  biggest_loss?: string;
+  win_rate?: string;
+  overall_pnl?: string;
+  personality_line?: string;
+}
 
-// This is a mock function - replace with actual API call
 export const fetchWrapStats = async (address: string): Promise<WrapStats> => {
-  // TODO: Replace with actual API endpoint
-  // const response = await fetch(`YOUR_API_ENDPOINT?address=${address}`);
-  // return response.json();
+  const response = await fetch(`${API_ENDPOINT}?user_address=${encodeURIComponent(address)}`);
 
-  // Simulated API delay
-  await new Promise((resolve) => setTimeout(resolve, MOCK_DELAY));
+  if (!response.ok) {
+    throw new Error("Invalid address or no data found");
+  }
 
-  // Mock data - remove when connecting real API
-  const mockStats: WrapStats = {
-    totalVolume: "$1.2M",
-    biggestProfit: "+$45,230",
-    biggestLoss: "-$12,450",
-    winRate: "62.3%",
-    overallPnL: "$32,780",
-    pnlPositive: true,
-    oneliner: oneliners[Math.floor(Math.random() * oneliners.length)],
+  const data: ApiResponse = await response.json();
+
+  // Check if we have meaningful data
+  if (!data || Object.keys(data).length === 0) {
+    throw new Error("Invalid address or no data found");
+  }
+
+  // Parse overall_pnl to determine if positive
+  const pnlValue = data.overall_pnl || "0";
+  const pnlNumeric = parseFloat(pnlValue.replace(/[^0-9.-]/g, ""));
+  const pnlPositive = pnlNumeric >= 0;
+
+  // Map API response to WrapStats interface with fallbacks
+  const stats: WrapStats = {
+    totalVolume: data.total_trading_volume || "$0",
+    biggestProfit: data.biggest_profit || "$0",
+    biggestLoss: data.biggest_loss || "$0",
+    winRate: data.win_rate || "0%",
+    overallPnL: data.overall_pnl || "$0",
+    pnlPositive,
+    oneliner: data.personality_line || "Your onchain journey awaits.",
     address: address,
   };
 
-  return mockStats;
+  return stats;
 };
