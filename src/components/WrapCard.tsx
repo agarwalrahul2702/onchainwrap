@@ -174,7 +174,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           className="absolute font-general-sans"
           style={{
             top: 'calc(26% + 10px)',
-            right: '7%',
+            right: 'calc(7% - 5px)',
           }}
         >
           <span 
