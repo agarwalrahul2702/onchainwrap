@@ -102,23 +102,36 @@ const AddressInput = ({
       }} onKeyDown={handleKeyDown} placeholder={addresses.length > 0 ? "Add another wallet address" : "Paste any EVM or Solana wallet address"} disabled={isLoading} className="w-full bg-[#1a1d2e] border border-border/30 rounded-lg pl-[2.5vw] pr-[1vw] py-[1.2vh] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-[#3B82F6]/30 transition-all font-mono text-[0.9vw] my-[10px]" />
       </div>
 
-      {/* Add button - only show if there's input */}
-      {address.trim() && <button onClick={handleAddAddress} disabled={isLoading} className="w-full bg-[#1a1d2e] hover:bg-[#252a3d] text-muted-foreground hover:text-foreground font-medium py-[0.8vh] px-[1.5vw] rounded-lg transition-all duration-200 border border-border/30 text-[0.9vw]">
-          + Add more address
-        </button>}
-
       {/* Error message */}
       {error && <p className="text-destructive text-[0.85vw] text-center">{error}</p>}
 
-      {/* Generate button */}
-      <button onClick={handleSubmit} disabled={isLoading} className="w-full bg-[#3B82F6] hover:bg-[#2563EB] text-white font-semibold py-[1.2vh] px-[1.5vw] rounded-lg transition-all duration-200 flex items-center justify-center gap-[0.5vw] disabled:opacity-50 disabled:cursor-not-allowed text-[1vw] my-[15px] mb-0">
-        <Sparkles className="w-[1.2vw] h-[1.2vw]" />
-        {isLoading ? "Generating..." : (() => {
-        const inputValid = address.trim() && isValidAddress(address.trim()) && !addresses.includes(address.trim());
-        const totalCount = addresses.length + (inputValid ? 1 : 0);
-        return `Generate Wrap${totalCount > 1 ? ` (${totalCount} wallets)` : ""}`;
-      })()}
-      </button>
+      {/* Buttons row */}
+      <div className="flex gap-2 my-[15px] mb-0">
+        {/* Add button - only show if there's input */}
+        {address.trim() && (
+          <button 
+            onClick={handleAddAddress} 
+            disabled={isLoading} 
+            className="bg-[#1a1d2e] hover:bg-[#252a3d] text-muted-foreground hover:text-foreground font-medium py-[1.2vh] px-[1.5vw] rounded-lg transition-all duration-200 border border-border/30 text-[0.9vw] whitespace-nowrap"
+          >
+            + Add
+          </button>
+        )}
+
+        {/* Generate button */}
+        <button 
+          onClick={handleSubmit} 
+          disabled={isLoading} 
+          className="flex-1 bg-[#3B82F6] hover:bg-[#2563EB] text-white font-semibold py-[1.2vh] px-[1.5vw] rounded-lg transition-all duration-200 flex items-center justify-center gap-[0.5vw] disabled:opacity-50 disabled:cursor-not-allowed text-[1vw]"
+        >
+          <Sparkles className="w-[1.2vw] h-[1.2vw]" />
+          {isLoading ? "Generating..." : (() => {
+            const inputValid = address.trim() && isValidAddress(address.trim()) && !addresses.includes(address.trim());
+            const totalCount = addresses.length + (inputValid ? 1 : 0);
+            return `Generate Wrap${totalCount > 1 ? ` (${totalCount} wallets)` : ""}`;
+          })()}
+        </button>
+      </div>
 
       {/* Footer text */}
       <p className="text-muted-foreground text-[0.85vw] text-center px-0 mb-[10px] mt-[40px]">Works for all EVM & Solana wallets · No login needed</p>
