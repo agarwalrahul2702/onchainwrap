@@ -272,15 +272,15 @@ const WrapCard = ({
       <div className="text-center space-y-4 py-8 animate-fade-in" style={{
       animationDelay: "0.3s"
     }}>
+        <button onClick={onReset} className="block mx-auto text-[#8b98a9] text-sm hover:text-white transition-colors underline-offset-4 hover:underline">
+          Generate another wrap
+        </button>
         <p className="text-[#8b98a9] text-sm">
           Want to level up your trading game?
         </p>
         <a href="https://0xppl.com/" target="_blank" rel="noopener noreferrer" className="bg-white inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold hover:bg-white/90 transition-colors text-primary-foreground">
           Try <img src="/logo-0xppl.svg" alt="0xPPL" className="h-[21px] w-auto object-cover" /> 0xPPL 
         </a>
-        <button onClick={onReset} className="block mx-auto text-[#8b98a9] text-sm hover:text-white transition-colors underline-offset-4 hover:underline">
-          Generate another wrap
-        </button>
       </div>
     </div>;
 };
