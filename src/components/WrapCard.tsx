@@ -41,12 +41,13 @@ interface WrapCardProps {
   onReset: () => void;
 }
 
-// Full card template images mapping
+// Full card template images mapping - archetype name + oneliner are baked into templates
 const templateImages: Record<string, string> = {
   "Whale": whaleTemplate,
   "Trencher": trencherTemplate,
   "Swing Trader": swingTraderTemplate,
   "Only W's": onlyWsTemplate,
+  "Only W": onlyWsTemplate,
   "Rug Maxi": rugMaxiTemplate,
   "Few-Trade Wonder": fewTradeWonderTemplate,
   "Freshly Spawned": freshlySpawnedTemplate,
@@ -136,52 +137,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
         
         {/* ===== DYNAMIC TEXT OVERLAYS - No backgrounds, transparent ===== */}
         
-        {/* Archetype name */}
-        <div 
-          className="absolute font-general-sans"
-          style={{
-            top: 'calc(18% + 10px)',
-            left: 'calc(5% + 295px)',
-          }}
-        >
-          <span 
-            style={{
-              background: 'linear-gradient(90deg, #C4C9FF 0%, #4873FF 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-              fontSize: '28.8px',
-              fontWeight: 700,
-              lineHeight: '100%',
-            }}
-          >
-            {archetype}
-          </span>
-        </div>
-
-        {/* One-liner */}
-        <div 
-          className="absolute font-general-sans"
-          style={{
-            top: 'calc(26% + 6px)',
-            left: 'calc(5% + 295px)',
-            maxWidth: '35%',
-          }}
-        >
-          <span 
-            style={{
-              background: 'linear-gradient(90deg, #C4C9FF 0%, #4873FF 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-              fontSize: 'clamp(10.6px, 1.48vw, 14.84px)',
-              fontWeight: 500,
-              lineHeight: '130%',
-            }}
-          >
-            {stats.oneliner}
-          </span>
-        </div>
+        {/* Archetype name and oneliner are baked into the template image - not rendered from API */}
         
         {/* Overall PnL value */}
         <div 
