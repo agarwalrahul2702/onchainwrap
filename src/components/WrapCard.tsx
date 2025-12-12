@@ -365,7 +365,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           href="https://0xppl.com/"
           target="_blank"
           rel="noopener noreferrer"
-          className="btn-primary inline-flex items-center gap-2 px-6 py-3 rounded-xl text-primary-foreground font-semibold"
+          className="bg-white inline-flex items-center gap-2 px-6 py-3 rounded-xl text-foreground font-semibold hover:bg-white/90 transition-colors"
         >
           Try <img src="/logo-0xppl.svg" alt="0xPPL" className="h-5 w-auto" /> 0xPPL →
         </a>
