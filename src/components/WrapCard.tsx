@@ -124,12 +124,12 @@ const WrapCard = ({
   };
 
   return (
-    <div className="w-full flex-col animate-scale-in flex items-center justify-end mt-8 lg:mt-[60px]">
+    <div className="w-full flex-col animate-scale-in flex items-center justify-end mt-4 sm:mt-6 lg:mt-[60px]">
       {/* Main card container - fixed aspect ratio matching template */}
-      <div 
-        ref={cardRef} 
-        id="wrap-card" 
-        className="relative w-full max-w-[1000px] overflow-hidden" 
+      <div
+        ref={cardRef}
+        id="wrap-card"
+        className="relative w-full max-w-[1000px] overflow-hidden rounded-lg sm:rounded-xl"
         style={{ aspectRatio: '1000 / 600' }}
       >
         {/* Full template image as background */}
@@ -141,7 +141,7 @@ const WrapCard = ({
         />
         
         {/* ===== DYNAMIC TEXT OVERLAYS - No backgrounds, transparent ===== */}
-        
+
         {/* Overall PnL value */}
         <div className="absolute font-general-sans" style={{
           top: 'calc(26% - 10px)',
@@ -149,7 +149,7 @@ const WrapCard = ({
         }}>
           <span style={{
             color: stats.pnlPositive ? '#22c55e' : '#ef4444',
-            fontSize: 'clamp(12px, 2.2vw, 22px)',
+            fontSize: 'clamp(10px, 2.2vw, 22px)',
             fontWeight: 600,
             fontVariant: 'small-caps',
             lineHeight: '100%'
@@ -163,10 +163,10 @@ const WrapCard = ({
           top: 'calc(55% + 5px)',
           left: 'calc(44% + 15px)'
         }}>
-          <div className="flex items-center gap-1 lg:gap-1.5">
+          <div className="flex items-center gap-0.5 sm:gap-1 lg:gap-1.5">
             <span style={{
               color: '#22c55e',
-              fontSize: 'clamp(10px, 2.39vw, 23.97px)',
+              fontSize: 'clamp(8px, 2.39vw, 23.97px)',
               fontWeight: 500,
               fontVariant: 'small-caps',
               lineHeight: '100%'
@@ -174,22 +174,22 @@ const WrapCard = ({
               +{stats.biggestProfit}
             </span>
             {stats.biggestProfitToken && (
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-0.5 sm:gap-1">
                 {stats.biggestProfitToken.logo && (
-                  <img 
-                    src={stats.biggestProfitToken.logo} 
-                    alt={stats.biggestProfitToken.symbol || 'token'} 
+                  <img
+                    src={stats.biggestProfitToken.logo}
+                    alt={stats.biggestProfitToken.symbol || 'token'}
                     style={{
-                      width: 'clamp(8px, 1.66vw, 16.56px)',
-                      height: 'clamp(8px, 1.66vw, 16.56px)'
-                    }} 
-                    className="rounded-full object-cover" 
+                      width: 'clamp(6px, 1.66vw, 16.56px)',
+                      height: 'clamp(6px, 1.66vw, 16.56px)'
+                    }}
+                    className="rounded-full object-cover"
                   />
                 )}
                 {stats.biggestProfitToken.symbol && (
                   <span style={{
                     color: '#9CA3AF',
-                    fontSize: 'clamp(8px, 1.47vw, 14.72px)',
+                    fontSize: 'clamp(6px, 1.47vw, 14.72px)',
                     fontWeight: 500,
                     lineHeight: '100%'
                   }}>
@@ -206,10 +206,10 @@ const WrapCard = ({
           top: 'calc(55% + 5px)',
           left: 'calc(71% + 10px)'
         }}>
-          <div className="flex items-center gap-1 lg:gap-1.5">
+          <div className="flex items-center gap-0.5 sm:gap-1 lg:gap-1.5">
             <span style={{
               color: '#ef4444',
-              fontSize: 'clamp(10px, 2.39vw, 23.97px)',
+              fontSize: 'clamp(8px, 2.39vw, 23.97px)',
               fontWeight: 500,
               fontVariant: 'small-caps',
               lineHeight: '100%'
@@ -217,22 +217,22 @@ const WrapCard = ({
               {stats.biggestLoss}
             </span>
             {stats.biggestLossToken && (
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-0.5 sm:gap-1">
                 {stats.biggestLossToken.logo && (
-                  <img 
-                    src={stats.biggestLossToken.logo} 
-                    alt={stats.biggestLossToken.symbol || 'token'} 
+                  <img
+                    src={stats.biggestLossToken.logo}
+                    alt={stats.biggestLossToken.symbol || 'token'}
                     style={{
-                      width: 'clamp(8px, 1.66vw, 16.56px)',
-                      height: 'clamp(8px, 1.66vw, 16.56px)'
-                    }} 
-                    className="rounded-full object-cover" 
+                      width: 'clamp(6px, 1.66vw, 16.56px)',
+                      height: 'clamp(6px, 1.66vw, 16.56px)'
+                    }}
+                    className="rounded-full object-cover"
                   />
                 )}
                 {stats.biggestLossToken.symbol && (
                   <span style={{
                     color: '#9CA3AF',
-                    fontSize: 'clamp(8px, 1.47vw, 14.72px)',
+                    fontSize: 'clamp(6px, 1.47vw, 14.72px)',
                     fontWeight: 500,
                     lineHeight: '100%'
                   }}>
@@ -251,7 +251,7 @@ const WrapCard = ({
         }}>
           <span style={{
             color: '#ffffff',
-            fontSize: 'clamp(10px, 2.39vw, 23.97px)',
+            fontSize: 'clamp(8px, 2.39vw, 23.97px)',
             fontWeight: 500,
             fontVariant: 'small-caps',
             lineHeight: '100%'
@@ -267,7 +267,7 @@ const WrapCard = ({
         }}>
           <span style={{
             color: '#ffffff',
-            fontSize: 'clamp(10px, 2.39vw, 23.97px)',
+            fontSize: 'clamp(8px, 2.39vw, 23.97px)',
             fontWeight: 500,
             fontVariant: 'small-caps',
             lineHeight: '100%'
@@ -283,7 +283,7 @@ const WrapCard = ({
         }}>
           <span style={{
             color: '#60a5fa',
-            fontSize: 'clamp(8px, 1.4vw, 14px)',
+            fontSize: 'clamp(6px, 1.4vw, 14px)',
             fontWeight: 600
           }} className="font-normal">
             {formatAddress(stats.address, stats.addressCount)}
@@ -292,22 +292,22 @@ const WrapCard = ({
       </div>
 
       {/* Action buttons - outside the card */}
-      <div className="flex flex-col lg:flex-row items-center gap-2 lg:gap-3 mt-4 lg:mt-6 w-full lg:w-auto px-4 lg:px-0">
-        <button 
-          onClick={onReset} 
-          className="w-full lg:w-auto border border-[#3b82f6] text-[#60a5fa] hover:bg-[#1d4ed8]/20 transition-colors rounded-lg px-4 lg:px-6 py-2.5 lg:py-3 font-medium text-sm lg:text-base"
+      <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-2.5 lg:gap-3 mt-3 sm:mt-4 lg:mt-6 w-full sm:w-auto px-2 sm:px-4 lg:px-0">
+        <button
+          onClick={onReset}
+          className="w-full sm:w-auto border border-[#3b82f6] text-[#60a5fa] hover:bg-[#1d4ed8]/20 transition-colors rounded-lg px-3 sm:px-4 lg:px-6 py-2 sm:py-2.5 lg:py-3 font-medium text-xs sm:text-sm lg:text-base active:scale-[0.98]"
         >
           Try another wallet
         </button>
-        <button 
-          onClick={handleDownload} 
-          disabled={isExporting} 
-          className="w-full lg:w-auto border border-[#3b82f6] text-[#60a5fa] hover:bg-[#1d4ed8]/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors rounded-lg px-4 lg:px-6 py-2.5 lg:py-3 font-medium flex items-center justify-center gap-2 text-sm lg:text-base"
+        <button
+          onClick={handleDownload}
+          disabled={isExporting}
+          className="w-full sm:w-auto border border-[#3b82f6] text-[#60a5fa] hover:bg-[#1d4ed8]/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors rounded-lg px-3 sm:px-4 lg:px-6 py-2 sm:py-2.5 lg:py-3 font-medium flex items-center justify-center gap-1.5 sm:gap-2 text-xs sm:text-sm lg:text-base active:scale-[0.98]"
         >
           {isExporting ? (
-            <Loader2 className="w-4 h-4 animate-spin" />
+            <Loader2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 animate-spin" />
           ) : (
-            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
               <polyline points="7 10 12 15 17 10" />
               <line x1="12" y1="15" x2="12" y2="3" />
@@ -315,16 +315,16 @@ const WrapCard = ({
           )}
           Download Image
         </button>
-        <button 
-          onClick={handleShareOnX} 
-          disabled={isExporting} 
-          className="w-full lg:w-auto bg-[#1d4ed8] hover:bg-[#1e40af] disabled:opacity-50 disabled:cursor-not-allowed transition-colors rounded-lg px-4 lg:px-6 py-2.5 lg:py-3 flex items-center justify-center gap-2 font-medium text-white text-sm lg:text-base"
+        <button
+          onClick={handleShareOnX}
+          disabled={isExporting}
+          className="w-full sm:w-auto bg-[#1d4ed8] hover:bg-[#1e40af] disabled:opacity-50 disabled:cursor-not-allowed transition-colors rounded-lg px-3 sm:px-4 lg:px-6 py-2 sm:py-2.5 lg:py-3 flex items-center justify-center gap-1.5 sm:gap-2 font-medium text-white text-xs sm:text-sm lg:text-base active:scale-[0.98]"
         >
           Share on
           {isExporting ? (
-            <Loader2 className="w-4 h-4 animate-spin" />
+            <Loader2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 animate-spin" />
           ) : (
-            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+            <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="currentColor">
               <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
             </svg>
           )}
@@ -332,20 +332,20 @@ const WrapCard = ({
       </div>
 
       {/* CTA section */}
-      <div 
-        className="text-center space-y-3 lg:space-y-4 py-6 lg:py-8 animate-fade-in px-4 lg:px-0" 
-        style={{ animationDelay: "0.3s", marginTop: "15px" }}
+      <div
+        className="text-center space-y-2 sm:space-y-3 lg:space-y-4 py-4 sm:py-6 lg:py-8 animate-fade-in px-3 sm:px-4 lg:px-0"
+        style={{ animationDelay: "0.3s", marginTop: "10px" }}
       >
-        <p className="text-[#8b98a9] text-xs lg:text-sm">
+        <p className="text-[#8b98a9] text-[10px] sm:text-xs lg:text-sm">
           Track your entire multichain portfolio with live pnl
         </p>
-        <a 
-          href="https://0xppl.com/" 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          className="bg-white inline-flex items-center gap-2 px-4 lg:px-6 py-2.5 lg:py-3 rounded-xl font-semibold hover:bg-white/90 transition-colors text-primary-foreground text-sm lg:text-base"
+        <a
+          href="https://0xppl.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-white inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 lg:px-6 py-2 sm:py-2.5 lg:py-3 rounded-lg sm:rounded-xl font-semibold hover:bg-white/90 transition-colors text-primary-foreground text-xs sm:text-sm lg:text-base active:scale-[0.98]"
         >
-          Try <img src="/logo-0xppl.svg" alt="0xPPL" className="h-[18px] lg:h-[21px] w-auto object-cover" /> 0xPPL 
+          Try <img src="/logo-0xppl.svg" alt="0xPPL" className="h-[14px] sm:h-[18px] lg:h-[21px] w-auto object-cover" /> 0xPPL
         </a>
       </div>
     </div>
