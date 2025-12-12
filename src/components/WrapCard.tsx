@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { captureElementAsBlob, downloadBlob, shareOnTwitter, uploadImageToBackend } from "@/utils/imageExport";
 
 // TODO: Replace with your actual backend endpoint
-const UPLOAD_ENDPOINT = "https://35.229.69.156/api/ipfs/upload-image";
+const UPLOAD_ENDPOINT = "http://35.229.69.156/api/ipfs/upload-image";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
 
