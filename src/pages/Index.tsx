@@ -41,7 +41,7 @@ const Index = () => {
       </header>
 
       {/* Main content */}
-      <div className="relative z-10 flex-1 pb-8 flex-col px-0 flex items-center justify-start my-[60px] scale-110 origin-top">
+      <div className="relative z-10 flex-1 pb-8 flex-col px-0 flex items-center justify-start my-[60px] scale-[0.94] origin-top">
         {appState === "input" && <>
             {/* Title - 489×72 dimensions */}
             <h1 className="font-sans font-bold text-center mb-6 animate-fade-in" style={{
