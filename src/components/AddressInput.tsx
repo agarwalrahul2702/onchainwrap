@@ -18,6 +18,14 @@ const AddressInput = ({
     return /^0x[a-fA-F0-9]{40}$/.test(addr);
   };
 
+  const isValidSolanaAddress = (addr: string): boolean => {
+    return /^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(addr);
+  };
+
+  const isValidAddress = (addr: string): boolean => {
+    return isValidEVMAddress(addr) || isValidSolanaAddress(addr);
+  };
+
   const handlePaste = async () => {
     try {
       const text = await navigator.clipboard.readText();
@@ -36,8 +44,8 @@ const AddressInput = ({
       return;
     }
     
-    if (!isValidEVMAddress(trimmedAddress)) {
-      setError("Please enter a valid EVM address");
+    if (!isValidAddress(trimmedAddress)) {
+      setError("Please enter a valid EVM or Solana address");
       return;
     }
 
@@ -60,8 +68,8 @@ const AddressInput = ({
       // If no addresses added yet, try to add the current input
       if (address.trim()) {
         const trimmedAddress = address.trim();
-        if (!isValidEVMAddress(trimmedAddress)) {
-          setError("Please enter a valid EVM address");
+        if (!isValidAddress(trimmedAddress)) {
+          setError("Please enter a valid EVM or Solana address");
           return;
         }
         onGenerate([trimmedAddress]);
@@ -122,7 +130,7 @@ const AddressInput = ({
           }}
           onKeyDown={handleKeyDown}
           onClick={handlePaste}
-          placeholder={addresses.length > 0 ? "Add another wallet address" : "Paste any EVM wallet address"}
+          placeholder={addresses.length > 0 ? "Add another wallet address" : "Paste any EVM or Solana wallet address"}
           className="w-full bg-[#1a1d2e] border border-border/30 rounded-lg pl-[2.5vw] pr-[1vw] py-[1.2vh] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-[#3B82F6]/30 transition-all font-mono text-[0.9vw]"
           disabled={isLoading}
         />
@@ -154,7 +162,7 @@ const AddressInput = ({
 
       {/* Footer text */}
       <p className="text-muted-foreground text-[0.85vw] text-center mb-[1vh] px-0 mt-[20px]">
-        Works with all EVM wallets · No login needed
+        Works with EVM & Solana wallets · No login needed
       </p>
     </div>
   );
