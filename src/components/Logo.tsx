@@ -13,7 +13,7 @@ const Logo = () => {
         <img 
           src={santaHat} 
           alt="Santa Hat" 
-          className="absolute -top-[60px] -left-[14px] h-[104px] w-[104px] object-contain z-10 rotate-[25deg]" 
+          className="absolute -top-[60px] -left-[10px] h-[104px] w-[104px] object-contain z-10 rotate-[25deg]" 
         />
         <img src={logoSvg} alt="0xPPL Logo" className="h-14 w-14 object-contain" />
       </div>
