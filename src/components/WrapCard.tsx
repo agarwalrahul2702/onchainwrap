@@ -111,7 +111,7 @@ const WrapCard = ({
       setIsExporting(false);
     }
   };
-  return <div className="w-full flex-col animate-scale-in flex items-center justify-end" style={{ marginTop: '25px' }}>
+  return <div className="w-full flex-col animate-scale-in flex items-center justify-end" style={{ marginTop: '60px' }}>
       {/* Main card container - fixed aspect ratio matching template */}
       <div ref={cardRef} id="wrap-card" className="relative w-full max-w-[1000px] overflow-hidden" style={{
       aspectRatio: '1000 / 600'
