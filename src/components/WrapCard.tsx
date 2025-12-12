@@ -251,7 +251,7 @@ const WrapCard = ({
           color: '#60a5fa',
           fontSize: 'clamp(10px, 1.4vw, 14px)',
           fontWeight: 600
-        }}>
+        }} className="font-normal text-sm text-[#0065bd]">
             {formatAddress(stats.address, stats.addressCount)}
           </span>
         </div>
