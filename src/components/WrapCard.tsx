@@ -279,7 +279,7 @@ const WrapCard = ({
         {/* Wallet address - bottom area */}
         <div className="absolute font-general-sans text-right" style={{
           bottom: '4%',
-          right: '4%'
+          right: 'calc(4% + 4px)'
         }}>
           <span style={{
             color: '#60a5fa',
