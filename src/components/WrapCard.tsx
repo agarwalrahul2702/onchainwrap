@@ -245,7 +245,7 @@ const WrapCard = ({
         {/* Wallet address - bottom area */}
         <div className="absolute font-general-sans text-right" style={{
         bottom: '4%',
-        right: '40px'
+        right: '45px'
       }}>
           <span style={{
           color: '#60a5fa',
