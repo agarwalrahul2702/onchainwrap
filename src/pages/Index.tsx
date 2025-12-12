@@ -57,7 +57,7 @@ const Index = () => {
                   <p className="text-foreground font-sans text-base lg:whitespace-nowrap font-medium pt-0 px-2 lg:px-[2.5vw] py-[0.2vh] text-center mt-0 lg:mt-[15px] my-px mb-[5px] lg:text-2xl">
                     See everything your wallet cooked
                   </p>
-                  <p className="text-foreground font-sans text-base font-medium lg:text-xl">(or didn't)</p>
+                  <p className="text-foreground font-sans text-base font-medium lg:text-2xl">(or didn't)</p>
                 </div>
                 <AddressInput onGenerate={handleGenerate} isLoading={false} />
               </div>
