@@ -64,22 +64,27 @@ const AddressInput = ({
   };
 
   const handleSubmit = () => {
-    if (addresses.length === 0) {
-      // If no addresses added yet, try to add the current input
-      if (address.trim()) {
-        const trimmedAddress = address.trim();
-        if (!isValidAddress(trimmedAddress)) {
-          setError("Please enter a valid EVM or Solana address");
-          return;
-        }
-        onGenerate([trimmedAddress]);
-      } else {
-        setError("Please add at least one address");
+    let allAddresses = [...addresses];
+    
+    // If there's text in the input, try to add it
+    if (address.trim()) {
+      const trimmedAddress = address.trim();
+      if (!isValidAddress(trimmedAddress)) {
+        setError("Please enter a valid EVM or Solana address");
+        return;
       }
+      if (!allAddresses.includes(trimmedAddress)) {
+        allAddresses.push(trimmedAddress);
+      }
+    }
+    
+    if (allAddresses.length === 0) {
+      setError("Please add at least one address");
       return;
     }
     
-    onGenerate(addresses);
+    console.log("Submitting addresses:", allAddresses);
+    onGenerate(allAddresses);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
