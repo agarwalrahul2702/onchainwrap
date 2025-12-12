@@ -283,9 +283,7 @@ const WrapCard = ({
       animationDelay: "0.3s",
       marginTop: "15px"
     }}>
-        <p className="text-[#8b98a9] text-sm">
-          Want to level up your trading game?
-        </p>
+        <p className="text-[#8b98a9] text-sm">Track you entire multichain portfolio with live pnl  ↓        </p>
         <a href="https://0xppl.com/" target="_blank" rel="noopener noreferrer" className="bg-white inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold hover:bg-white/90 transition-colors text-primary-foreground">
           Try <img src="/logo-0xppl.svg" alt="0xPPL" className="h-[21px] w-auto object-cover" /> 0xPPL 
         </a>
