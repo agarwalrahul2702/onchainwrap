@@ -99,7 +99,7 @@ const AddressInput = ({
         <input type="text" value={address} onChange={e => {
         setAddress(e.target.value);
         setError("");
-      }} onKeyDown={handleKeyDown} onClick={handlePaste} placeholder={addresses.length > 0 ? "Add another wallet address" : "Paste any EVM or Solana wallet address"} className="w-full bg-[#1a1d2e] border border-border/30 rounded-lg pl-[2.5vw] pr-[1vw] py-[1.2vh] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-[#3B82F6]/30 transition-all font-mono text-[0.9vw]" disabled={isLoading} />
+      }} onKeyDown={handleKeyDown} onClick={handlePaste} placeholder={addresses.length > 0 ? "Add another wallet address" : "Paste any EVM or Solana wallet address"} disabled={isLoading} className="w-full bg-[#1a1d2e] border border-border/30 rounded-lg pl-[2.5vw] pr-[1vw] py-[1.2vh] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-[#3B82F6]/30 transition-all font-mono text-[0.9vw] my-[10px]" />
       </div>
 
       {/* Add button - only show if there's input */}
