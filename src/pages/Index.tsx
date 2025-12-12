@@ -59,7 +59,7 @@ const Index = () => {
             <div className="liquid-glass-card w-[35vw] h-[36vh] my-0 mx-0 py-[2vh] flex-col px-0 flex items-center justify-center">
               <div className="space-y-[2vh] text-center py-0 my-0">
                 <div className="space-y-0">
-                  <p className="text-foreground font-sans whitespace-nowrap text-[1.6vw] font-medium pt-0 pr-[2.5vw] pl-[2.5vw] px-[2vw] py-[0.2vh] text-center -mt-[15px]">
+                  <p className="text-foreground font-sans whitespace-nowrap text-[1.6vw] font-medium pt-0 pr-[2.5vw] pl-[2.5vw] px-[2vw] py-[0.2vh] text-center mt-[20px]">
                     See everything your wallet cooked
                   </p>
                   <p className="text-foreground font-sans text-[1.6vw] font-medium">(or didn't)</p>
