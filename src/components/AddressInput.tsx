@@ -104,7 +104,7 @@ const AddressInput = ({
 
       {/* Add button - only show if there's input */}
       {address.trim() && <button onClick={handleAddAddress} disabled={isLoading} className="w-full bg-[#1a1d2e] hover:bg-[#252a3d] text-muted-foreground hover:text-foreground font-medium py-[0.8vh] px-[1.5vw] rounded-lg transition-all duration-200 border border-border/30 text-[0.9vw]">
-          + Add Address
+          + Add more address
         </button>}
 
       {/* Error message */}
@@ -114,10 +114,10 @@ const AddressInput = ({
       <button onClick={handleSubmit} disabled={isLoading} className="w-full bg-[#3B82F6] hover:bg-[#2563EB] text-white font-semibold py-[1.2vh] px-[1.5vw] rounded-lg transition-all duration-200 flex items-center justify-center gap-[0.5vw] disabled:opacity-50 disabled:cursor-not-allowed text-[1vw] my-[15px] mb-0">
         <Sparkles className="w-[1.2vw] h-[1.2vw]" />
         {isLoading ? "Generating..." : (() => {
-          const inputValid = address.trim() && isValidAddress(address.trim()) && !addresses.includes(address.trim());
-          const totalCount = addresses.length + (inputValid ? 1 : 0);
-          return `Generate Wrap${totalCount > 1 ? ` (${totalCount} wallets)` : ""}`;
-        })()}
+        const inputValid = address.trim() && isValidAddress(address.trim()) && !addresses.includes(address.trim());
+        const totalCount = addresses.length + (inputValid ? 1 : 0);
+        return `Generate Wrap${totalCount > 1 ? ` (${totalCount} wallets)` : ""}`;
+      })()}
       </button>
 
       {/* Footer text */}
