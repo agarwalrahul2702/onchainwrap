@@ -92,7 +92,7 @@ const AddressInput = ({
         </div>}
 
       {/* Input field */}
-      <div className="relative">
+      <div className="relative mx-[20px]">
         <div className="absolute left-3 lg:left-[1vw] top-1/2 -translate-y-1/2 text-muted-foreground">
           <ClipboardList className="w-4 h-4 lg:w-[1.2vw] lg:h-[1.2vw]" />
         </div>
