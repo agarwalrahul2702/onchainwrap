@@ -111,7 +111,9 @@ const WrapCard = ({
       setIsExporting(false);
     }
   };
-  return <div className="w-full flex-col animate-scale-in flex items-center justify-end" style={{ marginTop: '60px' }}>
+  return <div className="w-full flex-col animate-scale-in flex items-center justify-end" style={{
+    marginTop: '60px'
+  }}>
       {/* Main card container - fixed aspect ratio matching template */}
       <div ref={cardRef} id="wrap-card" className="relative w-full max-w-[1000px] overflow-hidden" style={{
       aspectRatio: '1000 / 600'
@@ -273,7 +275,7 @@ const WrapCard = ({
       animationDelay: "0.3s"
     }}>
         <button onClick={onReset} className="block mx-auto text-[16.5px] transition-colors text-secondary-foreground hover:opacity-80">
-          Generate another wrap
+          Try another wallet  
         </button>
         <p className="text-[#8b98a9] text-sm">
           Want to level up your trading game?
