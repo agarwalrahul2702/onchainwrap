@@ -32,6 +32,7 @@ export interface WrapStats {
   oneliner: string;
   archetype?: string;
   address: string;
+  addressCount: number;
 }
 interface WrapCardProps {
   stats: WrapStats;
@@ -61,8 +62,12 @@ const WrapCard = ({
   const {
     toast
   } = useToast();
-  const formatAddress = (addr: string) => {
-    return `${addr.slice(0, 4)}...${addr.slice(-4)}`;
+  const formatAddress = (addr: string, count: number) => {
+    const shortAddr = `${addr.slice(0, 4)}...${addr.slice(-4)}`;
+    if (count > 1) {
+      return `${shortAddr} + ${count - 1}`;
+    }
+    return shortAddr;
   };
   const archetype = stats.archetype || "Average Crypto Bro";
   const templateImage = templateImages[archetype] || averageCryptoBroTemplate;
@@ -247,7 +252,7 @@ const WrapCard = ({
           fontSize: 'clamp(10px, 1.4vw, 14px)',
           fontWeight: 600
         }}>
-            {formatAddress(stats.address)}
+            {formatAddress(stats.address, stats.addressCount)}
           </span>
         </div>
       </div>

@@ -272,7 +272,8 @@ export const fetchWrapStats = async (addresses: string[]): Promise<WrapStats> =>
     pnlPositive,
     oneliner: archetypeTaglines[detectedArchetype],
     archetype: detectedArchetype,
-    address: addresses.length === 1 ? addresses[0] : `${addresses.length} wallets`,
+    address: addresses[0],
+    addressCount: addresses.length,
   };
 
   console.log("Stats:", stats);
