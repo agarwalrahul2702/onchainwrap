@@ -272,7 +272,7 @@ const WrapCard = ({
       <div className="text-center space-y-4 py-8 animate-fade-in" style={{
       animationDelay: "0.3s"
     }}>
-        <button onClick={onReset} className="block mx-auto text-[15.4px] transition-colors text-secondary-foreground hover:opacity-80">
+        <button onClick={onReset} className="block mx-auto text-[16.5px] transition-colors text-secondary-foreground hover:opacity-80">
           Generate another wrap
         </button>
         <p className="text-[#8b98a9] text-sm">
