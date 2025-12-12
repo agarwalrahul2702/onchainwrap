@@ -50,6 +50,22 @@ export const downloadBlob = (blob: Blob, filename: string): void => {
 };
 
 /**
+ * Copies a blob to clipboard as an image
+ */
+export const copyBlobToClipboard = async (blob: Blob): Promise<void> => {
+  try {
+    await navigator.clipboard.write([
+      new ClipboardItem({
+        [blob.type]: blob
+      })
+    ]);
+  } catch (error) {
+    console.error('Failed to copy to clipboard:', error);
+    throw error;
+  }
+};
+
+/**
  * Generates the Twitter/X share intent URL
  */
 export const generateTwitterShareUrl = (text: string, url?: string): string => {

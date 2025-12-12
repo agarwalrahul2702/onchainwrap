@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { captureElementAsBlob, downloadBlob, shareOnTwitter } from "@/utils/imageExport";
+import { captureElementAsBlob, downloadBlob, shareOnTwitter, copyBlobToClipboard } from "@/utils/imageExport";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
 
@@ -97,13 +97,13 @@ const WrapCard = ({
     if (!cardRef.current || isExporting) return;
     setIsExporting(true);
     try {
-      await captureElementAsBlob(cardRef.current);
+      const blob = await captureElementAsBlob(cardRef.current);
+      await copyBlobToClipboard(blob);
       const shareText = "Got my 2025 onchain wrap from @0xPPL_. Check yours!";
-      const shareUrl = "https://0xppl.com";
-      shareOnTwitter(shareText, shareUrl);
+      shareOnTwitter(shareText);
       toast({
-        title: "Opening Twitter...",
-        description: "Share your wrap with the world!"
+        title: "Image copied to clipboard!",
+        description: "Paste (Ctrl+V / Cmd+V) the image in your tweet."
       });
     } catch (error) {
       console.error("Failed to share:", error);
