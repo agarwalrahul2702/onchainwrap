@@ -51,7 +51,7 @@ const Index = () => {
             </h1>
 
             {/* Card - responsive on mobile, fixed vw/vh on desktop */}
-            <div className="liquid-glass-card w-[90vw] lg:w-[35vw] min-h-[320px] lg:min-h-0 lg:h-[36vh] my-0 mx-0 py-4 lg:py-[2vh] flex-col lg:px-0 flex items-center justify-center px-[20px]">
+            <div className="liquid-glass-card w-[90vw] lg:w-[35vw] min-h-[320px] lg:min-h-0 lg:h-[36vh] my-0 mx-0 lg:py-[2vh] flex-col lg:px-0 flex items-center justify-center px-[20px] py-0">
               <div className="space-y-4 lg:space-y-[2vh] text-center py-0 my-0 w-full">
                 <div className="space-y-0 -mt-[10px]">
                   <p className="text-foreground font-sans text-sm lg:whitespace-nowrap font-medium pt-0 px-2 lg:px-[2.5vw] py-[0.2vh] text-center mt-0 lg:mt-[15px] my-px mb-[5px] lg:text-xl">
