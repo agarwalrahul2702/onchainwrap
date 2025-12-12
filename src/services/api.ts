@@ -163,6 +163,8 @@ const fetchSingleWrapStats = async (address: string): Promise<ApiData | null> =>
 };
 
 const fetchMultiWrapStats = async (addresses: string[]): Promise<ApiData | null> => {
+  console.log("Calling multi-address endpoint with addresses:", addresses);
+  
   const response = await fetch(API_ENDPOINT_MULTI, {
     method: 'POST',
     headers: {
@@ -171,11 +173,16 @@ const fetchMultiWrapStats = async (addresses: string[]): Promise<ApiData | null>
     body: JSON.stringify({ user_addresses: addresses }),
   });
 
+  console.log("Multi-endpoint response status:", response.status);
+
   if (!response.ok) {
+    const errorText = await response.text();
+    console.error("Multi-endpoint error:", errorText);
     return null;
   }
 
   const json: ApiResponse = await response.json();
+  console.log("Multi-endpoint raw response:", JSON.stringify(json, null, 2));
   
   if (!json || json.status !== "ok" || !json.data) {
     return null;
