@@ -124,7 +124,7 @@ const AddressInput = ({
       </div>
 
       {/* Footer text */}
-      <p className="text-muted-foreground text-[0.85vw] text-center px-0 mb-[10px] mt-[40px]">Works for all EVM & Solana wallets · No login needed</p>
+      
     </div>;
 };
 export default AddressInput;
