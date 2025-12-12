@@ -1,5 +1,8 @@
 import { useRef, useState } from "react";
-import { captureElementAsBlob, downloadBlob, shareOnTwitter, copyBlobToClipboard } from "@/utils/imageExport";
+import { captureElementAsBlob, downloadBlob, shareOnTwitter, uploadImageToBackend } from "@/utils/imageExport";
+
+// TODO: Replace with your actual backend endpoint
+const UPLOAD_ENDPOINT = "https://your-backend.com/api/upload-image";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
 
@@ -104,12 +107,16 @@ const WrapCard = ({
     setIsExporting(true);
     try {
       const blob = await captureElementAsBlob(cardRef.current);
-      await copyBlobToClipboard(blob);
+      
+      // Upload to your backend and get public URL
+      const imageUrl = await uploadImageToBackend(blob, UPLOAD_ENDPOINT);
+      
       const shareText = "Got my 2025 onchain wrap from @0xPPL_. Check yours!";
-      shareOnTwitter(shareText);
+      shareOnTwitter(shareText, imageUrl);
+      
       toast({
-        title: "Image copied to clipboard!",
-        description: "Paste (Ctrl+V / Cmd+V) the image in your tweet."
+        title: "Opening Twitter...",
+        description: "Your wrap image is ready to share!"
       });
     } catch (error) {
       console.error("Failed to share:", error);

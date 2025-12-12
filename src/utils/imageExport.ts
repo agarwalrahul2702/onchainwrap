@@ -66,6 +66,47 @@ export const copyBlobToClipboard = async (blob: Blob): Promise<void> => {
 };
 
 /**
+ * Uploads image blob to backend and returns public URL
+ * @param blob - The image blob to upload
+ * @param endpoint - Your backend endpoint URL
+ * @returns The public URL of the uploaded image
+ */
+export const uploadImageToBackend = async (
+  blob: Blob,
+  endpoint: string
+): Promise<string> => {
+  // Convert blob to base64
+  const reader = new FileReader();
+  const base64Promise = new Promise<string>((resolve, reject) => {
+    reader.onload = () => {
+      const base64 = (reader.result as string).split(',')[1];
+      resolve(base64);
+    };
+    reader.onerror = reject;
+  });
+  reader.readAsDataURL(blob);
+  const base64Data = await base64Promise;
+
+  const response = await fetch(endpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      imageData: base64Data,
+      contentType: blob.type,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Upload failed: ${response.statusText}`);
+  }
+
+  const data = await response.json();
+  return data.url; // Expects { url: "https://..." } from your backend
+};
+
+/**
  * Generates the Twitter/X share intent URL
  */
 export const generateTwitterShareUrl = (text: string, url?: string): string => {
