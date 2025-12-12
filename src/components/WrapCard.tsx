@@ -268,15 +268,15 @@ const WrapCard = ({
             </svg>}
           Download Image
         </button>
+        <button onClick={onReset} className="border border-[#3b82f6] text-[#60a5fa] hover:bg-[#1d4ed8]/20 transition-colors rounded-lg px-6 py-3 font-medium">
+          Try another wallet
+        </button>
       </div>
 
       {/* CTA section */}
       <div className="text-center space-y-4 py-8 animate-fade-in" style={{
       animationDelay: "0.3s"
     }}>
-        <button onClick={onReset} className="block mx-auto text-[16.5px] transition-colors text-secondary-foreground hover:opacity-80">
-          Try another wallet  
-        </button>
         <p className="text-[#8b98a9] text-sm">
           Want to level up your trading game?
         </p>
