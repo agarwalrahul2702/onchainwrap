@@ -172,7 +172,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
             <span 
               style={{
                 color: '#22c55e',
-                fontSize: 'clamp(15px, 2.08vw, 20.84px)',
+                fontSize: 'clamp(17.25px, 2.39vw, 23.97px)',
                 fontWeight: 500,
                 fontVariant: 'small-caps',
                 lineHeight: '100%',
@@ -187,8 +187,8 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
                     src={stats.biggestProfitToken.logo} 
                     alt={stats.biggestProfitToken.symbol || 'token'} 
                     style={{
-                      width: 'clamp(11.2px, 1.44vw, 14.4px)',
-                      height: 'clamp(11.2px, 1.44vw, 14.4px)',
+                      width: 'clamp(12.88px, 1.66vw, 16.56px)',
+                      height: 'clamp(12.88px, 1.66vw, 16.56px)',
                     }}
                     className="rounded-full object-cover"
                   />
@@ -197,7 +197,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
                   <span 
                     style={{
                       color: '#9CA3AF',
-                      fontSize: 'clamp(9.6px, 1.28vw, 12.8px)',
+                      fontSize: 'clamp(11.04px, 1.47vw, 14.72px)',
                       fontWeight: 500,
                       lineHeight: '100%',
                     }}
@@ -222,7 +222,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
             <span 
               style={{
                 color: '#ef4444',
-                fontSize: 'clamp(15px, 2.08vw, 20.84px)',
+                fontSize: 'clamp(17.25px, 2.39vw, 23.97px)',
                 fontWeight: 500,
                 fontVariant: 'small-caps',
                 lineHeight: '100%',
@@ -237,8 +237,8 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
                     src={stats.biggestLossToken.logo} 
                     alt={stats.biggestLossToken.symbol || 'token'} 
                     style={{
-                      width: 'clamp(11.2px, 1.44vw, 14.4px)',
-                      height: 'clamp(11.2px, 1.44vw, 14.4px)',
+                      width: 'clamp(12.88px, 1.66vw, 16.56px)',
+                      height: 'clamp(12.88px, 1.66vw, 16.56px)',
                     }}
                     className="rounded-full object-cover"
                   />
@@ -247,7 +247,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
                   <span 
                     style={{
                       color: '#9CA3AF',
-                      fontSize: 'clamp(9.6px, 1.28vw, 12.8px)',
+                      fontSize: 'clamp(11.04px, 1.47vw, 14.72px)',
                       fontWeight: 500,
                       lineHeight: '100%',
                     }}
@@ -271,7 +271,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           <span 
             style={{
               color: '#ffffff',
-              fontSize: 'clamp(15px, 2.08vw, 20.84px)',
+              fontSize: 'clamp(17.25px, 2.39vw, 23.97px)',
               fontWeight: 500,
               fontVariant: 'small-caps',
               lineHeight: '100%',
@@ -292,7 +292,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           <span 
             style={{
               color: '#ffffff',
-              fontSize: 'clamp(15px, 2.08vw, 20.84px)',
+              fontSize: 'clamp(17.25px, 2.39vw, 23.97px)',
               fontWeight: 500,
               fontVariant: 'small-caps',
               lineHeight: '100%',
