@@ -6,11 +6,10 @@ const BackgroundVideo = () => {
         loop
         muted
         playsInline
-        disablePictureInPicture
-        className="fixed inset-0 w-full h-full min-h-screen -z-10"
-        style={{
+        className="fixed inset-0 w-full h-full -z-10"
+        style={{ 
           objectFit: "cover",
-          objectPosition: "center 70%"
+          objectPosition: "center 80%" 
         }}
       >
         <source src="/bg-video.mp4" type="video/mp4" />
