@@ -113,7 +113,11 @@ const AddressInput = ({
       {/* Generate button */}
       <button onClick={handleSubmit} disabled={isLoading} className="w-full bg-[#3B82F6] hover:bg-[#2563EB] text-white font-semibold py-[1.2vh] px-[1.5vw] rounded-lg transition-all duration-200 flex items-center justify-center gap-[0.5vw] disabled:opacity-50 disabled:cursor-not-allowed text-[1vw] my-[15px] mb-0">
         <Sparkles className="w-[1.2vw] h-[1.2vw]" />
-        {isLoading ? "Generating..." : `Generate Wrap${addresses.length > 1 ? ` (${addresses.length} wallets)` : ""}`}
+        {isLoading ? "Generating..." : (() => {
+          const inputValid = address.trim() && isValidAddress(address.trim()) && !addresses.includes(address.trim());
+          const totalCount = addresses.length + (inputValid ? 1 : 0);
+          return `Generate Wrap${totalCount > 1 ? ` (${totalCount} wallets)` : ""}`;
+        })()}
       </button>
 
       {/* Footer text */}
