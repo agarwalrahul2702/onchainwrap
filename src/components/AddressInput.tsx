@@ -108,7 +108,7 @@ const AddressInput = ({
       {/* Buttons row */}
       <div className="flex flex-col lg:flex-row gap-2 my-3 lg:my-[15px] mb-0">
         {/* Add button - only show if there's input */}
-        {address.trim() && <button onClick={handleAddAddress} disabled={isLoading} className="bg-[#1a1d2e] hover:bg-[#252a3d] text-muted-foreground hover:text-foreground font-medium py-3 lg:py-[1.2vh] px-4 lg:px-[1.5vw] rounded-lg transition-all duration-200 border border-border/30 text-sm lg:text-[0.9vw] whitespace-nowrap">
+        {address.trim() && <button onClick={handleAddAddress} disabled={isLoading} className="bg-[#1a1d2e] hover:bg-[#252a3d] text-muted-foreground hover:text-foreground font-medium py-3 lg:py-[1.2vh] px-4 lg:px-[1.5vw] rounded-lg transition-all duration-200 border border-border/30 text-sm lg:text-[0.9vw] whitespace-nowrap mx-0 ml-[20px]">
             + Add more wallets  
           </button>}
 
