@@ -1,6 +1,7 @@
 import { WrapStats, TokenInfo } from "@/components/WrapCard";
 
-const API_ENDPOINT = "https://0xppl.com/api/v4/get_yearly_highlights";
+const API_ENDPOINT_SINGLE = "https://0xppl.com/api/v4/get_yearly_highlights";
+const API_ENDPOINT_MULTI = "https://0xppl.com/api/v4/get_yearly_highlights_multi";
 
 interface ApiProfile {
   display_name?: string;
@@ -8,26 +9,28 @@ interface ApiProfile {
   token_symbol?: string;
 }
 
+interface ApiData {
+  volume?: { value: number; display_value: string };
+  biggest_profit?: { 
+    amount: { value: number; display_value: string };
+    pnl_percent?: { value: number; display_value: string };
+    profile?: ApiProfile;
+  };
+  biggest_loss?: { 
+    amount: { value: number; display_value: string };
+    pnl_percent?: { value: number; display_value: string };
+    profile?: ApiProfile;
+  };
+  win_rate?: { value: number; display_value: string };
+  overall_pnl?: { value: number; display_value: string };
+  archetype?: string;
+  num_trades?: number;
+  tokens_interacted?: number;
+}
+
 interface ApiResponse {
   status: string;
-  data: {
-    volume?: { value: number; display_value: string };
-    biggest_profit?: { 
-      amount: { value: number; display_value: string };
-      pnl_percent?: { value: number; display_value: string };
-      profile?: ApiProfile;
-    };
-    biggest_loss?: { 
-      amount: { value: number; display_value: string };
-      pnl_percent?: { value: number; display_value: string };
-      profile?: ApiProfile;
-    };
-    win_rate?: { value: number; display_value: string };
-    overall_pnl?: { value: number; display_value: string };
-    archetype?: string;
-    num_trades?: number;
-    tokens_interacted?: number;
-  };
+  data: ApiData;
 }
 
 // Archetype detection based on priority table
@@ -143,8 +146,30 @@ const formatCurrency = (value: number): string => {
   return `${sign}$${absValue.toFixed(2)}`;
 };
 
-const fetchSingleWrapStats = async (address: string): Promise<ApiResponse["data"] | null> => {
-  const response = await fetch(`${API_ENDPOINT}?user_address=${encodeURIComponent(address)}`);
+const fetchSingleWrapStats = async (address: string): Promise<ApiData | null> => {
+  const response = await fetch(`${API_ENDPOINT_SINGLE}?user_address=${encodeURIComponent(address)}`);
+
+  if (!response.ok) {
+    return null;
+  }
+
+  const json: ApiResponse = await response.json();
+  
+  if (!json || json.status !== "ok" || !json.data) {
+    return null;
+  }
+
+  return json.data;
+};
+
+const fetchMultiWrapStats = async (addresses: string[]): Promise<ApiData | null> => {
+  const response = await fetch(API_ENDPOINT_MULTI, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ user_addresses: addresses }),
+  });
 
   if (!response.ok) {
     return null;
@@ -160,93 +185,86 @@ const fetchSingleWrapStats = async (address: string): Promise<ApiResponse["data"
 };
 
 export const fetchWrapStats = async (addresses: string[]): Promise<WrapStats> => {
-  // Fetch data for all addresses in parallel
-  const results = await Promise.all(addresses.map(addr => fetchSingleWrapStats(addr)));
+  let data: ApiData | null = null;
+
+  if (addresses.length === 1) {
+    // Single address: use the single endpoint
+    data = await fetchSingleWrapStats(addresses[0]);
+  } else {
+    // Multiple addresses: use the multi endpoint
+    data = await fetchMultiWrapStats(addresses);
+  }
   
-  // Filter out failed requests
-  const validResults = results.filter((r): r is ApiResponse["data"] => r !== null);
-  
-  if (validResults.length === 0) {
+  if (!data) {
     throw new Error("Invalid address or no data found");
   }
 
-  console.log("API Responses:", JSON.stringify(validResults, null, 2));
+  console.log("API Response:", JSON.stringify(data, null, 2));
 
-  // Aggregate the data
+  // Extract data from API response
+  const volume = data.volume?.value ?? 0;
+  const overallPnl = data.overall_pnl?.value ?? 0;
+  const tokensInteracted = data.tokens_interacted ?? 0;
+  const numTrades = data.num_trades ?? 0;
+  const winRateValue = data.win_rate?.value ?? 0;
+  const totalWinTrades = Math.round((winRateValue / 100) * numTrades);
+
+  const biggestProfit = data.biggest_profit?.amount?.value ?? 0;
+  const biggestProfitDisplay = data.biggest_profit?.amount?.display_value || "No data";
+  const biggestProfitToken: TokenInfo | undefined = data.biggest_profit?.profile ? {
+    logo: data.biggest_profit.profile.display_picture,
+    symbol: data.biggest_profit.profile.token_symbol,
+  } : undefined;
+  const biggestProfitPnlPercent = data.biggest_profit?.pnl_percent?.display_value;
+
+  const biggestLoss = data.biggest_loss?.amount?.value ?? 0;
+  const biggestLossDisplay = data.biggest_loss?.amount?.display_value || "No data";
+  const biggestLossToken: TokenInfo | undefined = data.biggest_loss?.profile ? {
+    logo: data.biggest_loss.profile.display_picture,
+    symbol: data.biggest_loss.profile.token_symbol,
+  } : undefined;
+  const biggestLossPnlPercent = data.biggest_loss?.pnl_percent?.display_value;
+
+  // Build aggregated data for archetype detection
   const aggregated: AggregatedData = {
-    volume: 0,
-    biggestProfit: 0,
-    biggestProfitDisplay: "No data",
-    biggestProfitToken: undefined,
-    biggestProfitPnlPercent: undefined,
-    biggestLoss: 0,
-    biggestLossDisplay: "No data",
-    biggestLossToken: undefined,
-    biggestLossPnlPercent: undefined,
-    totalWinTrades: 0,
-    totalTrades: 0,
-    overallPnl: 0,
-    tokensInteracted: 0,
+    volume,
+    biggestProfit,
+    biggestProfitDisplay,
+    biggestProfitToken,
+    biggestProfitPnlPercent,
+    biggestLoss,
+    biggestLossDisplay,
+    biggestLossToken,
+    biggestLossPnlPercent,
+    totalWinTrades,
+    totalTrades: numTrades,
+    overallPnl,
+    tokensInteracted,
   };
 
-  validResults.forEach(data => {
-    aggregated.volume += data.volume?.value ?? 0;
-    aggregated.overallPnl += data.overall_pnl?.value ?? 0;
-    aggregated.tokensInteracted += data.tokens_interacted ?? 0;
-    
-    const numTrades = data.num_trades ?? 0;
-    const winRateValue = data.win_rate?.value ?? 0;
-    aggregated.totalTrades += numTrades;
-    aggregated.totalWinTrades += Math.round((winRateValue / 100) * numTrades);
-
-    // Track biggest profit
-    const profit = data.biggest_profit?.amount?.value ?? 0;
-    if (profit > aggregated.biggestProfit) {
-      aggregated.biggestProfit = profit;
-      aggregated.biggestProfitDisplay = data.biggest_profit?.amount?.display_value || "No data";
-      aggregated.biggestProfitToken = data.biggest_profit?.profile ? {
-        logo: data.biggest_profit.profile.display_picture,
-        symbol: data.biggest_profit.profile.token_symbol,
-      } : undefined;
-      aggregated.biggestProfitPnlPercent = data.biggest_profit?.pnl_percent?.display_value;
-    }
-
-    // Track biggest loss (most negative)
-    const loss = data.biggest_loss?.amount?.value ?? 0;
-    if (loss < aggregated.biggestLoss) {
-      aggregated.biggestLoss = loss;
-      aggregated.biggestLossDisplay = data.biggest_loss?.amount?.display_value || "No data";
-      aggregated.biggestLossToken = data.biggest_loss?.profile ? {
-        logo: data.biggest_loss.profile.display_picture,
-        symbol: data.biggest_loss.profile.token_symbol,
-      } : undefined;
-      aggregated.biggestLossPnlPercent = data.biggest_loss?.pnl_percent?.display_value;
-    }
-  });
-
-  const pnlPositive = aggregated.overallPnl >= 0;
+  const pnlPositive = overallPnl >= 0;
   const detectedArchetype = detectArchetype(aggregated);
-  const aggregatedWinRate = aggregated.totalTrades > 0 
-    ? Math.round((aggregated.totalWinTrades / aggregated.totalTrades) * 100) 
+  const aggregatedWinRate = numTrades > 0 
+    ? Math.round((totalWinTrades / numTrades) * 100) 
     : 0;
 
   const stats: WrapStats = {
-    totalVolume: formatCurrency(aggregated.volume),
-    biggestProfit: aggregated.biggestProfitDisplay,
-    biggestProfitToken: aggregated.biggestProfitToken,
-    biggestProfitPnlPercent: aggregated.biggestProfitPnlPercent,
-    biggestLoss: aggregated.biggestLossDisplay,
-    biggestLossToken: aggregated.biggestLossToken,
-    biggestLossPnlPercent: aggregated.biggestLossPnlPercent,
+    totalVolume: formatCurrency(volume),
+    biggestProfit: biggestProfitDisplay,
+    biggestProfitToken,
+    biggestProfitPnlPercent,
+    biggestLoss: biggestLossDisplay,
+    biggestLossToken,
+    biggestLossPnlPercent,
     winRate: `${aggregatedWinRate}%`,
-    overallPnL: formatCurrency(aggregated.overallPnl),
+    overallPnL: formatCurrency(overallPnl),
     pnlPositive,
     oneliner: archetypeTaglines[detectedArchetype],
     archetype: detectedArchetype,
     address: addresses.length === 1 ? addresses[0] : `${addresses.length} wallets`,
   };
 
-  console.log("Aggregated Stats:", stats);
+  console.log("Stats:", stats);
   console.log("Detected Archetype:", detectedArchetype);
 
   return stats;
