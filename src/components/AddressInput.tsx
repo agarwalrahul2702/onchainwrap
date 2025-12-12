@@ -117,7 +117,7 @@ const AddressInput = ({
       </button>
 
       {/* Footer text */}
-      <p className="text-muted-foreground text-[0.85vw] text-center mb-[1vh] px-0 mt-[50px]">Works for all EVM & Solana wallets · No login needed</p>
+      <p className="text-muted-foreground text-[0.85vw] text-center px-0 mt-[50px] mb-[10px]">Works for all EVM & Solana wallets · No login needed</p>
     </div>;
 };
 export default AddressInput;
