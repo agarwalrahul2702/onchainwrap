@@ -80,41 +80,41 @@ const AddressInput = ({
   const truncateAddress = (addr: string) => {
     return `${addr.slice(0, 6)}...${addr.slice(-4)}`;
   };
-  return <div className="space-y-[1.2vh] mx-0 w-full my-[31px] mb-[30px]">
+  return <div className="space-y-3 sm:space-y-[1.2vh] mx-0 w-full my-4 sm:my-[31px] mb-4 sm:mb-[30px] px-2 sm:px-0">
       {/* Added addresses chips */}
       {addresses.length > 0 && <div className="flex flex-wrap gap-2 justify-center mb-2">
-          {addresses.map(addr => <div key={addr} className="flex items-center gap-1 bg-[#3B82F6]/20 border border-[#3B82F6]/40 rounded-full px-3 py-1 text-[0.8vw] font-mono text-foreground">
+          {addresses.map(addr => <div key={addr} className="flex items-center gap-1 bg-[#3B82F6]/20 border border-[#3B82F6]/40 rounded-full px-3 py-1 text-xs sm:text-sm font-mono text-foreground">
               <span>{truncateAddress(addr)}</span>
               <button onClick={() => handleRemoveAddress(addr)} className="hover:text-destructive transition-colors" disabled={isLoading}>
-                <X className="w-[0.9vw] h-[0.9vw]" />
+                <X className="w-3 h-3 sm:w-4 sm:h-4" />
               </button>
             </div>)}
         </div>}
 
       {/* Input field */}
       <div className="relative">
-        <div className="absolute left-[1vw] top-1/2 -translate-y-1/2 text-muted-foreground">
-          <ClipboardList className="w-[1.2vw] h-[1.2vw]" />
+        <div className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-muted-foreground">
+          <ClipboardList className="w-4 h-4 sm:w-5 sm:h-5" />
         </div>
         <input type="text" value={address} onChange={e => {
         setAddress(e.target.value);
         setError("");
-      }} onKeyDown={handleKeyDown} placeholder={addresses.length > 0 ? "Add another wallet address" : "Paste any EVM or Solana wallet address"} disabled={isLoading} className="w-full bg-[#1a1d2e] border border-border/30 rounded-lg pl-[2.5vw] pr-[1vw] py-[1.2vh] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-[#3B82F6]/30 transition-all font-mono text-[0.9vw] my-[10px]" />
+      }} onKeyDown={handleKeyDown} placeholder={addresses.length > 0 ? "Add another wallet address" : "Paste any EVM or Solana wallet address"} disabled={isLoading} className="w-full bg-[#1a1d2e] border border-border/30 rounded-lg pl-10 sm:pl-12 pr-3 sm:pr-4 py-3 sm:py-[1.2vh] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-[#3B82F6]/30 transition-all font-mono text-xs sm:text-sm my-2 sm:my-[10px]" />
       </div>
 
       {/* Error message */}
-      {error && <p className="text-destructive text-[0.85vw] text-center">{error}</p>}
+      {error && <p className="text-destructive text-xs sm:text-sm text-center">{error}</p>}
 
       {/* Buttons row */}
-      <div className="flex gap-2 my-[15px] mb-0">
+      <div className="flex flex-col sm:flex-row gap-2 my-3 sm:my-[15px] mb-0">
         {/* Add button - only show if there's input */}
-        {address.trim() && <button onClick={handleAddAddress} disabled={isLoading} className="bg-[#1a1d2e] hover:bg-[#252a3d] text-muted-foreground hover:text-foreground font-medium py-[1.2vh] px-[1.5vw] rounded-lg transition-all duration-200 border border-border/30 text-[0.9vw] whitespace-nowrap">
+        {address.trim() && <button onClick={handleAddAddress} disabled={isLoading} className="bg-[#1a1d2e] hover:bg-[#252a3d] text-muted-foreground hover:text-foreground font-medium py-3 sm:py-[1.2vh] px-4 sm:px-[1.5vw] rounded-lg transition-all duration-200 border border-border/30 text-sm whitespace-nowrap">
             + Add more wallets  
           </button>}
 
         {/* Generate button */}
-        <button onClick={handleSubmit} disabled={isLoading} className="flex-1 bg-[#3B82F6] hover:bg-[#2563EB] text-white font-semibold py-[1.2vh] px-[1.5vw] rounded-lg transition-all duration-200 flex items-center justify-center gap-[0.5vw] disabled:opacity-50 disabled:cursor-not-allowed text-[1vw]">
-          <Sparkles className="w-[1.2vw] h-[1.2vw]" />
+        <button onClick={handleSubmit} disabled={isLoading} className="flex-1 bg-[#3B82F6] hover:bg-[#2563EB] text-white font-semibold py-3 sm:py-[1.2vh] px-4 sm:px-[1.5vw] rounded-lg transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base">
+          <Sparkles className="w-4 h-4 sm:w-5 sm:h-5" />
           {isLoading ? "Generating..." : (() => {
           const inputValid = address.trim() && isValidAddress(address.trim()) && !addresses.includes(address.trim());
           const totalCount = addresses.length + (inputValid ? 1 : 0);
