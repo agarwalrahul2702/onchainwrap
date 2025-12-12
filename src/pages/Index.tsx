@@ -56,7 +56,7 @@ const Index = () => {
             <div className="liquid-glass-card w-[90vw] lg:w-[35vw] min-h-[320px] lg:min-h-0 lg:h-[36vh] my-0 mx-0 py-4 lg:py-[2vh] flex-col px-4 lg:px-0 flex items-center justify-center">
               <div className="space-y-4 lg:space-y-[2vh] text-center py-0 my-0 w-full">
                 <div className="space-y-0">
-                  <p className="text-foreground font-sans text-sm lg:text-[1.6vw] lg:whitespace-nowrap font-medium pt-0 px-2 lg:px-[2.5vw] py-[0.2vh] text-center mt-3 lg:mt-[20px]">
+                  <p className="text-foreground font-sans text-sm lg:text-[1.6vw] lg:whitespace-nowrap font-medium pt-0 px-2 lg:px-[2.5vw] py-[0.2vh] text-center mt-0 lg:mt-[10px]">
                     See everything your wallet cooked
                   </p>
                   <p className="text-foreground font-sans text-sm lg:text-[1.6vw] font-medium">(or didn't)</p>
