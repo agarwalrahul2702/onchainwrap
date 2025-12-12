@@ -65,7 +65,7 @@ const WrapCard = ({
   const formatAddress = (addr: string, count: number) => {
     const shortAddr = `${addr.slice(0, 4)}...${addr.slice(-4)}`;
     if (count > 1) {
-      return `${shortAddr} + ${count - 1}`;
+      return `${shortAddr} + ${count - 1} more`;
     }
     return shortAddr;
   };
