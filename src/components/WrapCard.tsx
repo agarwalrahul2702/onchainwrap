@@ -270,7 +270,7 @@ const WrapCard = ({
         {/* Trading volume value */}
         <div className="absolute font-general-sans" style={{
           top: 'calc(75% - 10px)',
-          left: 'calc(71% + 15px)'
+          left: 'calc(71% + 5px)'
         }}>
           <span style={{
             color: '#ffffff',
