@@ -1,5 +1,5 @@
 import logoSvg from "@/assets/logo-0xppl.svg";
-import santaHat from "@/assets/santa-hat.png";
+import santaHat from "@/assets/santa-hat.svg";
 
 const Logo = () => {
   return (
