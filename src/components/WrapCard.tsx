@@ -280,7 +280,8 @@ const WrapCard = ({
 
       {/* CTA section */}
       <div className="text-center space-y-4 py-8 animate-fade-in" style={{
-      animationDelay: "0.3s"
+      animationDelay: "0.3s",
+      marginTop: "15px"
     }}>
         <p className="text-[#8b98a9] text-sm">
           Want to level up your trading game?
