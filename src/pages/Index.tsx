@@ -33,12 +33,14 @@ const Index = () => {
   return <main className="relative w-[1440px] h-[932px] mx-auto flex-col overflow-hidden flex items-center justify-center">
       <BackgroundVideo />
 
-      {/* Header */}
-      <header className="relative z-10 pt-8 pb-4">
-        <div className="container px-0 flex items-center justify-center py-0 mt-[30px]">
-          <Logo />
-        </div>
-      </header>
+      {/* Header - hidden when card is generated */}
+      {appState !== "result" && (
+        <header className="relative z-10 pt-8 pb-4">
+          <div className="container px-0 flex items-center justify-center py-0 mt-[30px]">
+            <Logo />
+          </div>
+        </header>
+      )}
 
       {/* Main content */}
       <div className="relative z-10 flex-1 pb-8 flex-col px-0 flex items-center justify-start my-[60px] scale-[0.94] origin-top">
