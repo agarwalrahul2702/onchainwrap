@@ -144,7 +144,7 @@ const WrapCard = ({
         
         {/* Overall PnL value */}
         <div className="absolute font-general-sans" style={{
-          top: 'calc(26% + 2px)',
+          top: 'calc(26% - 3px)',
           right: 'calc(7% - 5px)'
         }}>
           <span style={{
