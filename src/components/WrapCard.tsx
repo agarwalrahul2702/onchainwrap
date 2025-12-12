@@ -18,6 +18,9 @@ import activeFarmerTemplate from "@/assets/card-templates/active-farmer.png";
 import casualDegenTemplate from "@/assets/card-templates/casual-degen.png";
 import averageCryptoBroTemplate from "@/assets/card-templates/average-crypto-bro.png";
 
+// Default token fallback image
+import defaultTokenImage from "@/assets/P1.png";
+
 export interface TokenInfo {
   logo?: string;
   symbol?: string;
@@ -190,17 +193,15 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
             </span>
             {stats.biggestProfitToken && (
               <div className="flex items-center gap-1">
-                {stats.biggestProfitToken.logo && (
-                  <img
-                    src={stats.biggestProfitToken.logo}
-                    alt={stats.biggestProfitToken.symbol || "token"}
-                    style={{
-                      width: "clamp(8px, 1.66vw, 16.56px)",
-                      height: "clamp(8px, 1.66vw, 16.56px)",
-                    }}
-                    className="rounded-full object-cover"
-                  />
-                )}
+                <img
+                  src={stats.biggestProfitToken.logo || defaultTokenImage}
+                  alt={stats.biggestProfitToken.symbol || "token"}
+                  style={{
+                    width: "clamp(8px, 1.66vw, 16.56px)",
+                    height: "clamp(8px, 1.66vw, 16.56px)",
+                  }}
+                  className="rounded-full object-cover"
+                />
                 {stats.biggestProfitToken.symbol && (
                   <span
                     style={{
@@ -240,17 +241,15 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
             </span>
             {stats.biggestLossToken && (
               <div className="flex items-center gap-1">
-                {stats.biggestLossToken.logo && (
-                  <img
-                    src={stats.biggestLossToken.logo}
-                    alt={stats.biggestLossToken.symbol || "token"}
-                    style={{
-                      width: "clamp(8px, 1.66vw, 16.56px)",
-                      height: "clamp(8px, 1.66vw, 16.56px)",
-                    }}
-                    className="rounded-full object-cover"
-                  />
-                )}
+                <img
+                  src={stats.biggestLossToken.logo || defaultTokenImage}
+                  alt={stats.biggestLossToken.symbol || "token"}
+                  style={{
+                    width: "clamp(8px, 1.66vw, 16.56px)",
+                    height: "clamp(8px, 1.66vw, 16.56px)",
+                  }}
+                  className="rounded-full object-cover"
+                />
                 {stats.biggestLossToken.symbol && (
                   <span
                     style={{
