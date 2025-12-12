@@ -55,8 +55,8 @@ const archetypeTaglines: Record<ArchetypeType, string> = {
   "Rug Maxi": "You buy tops with confidence",
   "Few-Trade Wonder": "Sniper with a day job",
   "Freshly Spawned": "Welcome onchain, traveler",
-  "Active Farmer": "You touch more tokens than influencers shill",
-  "Casual Degen": "You trade enough to matter, not enough to stress",
+  "Active Farmer": "Eye on charts, hand on farm",
+  "Casual Degen": "Knows risk, ignores it anyway",
   "Average Crypto Bro": "You talk crypto more than you trade",
 };
 
