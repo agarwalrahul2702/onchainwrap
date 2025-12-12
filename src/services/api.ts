@@ -192,13 +192,17 @@ const fetchMultiWrapStats = async (addresses: string[]): Promise<ApiData | null>
 };
 
 export const fetchWrapStats = async (addresses: string[]): Promise<WrapStats> => {
+  console.log("=== fetchWrapStats called ===");
+  console.log("Number of addresses:", addresses.length);
+  console.log("Addresses:", addresses);
+  
   let data: ApiData | null = null;
 
   if (addresses.length === 1) {
-    // Single address: use the single endpoint
+    console.log("Using SINGLE address endpoint");
     data = await fetchSingleWrapStats(addresses[0]);
   } else {
-    // Multiple addresses: use the multi endpoint
+    console.log("Using MULTI address endpoint");
     data = await fetchMultiWrapStats(addresses);
   }
   
