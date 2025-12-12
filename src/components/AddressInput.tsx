@@ -113,7 +113,7 @@ const AddressInput = ({
           </button>}
 
         {/* Generate button */}
-        <button onClick={handleSubmit} disabled={isLoading} className="flex-1 bg-[#3B82F6] hover:bg-[#2563EB] text-white font-semibold py-3 lg:py-[1.2vh] px-4 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 lg:gap-[0.5vw] disabled:opacity-50 disabled:cursor-not-allowed text-sm lg:text-[1vw] pl-0 lg:px-[1.5px]">
+        <button onClick={handleSubmit} disabled={isLoading} className="flex-1 bg-[#3B82F6] hover:bg-[#2563EB] text-white font-semibold py-3 lg:py-[1.2vh] px-4 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 lg:gap-[0.5vw] disabled:opacity-50 disabled:cursor-not-allowed text-sm lg:text-[1vw] pl-0 lg:px-[1.5px] mx-[10px]">
           <Sparkles className="w-4 h-4 lg:w-[1.2vw] lg:h-[1.2vw]" />
           {isLoading ? "Generating..." : (() => {
           const inputValid = address.trim() && isValidAddress(address.trim()) && !addresses.includes(address.trim());
