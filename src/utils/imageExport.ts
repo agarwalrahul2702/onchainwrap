@@ -75,17 +75,16 @@ export const uploadImageToBackend = async (
   blob: Blob,
   endpoint: string
 ): Promise<string> => {
-  // Convert blob to base64
+  // Convert blob to base64 data URI
   const reader = new FileReader();
-  const base64Promise = new Promise<string>((resolve, reject) => {
+  const dataUriPromise = new Promise<string>((resolve, reject) => {
     reader.onload = () => {
-      const base64 = (reader.result as string).split(',')[1];
-      resolve(base64);
+      resolve(reader.result as string);
     };
     reader.onerror = reject;
   });
   reader.readAsDataURL(blob);
-  const base64Data = await base64Promise;
+  const dataUri = await dataUriPromise;
 
   const response = await fetch(endpoint, {
     method: 'POST',
@@ -93,8 +92,7 @@ export const uploadImageToBackend = async (
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      imageData: base64Data,
-      contentType: blob.type,
+      images: [dataUri],
     }),
   });
 
