@@ -183,7 +183,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
                 lineHeight: 1,
               }}
             >
-              +{stats.biggestProfit}
+              {stats.biggestProfit !== "No data" && "+"}{stats.biggestProfit}
             </span>
             {stats.biggestProfitToken && (
               <div className="flex items-center gap-1">
