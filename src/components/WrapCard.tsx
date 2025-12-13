@@ -187,7 +187,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
         <div
           className="absolute font-general-sans"
           style={{
-            top: "56.28%",
+            top: scaleFactor < 0.6 ? "54%" : "57.5%",
             left: "46.14%",
           }}
         >
@@ -234,7 +234,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
         <div
           className="absolute font-general-sans"
           style={{
-            top: "56.28%",
+            top: scaleFactor < 0.6 ? "54%" : "57.5%",
             left: "72%",
           }}
         >
@@ -281,7 +281,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
         <div
           className="absolute font-general-sans"
           style={{
-            top: "72.57%",
+            top: scaleFactor < 0.6 ? "65%" : "72.57%",
             left: "46.14%",
           }}
         >
@@ -301,7 +301,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
         <div
           className="absolute font-general-sans"
           style={{
-            top: "72.57%",
+            top: scaleFactor < 0.6 ? "65%" : "72.57%",
             left: "72%",
           }}
         >
