@@ -1,7 +1,6 @@
 import { useRef, useState } from "react";
 import { captureElementAsBlob, downloadBlob, shareOnTwitter, uploadImageToBackend } from "@/utils/imageExport";
 
-// TODO: Replace with your actual backend endpoint
 const UPLOAD_ENDPOINT = "http://35.229.69.156/api/ipfs/upload-image";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
@@ -48,7 +47,7 @@ interface WrapCardProps {
   onReset: () => void;
 }
 
-// Full card template images mapping - archetype name + oneliner are baked into templates
+// Full card template images mapping
 const templateImages: Record<string, string> = {
   Whale: whaleTemplate,
   Trencher: trencherTemplate,
@@ -107,13 +106,9 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
     setIsExporting(true);
     try {
       const blob = await captureElementAsBlob(cardRef.current);
-
-      // Upload to your backend and get public URL
       const imageUrl = await uploadImageToBackend(blob, UPLOAD_ENDPOINT);
-
       const shareText = "Got my 2025 onchain wrap from @0xPPL_. Check yours!";
       shareOnTwitter(shareText, imageUrl);
-
       toast({
         title: "Opening Twitter...",
         description: "Your wrap image is ready to share!",
@@ -132,38 +127,38 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
 
   return (
     <div className="w-full flex-col animate-scale-in flex items-center justify-end mt-8 lg:mt-[60px]">
-      {/* Main card container - fixed aspect ratio matching template */}
+      {/* Main card container - fixed aspect ratio matching template (780x468 = 1.667:1) */}
       <div
         ref={cardRef}
         id="wrap-card"
-        className="relative w-full max-w-[1000px] overflow-hidden"
-        style={{ aspectRatio: "1000 / 600" }}
+        className="relative w-full max-w-[780px] overflow-hidden"
+        style={{ aspectRatio: "780 / 468" }}
       >
         {/* Full template image as background */}
         <img
           src={templateImage}
           alt={`${archetype} card template`}
-          className="absolute inset-0 w-full h-full object-contain"
+          className="absolute inset-0 w-full h-full object-cover"
           draggable={false}
         />
 
-        {/* ===== DYNAMIC TEXT OVERLAYS - No backgrounds, transparent ===== */}
+        {/* ===== DYNAMIC TEXT OVERLAYS ===== */}
+        {/* All positions are based on the 780x468 template layout */}
 
-        {/* Overall PnL value */}
+        {/* Overall PnL value - positioned to the right of "Overall pnl" label */}
         <div
           className="absolute font-general-sans"
           style={{
-            top: "calc(26% - 10px)",
-            right: "calc(7% - 5px)",
+            top: "14.5%",
+            right: "4%",
           }}
         >
           <span
             style={{
               color: stats.pnlPositive ? "#22c55e" : "#ef4444",
-              fontSize: "clamp(12px, 2.2vw, 22px)",
+              fontSize: "clamp(14px, 2.8vw, 22px)",
               fontWeight: 600,
-              fontVariant: "small-caps",
-              lineHeight: "100%",
+              lineHeight: 1,
             }}
           >
             {stats.pnlPositive ? "+" : ""}
@@ -171,22 +166,21 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           </span>
         </div>
 
-        {/* Biggest profit value with token */}
+        {/* Biggest profit value - below "Biggest profit" label */}
         <div
-          className="absolute font-general-sans flex flex-col"
+          className="absolute font-general-sans"
           style={{
-            top: "calc(55% + 5px)",
-            left: "calc(44% + 15px)",
+            top: "52%",
+            left: "45.5%",
           }}
         >
-          <div className="flex items-center gap-1 lg:gap-1.5">
+          <div className="flex items-center gap-1.5">
             <span
               style={{
                 color: "#22c55e",
-                fontSize: "clamp(10px, 2.39vw, 23.97px)",
+                fontSize: "clamp(12px, 2.4vw, 19px)",
                 fontWeight: 500,
-                fontVariant: "small-caps",
-                lineHeight: "100%",
+                lineHeight: 1,
               }}
             >
               +{stats.biggestProfit}
@@ -197,8 +191,8 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
                   src={stats.biggestProfitToken.logo || defaultTokenImage}
                   alt={stats.biggestProfitToken.symbol || "token"}
                   style={{
-                    width: "clamp(8px, 1.66vw, 16.56px)",
-                    height: "clamp(8px, 1.66vw, 16.56px)",
+                    width: "clamp(12px, 2vw, 16px)",
+                    height: "clamp(12px, 2vw, 16px)",
                   }}
                   className="rounded-full object-cover"
                 />
@@ -206,9 +200,9 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
                   <span
                     style={{
                       color: "#9CA3AF",
-                      fontSize: "clamp(8px, 1.47vw, 14.72px)",
+                      fontSize: "clamp(10px, 1.6vw, 13px)",
                       fontWeight: 500,
-                      lineHeight: "100%",
+                      lineHeight: 1,
                     }}
                   >
                     {stats.biggestProfitToken.symbol}
@@ -219,22 +213,21 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           </div>
         </div>
 
-        {/* Biggest loss value with token */}
+        {/* Biggest loss value - below "Biggest loss" label */}
         <div
-          className="absolute font-general-sans flex flex-col"
+          className="absolute font-general-sans"
           style={{
-            top: "calc(55% + 5px)",
-            left: "calc(71% + 10px)",
+            top: "52%",
+            left: "72%",
           }}
         >
-          <div className="flex items-center gap-1 lg:gap-1.5">
+          <div className="flex items-center gap-1.5">
             <span
               style={{
                 color: "#ef4444",
-                fontSize: "clamp(10px, 2.39vw, 23.97px)",
+                fontSize: "clamp(12px, 2.4vw, 19px)",
                 fontWeight: 500,
-                fontVariant: "small-caps",
-                lineHeight: "100%",
+                lineHeight: 1,
               }}
             >
               {stats.biggestLoss}
@@ -245,8 +238,8 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
                   src={stats.biggestLossToken.logo || defaultTokenImage}
                   alt={stats.biggestLossToken.symbol || "token"}
                   style={{
-                    width: "clamp(8px, 1.66vw, 16.56px)",
-                    height: "clamp(8px, 1.66vw, 16.56px)",
+                    width: "clamp(12px, 2vw, 16px)",
+                    height: "clamp(12px, 2vw, 16px)",
                   }}
                   className="rounded-full object-cover"
                 />
@@ -254,9 +247,9 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
                   <span
                     style={{
                       color: "#9CA3AF",
-                      fontSize: "clamp(8px, 1.47vw, 14.72px)",
+                      fontSize: "clamp(10px, 1.6vw, 13px)",
                       fontWeight: 500,
-                      lineHeight: "100%",
+                      lineHeight: 1,
                     }}
                   >
                     {stats.biggestLossToken.symbol}
@@ -267,63 +260,61 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           </div>
         </div>
 
-        {/* Win rate value */}
+        {/* Win rate value - below "Win rate" label */}
         <div
           className="absolute font-general-sans"
           style={{
-            top: "calc(75% - 10px)",
-            left: "calc(44% + 15px)",
+            top: "73%",
+            left: "45.5%",
           }}
         >
           <span
             style={{
               color: "#ffffff",
-              fontSize: "clamp(10px, 2.39vw, 23.97px)",
+              fontSize: "clamp(12px, 2.4vw, 19px)",
               fontWeight: 500,
-              fontVariant: "small-caps",
-              lineHeight: "100%",
+              lineHeight: 1,
             }}
           >
             {stats.winRate}
           </span>
         </div>
 
-        {/* Trading volume value */}
+        {/* Trading volume value - below "Trading volume" label */}
         <div
           className="absolute font-general-sans"
           style={{
-            top: "calc(75% - 10px)",
-            left: "calc(71% + 5px)",
+            top: "73%",
+            left: "72%",
           }}
         >
           <span
             style={{
               color: "#ffffff",
-              fontSize: "clamp(10px, 2.39vw, 23.97px)",
+              fontSize: "clamp(12px, 2.4vw, 19px)",
               fontWeight: 500,
-              fontVariant: "small-caps",
-              lineHeight: "100%",
+              lineHeight: 1,
             }}
           >
             {stats.totalVolume}
           </span>
         </div>
 
-        {/* Wallet address - bottom area */}
+        {/* Wallet address - bottom right */}
         <div
-          className="absolute font-general-sans text-right"
+          className="absolute font-general-sans"
           style={{
             bottom: "4%",
-            right: "calc(4% + 17px)",
+            right: "4%",
           }}
         >
           <span
             style={{
               color: "#60a5fa",
-              fontSize: "clamp(8px, 1.4vw, 14px)",
-              fontWeight: 600,
+              fontSize: "clamp(10px, 1.5vw, 12px)",
+              fontWeight: 500,
+              lineHeight: 1,
             }}
-            className="font-normal"
           >
             {formatAddress(stats.address, stats.addressCount)}
           </span>
