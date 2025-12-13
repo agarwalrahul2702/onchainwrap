@@ -171,7 +171,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           className="absolute font-general-sans"
           style={{
             top: "52%",
-            left: "45.5%",
+            left: "46.14%",
           }}
         >
           <div className="flex items-center gap-1.5">
@@ -265,7 +265,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           className="absolute font-general-sans"
           style={{
             top: "73%",
-            left: "45.5%",
+            left: "46.14%",
           }}
         >
           <span
