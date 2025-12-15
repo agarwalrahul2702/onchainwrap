@@ -94,7 +94,7 @@ const AddressInput = ({
 
       {/* Input field */}
       <div className="relative mx-2 sm:mx-[20px]">
-        <div className="absolute left-2.5 sm:left-3 lg:left-[1vw] top-1/2 -translate-y-1/2 text-muted-foreground">
+        <div className="absolute left-2.5 sm:left-3 lg:left-[1vw] top-1/2 -translate-y-[calc(50%-7px)] text-muted-foreground">
           <ClipboardList className="w-3.5 h-3.5 sm:w-4 sm:h-4 lg:w-[1.2vw] lg:h-[1.2vw]" />
         </div>
         <input type="text" value={address} onChange={e => {
