@@ -106,13 +106,6 @@ const AddressInput = ({
       {/* Error message */}
       {error && <p className="text-destructive text-[10px] sm:text-xs lg:text-[0.85vw] text-center px-2">{error}</p>}
 
-      {/* Twitter input field */}
-      <div className="relative mx-2 sm:mx-[20px]">
-        <div className="absolute left-2.5 sm:left-3 lg:left-[1vw] top-1/2 -translate-y-[calc(50%+7px)] text-[#1DA1F2]">
-          <Twitter className="w-[14.7px] h-[14.7px] sm:w-[18.4px] sm:h-[18.4px] lg:w-[1.29vw] lg:h-[1.29vw]" />
-        </div>
-        <input type="text" value={twitterHandle} onChange={e => setTwitterHandle(e.target.value)} disabled={isLoading} className="w-full bg-[#1a1d2e] border border-border/30 rounded-lg pl-8 sm:pl-10 lg:pl-[2.5vw] pr-2 sm:pr-3 lg:pr-[1vw] py-2.5 sm:py-3 lg:py-[1.2vh] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-[#1DA1F2]/30 transition-all font-mono text-[11px] sm:text-xs lg:text-[0.9vw] mt-0 mb-2 sm:mb-3 lg:mb-[15px]" placeholder="Twitter handle (optional)" />
-      </div>
 
       {/* Buttons row */}
       <div className="flex flex-col lg:flex-row gap-2 mt-0 mb-0">
