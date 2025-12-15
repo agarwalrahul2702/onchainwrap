@@ -166,14 +166,14 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
         <div
           className="absolute font-general-sans"
           style={{
-            top: "21.75%",
+            top: scaleFactor < 0.6 ? "13%" : "21.75%",
             right: "5.8%",
           }}
         >
           <span
             style={{
               color: stats.pnlPositive ? "#22c55e" : "#ef4444",
-              fontSize: `${Math.max(10, 22 * scaleFactor)}px`,
+              fontSize: scaleFactor < 0.6 ? `${Math.max(5, 10 * scaleFactor)}px` : `${Math.max(10, 22 * scaleFactor)}px`,
               fontWeight: 600,
               lineHeight: 1,
             }}
@@ -195,7 +195,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
             <span
               style={{
                 color: "#22c55e",
-                fontSize: `${Math.max(9, 20 * scaleFactor)}px`,
+                fontSize: scaleFactor < 0.6 ? `${Math.max(5, 12 * scaleFactor)}px` : `${Math.max(9, 20 * scaleFactor)}px`,
                 fontWeight: 500,
                 lineHeight: 1,
               }}
@@ -242,7 +242,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
             <span
               style={{
                 color: "#ef4444",
-                fontSize: `${Math.max(9, 20 * scaleFactor)}px`,
+                fontSize: scaleFactor < 0.6 ? `${Math.max(5, 12 * scaleFactor)}px` : `${Math.max(9, 20 * scaleFactor)}px`,
                 fontWeight: 500,
                 lineHeight: 1,
               }}
@@ -288,7 +288,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           <span
             style={{
               color: "#ffffff",
-              fontSize: `${Math.max(9, 20 * scaleFactor)}px`,
+              fontSize: scaleFactor < 0.6 ? `${Math.max(5, 12 * scaleFactor)}px` : `${Math.max(9, 20 * scaleFactor)}px`,
               fontWeight: 500,
               lineHeight: 1,
             }}
@@ -308,7 +308,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           <span
             style={{
               color: "#ffffff",
-              fontSize: `${Math.max(9, 20 * scaleFactor)}px`,
+              fontSize: scaleFactor < 0.6 ? `${Math.max(5, 12 * scaleFactor)}px` : `${Math.max(9, 20 * scaleFactor)}px`,
               fontWeight: 500,
               lineHeight: 1,
             }}
