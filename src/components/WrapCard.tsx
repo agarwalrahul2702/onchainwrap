@@ -41,6 +41,7 @@ export interface WrapStats {
   archetype?: string;
   address: string;
   addressCount: number;
+  twitterHandle?: string;
 }
 
 interface WrapCardProps {
@@ -317,14 +318,27 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           </span>
         </div>
 
-        {/* Wallet address - bottom right */}
+        {/* Twitter handle and Wallet address - bottom right */}
         <div
-          className="absolute font-general-sans"
+          className="absolute font-general-sans flex items-center"
           style={{
             bottom: "4%",
             right: "5.41%",
+            gap: `${Math.max(4, 8 * scaleFactor)}px`,
           }}
         >
+          {stats.twitterHandle && (
+            <span
+              style={{
+                color: "#60a5fa",
+                fontSize: `${Math.max(7, 12 * scaleFactor)}px`,
+                fontWeight: 500,
+                lineHeight: 1,
+              }}
+            >
+              @{stats.twitterHandle.replace(/^@/, '')}
+            </span>
+          )}
           <span
             style={{
               color: "#60a5fa",

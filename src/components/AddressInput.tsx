@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ClipboardList, Sparkles, X, Twitter } from "lucide-react";
 interface AddressInputProps {
-  onGenerate: (addresses: string[]) => void;
+  onGenerate: (addresses: string[], twitterHandle?: string) => void;
   isLoading: boolean;
 }
 const AddressInput = ({
@@ -70,7 +70,7 @@ const AddressInput = ({
       return;
     }
     console.log("Submitting addresses:", allAddresses);
-    onGenerate(allAddresses);
+    onGenerate(allAddresses, twitterHandle.trim() || undefined);
   };
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
