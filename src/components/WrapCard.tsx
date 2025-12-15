@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { captureElementAsBlob, downloadBlob, copyBlobToClipboard, shareOnTwitter, uploadImageToBackend } from "@/utils/imageExport";
 import copyIcon from "@/assets/copy-icon.png";
 
@@ -98,10 +98,25 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
   const archetype = stats.archetype || "Average Crypto Bro";
   const templateImage = templateImages[archetype] || averageCryptoBroTemplate;
 
-  const handleDownload = async () => {
+  const runExportAction = async (
+    action: 'download' | 'copy' | 'share',
+    fn: () => Promise<void>
+  ) => {
     if (!cardRef.current || exportingAction) return;
-    setExportingAction('download');
+    setExportingAction(action);
     try {
+      await fn();
+    } finally {
+      // Small delay so the spinner state doesn't “flash” across buttons on fast actions
+      window.setTimeout(() => setExportingAction(null), 200);
+    }
+  };
+
+  const handleDownload = async (e?: React.MouseEvent) => {
+    e?.preventDefault();
+    e?.stopPropagation();
+    return runExportAction('download', async () => {
+      if (!cardRef.current) return;
       const blob = await captureElementAsBlob(cardRef.current);
       const shortAddress = stats.address.slice(0, 8);
       downloadBlob(blob, `onchain_wrap_${shortAddress}.png`);
@@ -109,44 +124,28 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
         title: "Image downloaded!",
         description: "Your wrap card has been saved.",
       });
-    } catch (error) {
-      console.error("Failed to download image:", error);
-      toast({
-        title: "Something went wrong",
-        description: "Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setExportingAction(null);
-    }
+    });
   };
 
-  const handleCopy = async () => {
-    if (!cardRef.current || exportingAction) return;
-    setExportingAction('copy');
-    try {
+  const handleCopy = async (e?: React.MouseEvent) => {
+    e?.preventDefault();
+    e?.stopPropagation();
+    return runExportAction('copy', async () => {
+      if (!cardRef.current) return;
       const blob = await captureElementAsBlob(cardRef.current);
       await copyBlobToClipboard(blob);
       toast({
         title: "Image copied!",
         description: "Your wrap card has been copied to clipboard.",
       });
-    } catch (error) {
-      console.error("Failed to copy image:", error);
-      toast({
-        title: "Something went wrong",
-        description: "Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setExportingAction(null);
-    }
+    });
   };
 
-  const handleShareOnX = async () => {
-    if (!cardRef.current || exportingAction) return;
-    setExportingAction('share');
-    try {
+  const handleShareOnX = async (e?: React.MouseEvent) => {
+    e?.preventDefault();
+    e?.stopPropagation();
+    return runExportAction('share', async () => {
+      if (!cardRef.current) return;
       const blob = await captureElementAsBlob(cardRef.current);
       const imageUrl = await uploadImageToBackend(blob, UPLOAD_ENDPOINT);
       const shareText = "Got my 2025 onchain wrap from @0xPPL_. Check yours!";
@@ -155,16 +154,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
         title: "Opening Twitter...",
         description: "Your wrap image is ready to share!",
       });
-    } catch (error) {
-      console.error("Failed to share:", error);
-      toast({
-        title: "Something went wrong",
-        description: "Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setExportingAction(null);
-    }
+    });
   };
 
   return (
