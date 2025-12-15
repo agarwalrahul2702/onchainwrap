@@ -100,7 +100,7 @@ const AddressInput = ({
         <input type="text" value={address} onChange={e => {
         setAddress(e.target.value);
         setError("");
-      }} onKeyDown={handleKeyDown} placeholder={addresses.length > 0 ? "Add another wallet" : "Paste your EVM or Sol address here"} disabled={isLoading} className="w-full bg-[#1a1d2e] border border-border/30 rounded-lg pl-8 sm:pl-10 lg:pl-[2.5vw] pr-2 sm:pr-3 lg:pr-[1vw] py-2.5 sm:py-3 lg:py-[1.2vh] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-[#3B82F6]/30 transition-all font-mono text-[11px] sm:text-xs lg:text-[0.9vw] my-1.5 sm:my-2 lg:my-[10px]" />
+      }} onKeyDown={handleKeyDown} placeholder={addresses.length > 0 ? "Add another wallet" : "Paste your EVM or Sol address here"} disabled={isLoading} className="w-full bg-[#1a1d2e] border border-border/30 rounded-lg pl-8 sm:pl-10 lg:pl-[2.5vw] pr-2 sm:pr-3 lg:pr-[1vw] py-2.5 sm:py-3 lg:py-[1.2vh] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-[#3B82F6]/30 transition-all font-mono text-[11px] sm:text-xs lg:text-[0.9vw] mt-1.5 sm:mt-2 lg:mt-[10px] mb-2 sm:mb-3 lg:mb-[15px]" />
       </div>
 
       {/* Error message */}
@@ -117,12 +117,12 @@ const AddressInput = ({
           onChange={e => setTwitterHandle(e.target.value)} 
           placeholder="Paste your Twitter profile link (optional)" 
           disabled={isLoading} 
-          className="w-full bg-[#1a1d2e] border border-border/30 rounded-lg pl-8 sm:pl-10 lg:pl-[2.5vw] pr-2 sm:pr-3 lg:pr-[1vw] py-2.5 sm:py-3 lg:py-[1.2vh] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-[#1DA1F2]/30 transition-all font-mono text-[11px] sm:text-xs lg:text-[0.9vw] my-1.5 sm:my-2 lg:my-[10px]" 
+          className="w-full bg-[#1a1d2e] border border-border/30 rounded-lg pl-8 sm:pl-10 lg:pl-[2.5vw] pr-2 sm:pr-3 lg:pr-[1vw] py-2.5 sm:py-3 lg:py-[1.2vh] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-[#1DA1F2]/30 transition-all font-mono text-[11px] sm:text-xs lg:text-[0.9vw] mt-1.5 sm:mt-2 lg:mt-[10px] mb-1.5 sm:mb-2 lg:mb-[10px]" 
         />
       </div>
 
       {/* Buttons row */}
-      <div className="flex flex-col lg:flex-row gap-2 my-2 sm:my-3 lg:my-[15px] mb-0">
+      <div className="flex flex-col lg:flex-row gap-2 mt-2 sm:mt-3 lg:mt-[15px] mb-0">
         {/* Add button - only show if there's input */}
         {address.trim() && <button onClick={handleAddAddress} disabled={isLoading} className="border border-[#3b82f6] text-[#60a5fa] hover:bg-[#1d4ed8]/20 font-medium py-2.5 sm:py-3 lg:py-[1.2vh] px-3 sm:px-4 lg:px-[1.5vw] rounded-lg transition-colors text-xs sm:text-sm lg:text-[1vw] whitespace-nowrap mx-2 sm:mx-0 sm:ml-[20px]">
             + Add more wallets
