@@ -334,7 +334,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
                 fontSize: `${Math.max(8.4, 14.4 * scaleFactor)}px`,
                 fontWeight: 500,
                 lineHeight: 1,
-                marginRight: `${230 * scaleFactor}px`,
+                marginRight: `${215 * scaleFactor}px`,
               }}
             >
               @{stats.twitterHandle.replace(/^@/, '')}
