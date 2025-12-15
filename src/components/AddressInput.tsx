@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ClipboardList, Sparkles, X } from "lucide-react";
+import { ClipboardList, Sparkles, X, Twitter } from "lucide-react";
 interface AddressInputProps {
   onGenerate: (addresses: string[]) => void;
   isLoading: boolean;
@@ -104,6 +104,23 @@ const AddressInput = ({
 
       {/* Error message */}
       {error && <p className="text-destructive text-[10px] sm:text-xs lg:text-[0.85vw] text-center px-2">{error}</p>}
+
+      {/* Twitter personalization card */}
+      <div className="mx-2 sm:mx-[20px] mt-2 sm:mt-3">
+        <div className="bg-[#1a1d2e]/60 border border-border/20 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 flex items-center gap-2 sm:gap-3">
+          <div className="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#1DA1F2]/10 flex items-center justify-center">
+            <Twitter className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#1DA1F2]" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-foreground text-[11px] sm:text-xs lg:text-[0.85vw] font-medium">
+              Personalise your card with your Twitter
+            </p>
+            <p className="text-muted-foreground text-[10px] sm:text-[11px] lg:text-[0.75vw]">
+              (optional)
+            </p>
+          </div>
+        </div>
+      </div>
 
       {/* Buttons row */}
       <div className="flex flex-col lg:flex-row gap-2 my-2 sm:my-3 lg:my-[15px] mb-0">
