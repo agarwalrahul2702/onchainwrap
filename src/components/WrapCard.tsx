@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { captureElementAsBlob, downloadBlob, shareOnTwitter, uploadImageToBackend } from "@/utils/imageExport";
+import { captureElementAsBlob, downloadBlob, copyBlobToClipboard, shareOnTwitter, uploadImageToBackend } from "@/utils/imageExport";
+import copyIcon from "@/assets/copy-icon.png";
 
 // Backend endpoint (use dev server until Cloudflare is configured for production)
 const UPLOAD_ENDPOINT = "https://api.0xppl.com/api/ipfs/upload-image";
@@ -110,6 +111,28 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
       });
     } catch (error) {
       console.error("Failed to download image:", error);
+      toast({
+        title: "Something went wrong",
+        description: "Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
+  const handleCopy = async () => {
+    if (!cardRef.current || isExporting) return;
+    setIsExporting(true);
+    try {
+      const blob = await captureElementAsBlob(cardRef.current);
+      await copyBlobToClipboard(blob);
+      toast({
+        title: "Image copied!",
+        description: "Your wrap card has been copied to clipboard.",
+      });
+    } catch (error) {
+      console.error("Failed to copy image:", error);
       toast({
         title: "Something went wrong",
         description: "Please try again.",
@@ -394,6 +417,17 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
             </svg>
           )}
           Download
+        </button>
+        <button
+          onClick={handleCopy}
+          disabled={isExporting}
+          className="w-full sm:w-auto lg:w-auto border border-[#3b82f6] hover:bg-[#1d4ed8]/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors rounded-lg px-3 sm:px-4 lg:px-4 py-2 sm:py-2.5 lg:py-3 flex items-center justify-center"
+        >
+          {isExporting ? (
+            <Loader2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 animate-spin text-[#60a5fa]" />
+          ) : (
+            <img src={copyIcon} alt="Copy" className="w-4 h-4 sm:w-5 sm:h-5" style={{ filter: 'invert(62%) sepia(52%) saturate(1347%) hue-rotate(194deg) brightness(101%) contrast(96%)' }} />
+          )}
         </button>
         <button
           onClick={handleShareOnX}
