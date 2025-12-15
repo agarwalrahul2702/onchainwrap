@@ -330,11 +330,14 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           {stats.twitterHandle && (
             <span
               style={{
-              color: "#60a5fa",
+                position: "absolute",
+                right: `${265 * scaleFactor}px`,
+                color: "#60a5fa",
                 fontSize: `${Math.max(8.4, 14.4 * scaleFactor)}px`,
                 fontWeight: 500,
                 lineHeight: 1,
-                transform: "translate(-215px, -2px)",
+                textAlign: "right",
+                transform: "translateY(-2px)",
               }}
             >
               @{stats.twitterHandle.replace(/^@/, '')}
