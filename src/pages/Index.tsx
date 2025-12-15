@@ -10,10 +10,13 @@ type AppState = "input" | "loading" | "result";
 const Index = () => {
   const [appState, setAppState] = useState<AppState>("input");
   const [stats, setStats] = useState<WrapStats | null>(null);
-  const handleGenerate = async (addresses: string[]) => {
+  const handleGenerate = async (addresses: string[], twitterHandle?: string) => {
     setAppState("loading");
     try {
       const result = await fetchWrapStats(addresses);
+      if (twitterHandle) {
+        result.twitterHandle = twitterHandle;
+      }
       setStats(result);
       setAppState("result");
     } catch (error) {
