@@ -175,7 +175,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           <span
             style={{
               color: stats.pnlPositive ? "#22c55e" : "#ef4444",
-              fontSize: scaleFactor < 0.6 ? `${Math.max(5, 10 * scaleFactor)}px` : `${Math.max(10, 22 * scaleFactor)}px`,
+              fontSize: scaleFactor < 0.6 ? `${Math.max(8, 12 * scaleFactor)}px` : `${Math.max(10, 22 * scaleFactor)}px`,
               fontWeight: 600,
               lineHeight: 1,
             }}
@@ -205,13 +205,13 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
               {stats.biggestProfit !== "No data" && "+"}{stats.biggestProfit}
             </span>
             {stats.biggestProfitToken && (
-              <div className="flex items-center" style={{ gap: `${Math.max(2, 4 * scaleFactor)}px` }}>
+              <div className="flex items-center" style={{ gap: `${scaleFactor < 0.6 ? Math.max(1, 2 * scaleFactor) : Math.max(2, 4 * scaleFactor)}px` }}>
                 <img
                   src={stats.biggestProfitToken.logo || defaultTokenImage}
                   alt={stats.biggestProfitToken.symbol || "token"}
                   style={{
-                    width: `${Math.max(8, 16 * scaleFactor)}px`,
-                    height: `${Math.max(8, 16 * scaleFactor)}px`,
+                    width: `${scaleFactor < 0.6 ? Math.max(5, 10 * scaleFactor) : Math.max(8, 16 * scaleFactor)}px`,
+                    height: `${scaleFactor < 0.6 ? Math.max(5, 10 * scaleFactor) : Math.max(8, 16 * scaleFactor)}px`,
                   }}
                   className="rounded-full object-cover"
                 />
@@ -219,7 +219,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
                   <span
                     style={{
                       color: "#9CA3AF",
-                      fontSize: `${Math.max(7, 13 * scaleFactor)}px`,
+                      fontSize: `${scaleFactor < 0.6 ? Math.max(4, 8 * scaleFactor) : Math.max(7, 13 * scaleFactor)}px`,
                       fontWeight: 500,
                       lineHeight: 1,
                     }}
@@ -252,13 +252,13 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
               {stats.biggestLoss}
             </span>
             {stats.biggestLossToken && (
-              <div className="flex items-center" style={{ gap: `${Math.max(2, 4 * scaleFactor)}px` }}>
+              <div className="flex items-center" style={{ gap: `${scaleFactor < 0.6 ? Math.max(1, 2 * scaleFactor) : Math.max(2, 4 * scaleFactor)}px` }}>
                 <img
                   src={stats.biggestLossToken.logo || defaultTokenImage}
                   alt={stats.biggestLossToken.symbol || "token"}
                   style={{
-                    width: `${Math.max(8, 16 * scaleFactor)}px`,
-                    height: `${Math.max(8, 16 * scaleFactor)}px`,
+                    width: `${scaleFactor < 0.6 ? Math.max(5, 10 * scaleFactor) : Math.max(8, 16 * scaleFactor)}px`,
+                    height: `${scaleFactor < 0.6 ? Math.max(5, 10 * scaleFactor) : Math.max(8, 16 * scaleFactor)}px`,
                   }}
                   className="rounded-full object-cover"
                 />
@@ -266,7 +266,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
                   <span
                     style={{
                       color: "#9CA3AF",
-                      fontSize: `${Math.max(7, 13 * scaleFactor)}px`,
+                      fontSize: `${scaleFactor < 0.6 ? Math.max(4, 8 * scaleFactor) : Math.max(7, 13 * scaleFactor)}px`,
                       fontWeight: 500,
                       lineHeight: 1,
                     }}
@@ -283,7 +283,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
         <div
           className="absolute font-general-sans"
           style={{
-            top: scaleFactor < 0.6 ? "65%" : "72.57%",
+            top: scaleFactor < 0.6 ? "62%" : "72.57%",
             left: "46.14%",
           }}
         >
@@ -303,7 +303,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
         <div
           className="absolute font-general-sans"
           style={{
-            top: scaleFactor < 0.6 ? "65%" : "72.57%",
+            top: scaleFactor < 0.6 ? "62%" : "72.57%",
             left: "72%",
           }}
         >
@@ -360,7 +360,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           <span
             style={{
               color: "#60a5fa",
-              fontSize: `${Math.max(8.4, 14.4 * scaleFactor)}px`,
+              fontSize: `${Math.max(4, 1 * scaleFactor)}px`,
               fontWeight: 500,
               lineHeight: 1,
               marginRight: `${3 * scaleFactor}px`,
