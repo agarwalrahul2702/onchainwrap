@@ -332,7 +332,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
             <div
               style={{
                 position: "absolute",
-                right: `${280 * scaleFactor}px`,
+                right: `${330 * scaleFactor}px`,
                 display: "flex",
                 alignItems: "center",
                 gap: `${4 * scaleFactor}px`,
