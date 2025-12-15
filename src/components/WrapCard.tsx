@@ -335,7 +335,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
                 alt="X"
                 style={{
                   position: "absolute",
-                  right: `${370 * scaleFactor}px`,
+                  right: `${378 * scaleFactor}px`,
                   width: `${Math.max(12, 16 * scaleFactor)}px`,
                   height: `${Math.max(12, 16 * scaleFactor)}px`,
                   transform: "translateY(-2px)",
