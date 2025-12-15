@@ -330,11 +330,10 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           {stats.twitterHandle && (
             <span
               style={{
-                color: "#60a5fa",
+              color: "#60a5fa",
                 fontSize: `${Math.max(8.4, 14.4 * scaleFactor)}px`,
                 fontWeight: 500,
                 lineHeight: 1,
-                marginRight: `${219 * scaleFactor}px`,
                 transform: "translateY(-2px)",
               }}
             >
