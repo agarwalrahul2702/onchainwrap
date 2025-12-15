@@ -109,7 +109,7 @@ const AddressInput = ({
       {/* Twitter input field */}
       <div className="relative mx-2 sm:mx-[20px]">
         <div className="absolute left-2 sm:left-2.5 lg:left-[0.7vw] top-1/2 -translate-y-[calc(50%+7px)] text-[#1DA1F2]">
-          <Twitter className="w-4 h-4 sm:w-5 sm:h-5 lg:w-[1.4vw] lg:h-[1.4vw]" />
+          <Twitter className="w-[14.7px] h-[14.7px] sm:w-[18.4px] sm:h-[18.4px] lg:w-[1.29vw] lg:h-[1.29vw]" />
         </div>
         <input 
           type="text" 
