@@ -11,6 +11,7 @@ const AddressInput = ({
   const [address, setAddress] = useState("");
   const [addresses, setAddresses] = useState<string[]>([]);
   const [error, setError] = useState("");
+  const [twitterHandle, setTwitterHandle] = useState("");
   const isValidEVMAddress = (addr: string): boolean => {
     return /^0x[a-fA-F0-9]{40}$/.test(addr);
   };
@@ -105,21 +106,19 @@ const AddressInput = ({
       {/* Error message */}
       {error && <p className="text-destructive text-[10px] sm:text-xs lg:text-[0.85vw] text-center px-2">{error}</p>}
 
-      {/* Twitter personalization card */}
-      <div className="mx-2 sm:mx-[20px] mt-2 sm:mt-3">
-        <div className="bg-[#1a1d2e]/60 border border-border/20 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 flex items-center gap-2 sm:gap-3">
-          <div className="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#1DA1F2]/10 flex items-center justify-center">
-            <Twitter className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#1DA1F2]" />
-          </div>
-          <div className="flex-1 min-w-0">
-            <p className="text-foreground text-[11px] sm:text-xs lg:text-[0.85vw] font-medium">
-              Personalise your card with your Twitter
-            </p>
-            <p className="text-muted-foreground text-[10px] sm:text-[11px] lg:text-[0.75vw]">
-              (optional)
-            </p>
-          </div>
+      {/* Twitter input field */}
+      <div className="relative mx-2 sm:mx-[20px]">
+        <div className="absolute left-2.5 sm:left-3 lg:left-[1vw] top-1/2 -translate-y-1/2 text-[#1DA1F2]">
+          <Twitter className="w-3.5 h-3.5 sm:w-4 sm:h-4 lg:w-[1.2vw] lg:h-[1.2vw]" />
         </div>
+        <input 
+          type="text" 
+          value={twitterHandle} 
+          onChange={e => setTwitterHandle(e.target.value)} 
+          placeholder="Paste your Twitter profile link (optional)" 
+          disabled={isLoading} 
+          className="w-full bg-[#1a1d2e] border border-border/30 rounded-lg pl-8 sm:pl-10 lg:pl-[2.5vw] pr-2 sm:pr-3 lg:pr-[1vw] py-2.5 sm:py-3 lg:py-[1.2vh] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-[#1DA1F2]/30 transition-all font-mono text-[11px] sm:text-xs lg:text-[0.9vw] my-1.5 sm:my-2 lg:my-[10px]" 
+        />
       </div>
 
       {/* Buttons row */}
