@@ -100,7 +100,7 @@ const AddressInput = ({
         <input type="text" value={address} onChange={e => {
         setAddress(e.target.value);
         setError("");
-      }} onKeyDown={handleKeyDown} placeholder={addresses.length > 0 ? "Add another wallet" : "Paste your EVM or Sol address here"} disabled={isLoading} className="w-full bg-[#1a1d2e] border border-border/30 rounded-lg pl-8 sm:pl-10 lg:pl-[2.5vw] pr-2 sm:pr-3 lg:pr-[1vw] py-2.5 sm:py-3 lg:py-[1.2vh] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-[#3B82F6]/30 transition-all font-mono text-[11px] sm:text-xs lg:text-[0.9vw] mt-1.5 sm:mt-2 lg:mt-[10px] mb-0" />
+      }} onKeyDown={handleKeyDown} placeholder={addresses.length > 0 ? "Add another wallet" : "Paste your EVM address here"} disabled={isLoading} className="w-full bg-[#1a1d2e] border border-border/30 rounded-lg pl-8 sm:pl-10 lg:pl-[2.5vw] pr-2 sm:pr-3 lg:pr-[1vw] py-2.5 sm:py-3 lg:py-[1.2vh] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-[#3B82F6]/30 transition-all font-mono text-[11px] sm:text-xs lg:text-[0.9vw] mt-1.5 sm:mt-2 lg:mt-[10px] mb-0" />
       </div>
 
       {/* Error message */}
