@@ -68,7 +68,7 @@ const templateImages: Record<string, string> = {
 
 const WrapCard = ({ stats, onReset }: WrapCardProps) => {
   const cardRef = useRef<HTMLDivElement>(null);
-  const [isExporting, setIsExporting] = useState(false);
+  const [exportingAction, setExportingAction] = useState<'download' | 'copy' | 'share' | null>(null);
   const [cardWidth, setCardWidth] = useState(780);
   const { toast } = useToast();
 
@@ -99,8 +99,8 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
   const templateImage = templateImages[archetype] || averageCryptoBroTemplate;
 
   const handleDownload = async () => {
-    if (!cardRef.current || isExporting) return;
-    setIsExporting(true);
+    if (!cardRef.current || exportingAction) return;
+    setExportingAction('download');
     try {
       const blob = await captureElementAsBlob(cardRef.current);
       const shortAddress = stats.address.slice(0, 8);
@@ -117,13 +117,13 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
         variant: "destructive",
       });
     } finally {
-      setIsExporting(false);
+      setExportingAction(null);
     }
   };
 
   const handleCopy = async () => {
-    if (!cardRef.current || isExporting) return;
-    setIsExporting(true);
+    if (!cardRef.current || exportingAction) return;
+    setExportingAction('copy');
     try {
       const blob = await captureElementAsBlob(cardRef.current);
       await copyBlobToClipboard(blob);
@@ -139,13 +139,13 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
         variant: "destructive",
       });
     } finally {
-      setIsExporting(false);
+      setExportingAction(null);
     }
   };
 
   const handleShareOnX = async () => {
-    if (!cardRef.current || isExporting) return;
-    setIsExporting(true);
+    if (!cardRef.current || exportingAction) return;
+    setExportingAction('share');
     try {
       const blob = await captureElementAsBlob(cardRef.current);
       const imageUrl = await uploadImageToBackend(blob, UPLOAD_ENDPOINT);
@@ -163,7 +163,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
         variant: "destructive",
       });
     } finally {
-      setIsExporting(false);
+      setExportingAction(null);
     }
   };
 
@@ -404,10 +404,10 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
         </button>
         <button
           onClick={handleDownload}
-          disabled={isExporting}
+          disabled={!!exportingAction}
           className="w-full sm:w-auto lg:w-auto border border-[#3b82f6] text-[#60a5fa] hover:bg-[#1d4ed8]/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors rounded-lg px-3 sm:px-4 lg:px-6 py-2 sm:py-2.5 lg:py-3 font-medium flex items-center justify-center gap-1.5 sm:gap-2 text-xs sm:text-sm lg:text-base"
         >
-          {isExporting ? (
+          {exportingAction === 'download' ? (
             <Loader2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 animate-spin" />
           ) : (
             <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -420,10 +420,10 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
         </button>
         <button
           onClick={handleCopy}
-          disabled={isExporting}
+          disabled={!!exportingAction}
           className="w-full sm:w-auto lg:w-auto border border-[#3b82f6] hover:bg-[#1d4ed8]/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors rounded-lg px-3 sm:px-4 lg:px-4 py-2 sm:py-2.5 lg:py-3 flex items-center justify-center"
         >
-          {isExporting ? (
+          {exportingAction === 'copy' ? (
             <Loader2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 animate-spin text-[#60a5fa]" />
           ) : (
             <img src={copyIcon} alt="Copy" className="w-4 h-4 sm:w-5 sm:h-5" style={{ filter: 'invert(62%) sepia(52%) saturate(1347%) hue-rotate(194deg) brightness(101%) contrast(96%)' }} />
@@ -431,11 +431,11 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
         </button>
         <button
           onClick={handleShareOnX}
-          disabled={isExporting}
+          disabled={!!exportingAction}
           className="w-full sm:w-auto lg:w-auto bg-[#1d4ed8] hover:bg-[#1e40af] disabled:opacity-50 disabled:cursor-not-allowed transition-colors rounded-lg px-3 sm:px-4 lg:px-6 py-2 sm:py-2.5 lg:py-3 flex items-center justify-center gap-1.5 sm:gap-2 font-medium text-white text-xs sm:text-sm lg:text-base"
         >
           Share on
-          {isExporting ? (
+          {exportingAction === 'share' ? (
             <Loader2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 animate-spin" />
           ) : (
             <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="currentColor">
