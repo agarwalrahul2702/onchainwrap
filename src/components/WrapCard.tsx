@@ -20,6 +20,7 @@ import averageCryptoBroTemplate from "@/assets/card-templates/average-crypto-bro
 
 // Default token fallback image
 import defaultTokenImage from "@/assets/P1.png";
+import xLogo from "@/assets/x-logo.png";
 
 export interface TokenInfo {
   logo?: string;
@@ -328,20 +329,33 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           }}
         >
           {stats.twitterHandle && (
-            <span
-              style={{
-                position: "absolute",
-                right: `${329 * scaleFactor}px`,
-                color: "#60a5fa",
-                fontSize: `${Math.max(8.4, 14.4 * scaleFactor)}px`,
-                fontWeight: 500,
-                lineHeight: 1,
-                textAlign: "right",
-                transform: "translateY(-2px)",
-              }}
-            >
-              @{stats.twitterHandle.replace(/^@/, '')}
-            </span>
+            <>
+              <img
+                src={xLogo}
+                alt="X"
+                style={{
+                  position: "absolute",
+                  right: `${349 * scaleFactor}px`,
+                  width: `${Math.max(12, 16 * scaleFactor)}px`,
+                  height: `${Math.max(12, 16 * scaleFactor)}px`,
+                  transform: "translateY(-2px)",
+                }}
+              />
+              <span
+                style={{
+                  position: "absolute",
+                  right: `${329 * scaleFactor}px`,
+                  color: "#60a5fa",
+                  fontSize: `${Math.max(8.4, 14.4 * scaleFactor)}px`,
+                  fontWeight: 500,
+                  lineHeight: 1,
+                  textAlign: "right",
+                  transform: "translateY(-2px)",
+                }}
+              >
+                @{stats.twitterHandle.replace(/^@/, '')}
+              </span>
+            </>
           )}
           <span
             style={{
