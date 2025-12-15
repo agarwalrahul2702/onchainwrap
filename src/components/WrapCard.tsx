@@ -329,33 +329,37 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           }}
         >
           {stats.twitterHandle && (
-            <>
-              <img
-                src={xLogo}
-                alt="X"
-                style={{
-                  position: "absolute",
-                  right: `${378 * scaleFactor}px`,
-                  width: `${Math.max(12, 16 * scaleFactor)}px`,
-                  height: `${Math.max(12, 16 * scaleFactor)}px`,
-                  transform: "translateY(-2px)",
-                }}
-              />
+            <div
+              style={{
+                position: "absolute",
+                right: `${378 * scaleFactor}px`,
+                display: "flex",
+                alignItems: "center",
+                gap: `${4 * scaleFactor}px`,
+                transform: "translateY(-2px)",
+                flexDirection: "row-reverse",
+              }}
+            >
               <span
                 style={{
-                  position: "absolute",
-                  left: `${(780 - 378 + 20) * scaleFactor}px`,
                   color: "#60a5fa",
                   fontSize: `${Math.max(8.4, 14.4 * scaleFactor)}px`,
                   fontWeight: 500,
                   lineHeight: 1,
                   whiteSpace: "nowrap",
-                  transform: "translateY(-2px)",
                 }}
               >
                 @{stats.twitterHandle.replace(/^@/, '')}
               </span>
-            </>
+              <img
+                src={xLogo}
+                alt="X"
+                style={{
+                  width: `${Math.max(12, 16 * scaleFactor)}px`,
+                  height: `${Math.max(12, 16 * scaleFactor)}px`,
+                }}
+              />
+            </div>
           )}
           <span
             style={{
