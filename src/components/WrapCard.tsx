@@ -122,13 +122,6 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
       const shortAddress = stats.address.slice(0, 8);
       downloadBlob(blob, `onchain_wrap_${shortAddress}.png`);
       trackEvent(EVENTS.CARD_DOWNLOADED, { archetype: stats.archetype });
-      if (window.gtag) {
-        window.gtag('event', 'download_image', {
-          event_callback: () => {
-            console.log('[GA4] Event fired:', 'download_image');
-          }
-        });
-      }
       toast({
         title: "Image downloaded!",
         description: "Your wrap card has been saved.",
@@ -144,13 +137,6 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
       const blob = await captureElementAsBlob(cardRef.current);
       await copyBlobToClipboard(blob);
       trackEvent(EVENTS.CARD_COPIED, { archetype: stats.archetype });
-      if (window.gtag) {
-        window.gtag('event', 'copy_wrap', {
-          event_callback: () => {
-            console.log('[GA4] Event fired:', 'copy_wrap');
-          }
-        });
-      }
       toast({
         title: "Image copied!",
         description: "Your wrap card has been copied to clipboard.",
@@ -168,13 +154,6 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
       const shareText = "Got my 2025 onchain wrap from @0xPPL_. Check yours!";
       shareOnTwitter(shareText, imageUrl);
       trackEvent(EVENTS.CARD_SHARED_X, { archetype: stats.archetype });
-      if (window.gtag) {
-        window.gtag('event', 'share_x', {
-          event_callback: () => {
-            console.log('[GA4] Event fired:', 'share_x');
-          }
-        });
-      }
       toast({
         title: "Opening Twitter...",
         description: "Your wrap image is ready to share!",
@@ -412,24 +391,43 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
       {/* Action buttons - outside the card */}
       <div className="flex flex-col sm:flex-row lg:flex-row items-center gap-2 sm:gap-2 lg:gap-3 mt-3 sm:mt-4 lg:mt-6 w-full lg:w-auto px-2 sm:px-4 lg:px-0">
         <button
-          onClick={() => {
+          onClick={(e) => {
+            e.preventDefault();
+
             if (window.gtag) {
               window.gtag('event', 'try_another_wallet', {
+                transport_type: 'beacon',
                 event_callback: () => {
                   console.log('[GA4] Event fired:', 'try_another_wallet');
                   onReset();
                 }
               });
-            } else {
-              onReset();
+              return;
             }
+
+            onReset();
           }}
           className="w-full sm:w-auto lg:w-auto border border-[#3b82f6] text-[#60a5fa] hover:bg-[#1d4ed8]/20 transition-colors rounded-lg px-3 sm:px-4 lg:px-6 py-2 sm:py-2.5 lg:py-3 font-medium text-xs sm:text-sm lg:text-base"
         >
           Try another wallet
         </button>
         <button
-          onClick={handleDownload}
+          onClick={(e) => {
+            e.preventDefault();
+
+            if (window.gtag) {
+              window.gtag('event', 'download_image', {
+                transport_type: 'beacon',
+                event_callback: () => {
+                  console.log('[GA4] Event fired:', 'download_image');
+                  void handleDownload();
+                }
+              });
+              return;
+            }
+
+            void handleDownload();
+          }}
           disabled={exportingAction === 'download'}
           className="w-full sm:w-auto lg:w-auto border border-[#3b82f6] text-[#60a5fa] hover:bg-[#1d4ed8]/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors rounded-lg px-3 sm:px-4 lg:px-6 py-2 sm:py-2.5 lg:py-3 font-medium flex items-center justify-center gap-1.5 sm:gap-2 text-xs sm:text-sm lg:text-base"
         >
@@ -445,7 +443,22 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           Download
         </button>
         <button
-          onClick={handleCopy}
+          onClick={(e) => {
+            e.preventDefault();
+
+            if (window.gtag) {
+              window.gtag('event', 'copy_wrap', {
+                transport_type: 'beacon',
+                event_callback: () => {
+                  console.log('[GA4] Event fired:', 'copy_wrap');
+                  void handleCopy();
+                }
+              });
+              return;
+            }
+
+            void handleCopy();
+          }}
           disabled={exportingAction === 'copy'}
           className="w-full sm:w-auto lg:w-auto border border-[#3b82f6] hover:bg-[#1d4ed8]/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors rounded-lg px-3 sm:px-4 lg:px-4 py-2 sm:py-2.5 lg:py-3 flex items-center justify-center"
         >
@@ -456,7 +469,22 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           )}
         </button>
         <button
-          onClick={handleShareOnX}
+          onClick={(e) => {
+            e.preventDefault();
+
+            if (window.gtag) {
+              window.gtag('event', 'share_x', {
+                transport_type: 'beacon',
+                event_callback: () => {
+                  console.log('[GA4] Event fired:', 'share_x');
+                  void handleShareOnX();
+                }
+              });
+              return;
+            }
+
+            void handleShareOnX();
+          }}
           disabled={exportingAction === 'share'}
           className="w-full sm:w-auto lg:w-auto bg-[#1d4ed8] hover:bg-[#1e40af] disabled:opacity-50 disabled:cursor-not-allowed transition-colors rounded-lg px-3 sm:px-4 lg:px-6 py-2 sm:py-2.5 lg:py-3 flex items-center justify-center gap-1.5 sm:gap-2 font-medium text-white text-xs sm:text-sm lg:text-base"
         >
@@ -482,15 +510,20 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           target="_blank"
           rel="noopener noreferrer"
           onClick={(e) => {
+            e.preventDefault();
+
             if (window.gtag) {
-              e.preventDefault();
               window.gtag('event', 'try_0xppl', {
+                transport_type: 'beacon',
                 event_callback: () => {
                   console.log('[GA4] Event fired:', 'try_0xppl');
                   window.open('https://0xppl.com/', '_blank');
                 }
               });
+              return;
             }
+
+            window.open('https://0xppl.com/', '_blank');
           }}
           className="bg-white inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 lg:px-6 py-2 sm:py-2.5 lg:py-3 rounded-xl font-semibold hover:bg-white/90 transition-colors text-primary-foreground text-xs sm:text-sm lg:text-base"
         >
