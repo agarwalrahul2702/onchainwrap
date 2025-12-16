@@ -123,8 +123,11 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
       downloadBlob(blob, `onchain_wrap_${shortAddress}.png`);
       trackEvent(EVENTS.CARD_DOWNLOADED, { archetype: stats.archetype });
       if (window.gtag) {
-        window.gtag('event', 'download_image');
-        console.log('[GA4] Event fired:', 'download_image');
+        window.gtag('event', 'download_image', {
+          event_callback: () => {
+            console.log('[GA4] Event fired:', 'download_image');
+          }
+        });
       }
       toast({
         title: "Image downloaded!",
@@ -142,8 +145,11 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
       await copyBlobToClipboard(blob);
       trackEvent(EVENTS.CARD_COPIED, { archetype: stats.archetype });
       if (window.gtag) {
-        window.gtag('event', 'copy_wrap');
-        console.log('[GA4] Event fired:', 'copy_wrap');
+        window.gtag('event', 'copy_wrap', {
+          event_callback: () => {
+            console.log('[GA4] Event fired:', 'copy_wrap');
+          }
+        });
       }
       toast({
         title: "Image copied!",
@@ -163,8 +169,11 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
       shareOnTwitter(shareText, imageUrl);
       trackEvent(EVENTS.CARD_SHARED_X, { archetype: stats.archetype });
       if (window.gtag) {
-        window.gtag('event', 'share_x');
-        console.log('[GA4] Event fired:', 'share_x');
+        window.gtag('event', 'share_x', {
+          event_callback: () => {
+            console.log('[GA4] Event fired:', 'share_x');
+          }
+        });
       }
       toast({
         title: "Opening Twitter...",
@@ -405,10 +414,15 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
         <button
           onClick={() => {
             if (window.gtag) {
-              window.gtag('event', 'try_another_wallet');
-              console.log('[GA4] Event fired:', 'try_another_wallet');
+              window.gtag('event', 'try_another_wallet', {
+                event_callback: () => {
+                  console.log('[GA4] Event fired:', 'try_another_wallet');
+                  onReset();
+                }
+              });
+            } else {
+              onReset();
             }
-            onReset();
           }}
           className="w-full sm:w-auto lg:w-auto border border-[#3b82f6] text-[#60a5fa] hover:bg-[#1d4ed8]/20 transition-colors rounded-lg px-3 sm:px-4 lg:px-6 py-2 sm:py-2.5 lg:py-3 font-medium text-xs sm:text-sm lg:text-base"
         >
@@ -467,10 +481,15 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           href="https://0xppl.com/"
           target="_blank"
           rel="noopener noreferrer"
-          onClick={() => {
+          onClick={(e) => {
             if (window.gtag) {
-              window.gtag('event', 'try_0xppl');
-              console.log('[GA4] Event fired:', 'try_0xppl');
+              e.preventDefault();
+              window.gtag('event', 'try_0xppl', {
+                event_callback: () => {
+                  console.log('[GA4] Event fired:', 'try_0xppl');
+                  window.open('https://0xppl.com/', '_blank');
+                }
+              });
             }
           }}
           className="bg-white inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 lg:px-6 py-2 sm:py-2.5 lg:py-3 rounded-xl font-semibold hover:bg-white/90 transition-colors text-primary-foreground text-xs sm:text-sm lg:text-base"
