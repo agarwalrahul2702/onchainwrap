@@ -21,10 +21,10 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-H8PYQF0RGT"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+      window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
+      window.gtag('js', new Date());
       // Enable debug_mode so events show up in GA4 DebugView immediately
-      gtag('config', 'G-H8PYQF0RGT', { debug_mode: true });
+      window.gtag('config', 'G-H8PYQF0RGT', { debug_mode: true });
     </script>
   </head>
 
