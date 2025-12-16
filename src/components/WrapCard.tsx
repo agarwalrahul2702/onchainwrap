@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from "react";
-import { captureElementAsBlob, downloadBlob, shareOnTwitter, uploadImageToBackend } from "@/utils/imageExport";
+import React, { useEffect, useRef, useState } from "react";
+import { captureElementAsBlob, downloadBlob, copyBlobToClipboard, shareOnTwitter, uploadImageToBackend } from "@/utils/imageExport";
+import copyIcon from "@/assets/copy-icon.png";
 
 // Backend endpoint (use dev server until Cloudflare is configured for production)
 const UPLOAD_ENDPOINT = "https://api.0xppl.com/api/ipfs/upload-image";
@@ -67,7 +68,7 @@ const templateImages: Record<string, string> = {
 
 const WrapCard = ({ stats, onReset }: WrapCardProps) => {
   const cardRef = useRef<HTMLDivElement>(null);
-  const [isExporting, setIsExporting] = useState(false);
+  const [exportingAction, setExportingAction] = useState<'download' | 'copy' | 'share' | null>(null);
   const [cardWidth, setCardWidth] = useState(780);
   const { toast } = useToast();
 
@@ -97,10 +98,25 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
   const archetype = stats.archetype || "Average Crypto Bro";
   const templateImage = templateImages[archetype] || averageCryptoBroTemplate;
 
-  const handleDownload = async () => {
-    if (!cardRef.current || isExporting) return;
-    setIsExporting(true);
+  const runExportAction = async (
+    action: 'download' | 'copy' | 'share',
+    fn: () => Promise<void>
+  ) => {
+    if (!cardRef.current || exportingAction) return;
+    setExportingAction(action);
     try {
+      await fn();
+    } finally {
+      // Small delay so the spinner state doesn't “flash” across buttons on fast actions
+      window.setTimeout(() => setExportingAction(null), 200);
+    }
+  };
+
+  const handleDownload = async (e?: React.MouseEvent) => {
+    e?.preventDefault();
+    e?.stopPropagation();
+    return runExportAction('download', async () => {
+      if (!cardRef.current) return;
       const blob = await captureElementAsBlob(cardRef.current);
       const shortAddress = stats.address.slice(0, 8);
       downloadBlob(blob, `onchain_wrap_${shortAddress}.png`);
@@ -108,22 +124,28 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
         title: "Image downloaded!",
         description: "Your wrap card has been saved.",
       });
-    } catch (error) {
-      console.error("Failed to download image:", error);
-      toast({
-        title: "Something went wrong",
-        description: "Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsExporting(false);
-    }
+    });
   };
 
-  const handleShareOnX = async () => {
-    if (!cardRef.current || isExporting) return;
-    setIsExporting(true);
-    try {
+  const handleCopy = async (e?: React.MouseEvent) => {
+    e?.preventDefault();
+    e?.stopPropagation();
+    return runExportAction('copy', async () => {
+      if (!cardRef.current) return;
+      const blob = await captureElementAsBlob(cardRef.current);
+      await copyBlobToClipboard(blob);
+      toast({
+        title: "Image copied!",
+        description: "Your wrap card has been copied to clipboard.",
+      });
+    });
+  };
+
+  const handleShareOnX = async (e?: React.MouseEvent) => {
+    e?.preventDefault();
+    e?.stopPropagation();
+    return runExportAction('share', async () => {
+      if (!cardRef.current) return;
       const blob = await captureElementAsBlob(cardRef.current);
       const imageUrl = await uploadImageToBackend(blob, UPLOAD_ENDPOINT);
       const shareText = "Got my 2025 onchain wrap from @0xPPL_. Check yours!";
@@ -132,16 +154,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
         title: "Opening Twitter...",
         description: "Your wrap image is ready to share!",
       });
-    } catch (error) {
-      console.error("Failed to share:", error);
-      toast({
-        title: "Something went wrong",
-        description: "Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsExporting(false);
-    }
+    });
   };
 
   return (
@@ -381,10 +394,10 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
         </button>
         <button
           onClick={handleDownload}
-          disabled={isExporting}
+          disabled={exportingAction === 'download'}
           className="w-full sm:w-auto lg:w-auto border border-[#3b82f6] text-[#60a5fa] hover:bg-[#1d4ed8]/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors rounded-lg px-3 sm:px-4 lg:px-6 py-2 sm:py-2.5 lg:py-3 font-medium flex items-center justify-center gap-1.5 sm:gap-2 text-xs sm:text-sm lg:text-base"
         >
-          {isExporting ? (
+          {exportingAction === 'download' ? (
             <Loader2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 animate-spin" />
           ) : (
             <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -396,12 +409,23 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           Download
         </button>
         <button
+          onClick={handleCopy}
+          disabled={exportingAction === 'copy'}
+          className="w-full sm:w-auto lg:w-auto border border-[#3b82f6] hover:bg-[#1d4ed8]/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors rounded-lg px-3 sm:px-4 lg:px-4 py-2 sm:py-2.5 lg:py-3 flex items-center justify-center"
+        >
+          {exportingAction === 'copy' ? (
+            <Loader2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 animate-spin text-[#60a5fa]" />
+          ) : (
+            <img src={copyIcon} alt="Copy" className="w-4 h-4 sm:w-5 sm:h-5" style={{ filter: 'invert(62%) sepia(52%) saturate(1347%) hue-rotate(194deg) brightness(101%) contrast(96%)' }} />
+          )}
+        </button>
+        <button
           onClick={handleShareOnX}
-          disabled={isExporting}
+          disabled={exportingAction === 'share'}
           className="w-full sm:w-auto lg:w-auto bg-[#1d4ed8] hover:bg-[#1e40af] disabled:opacity-50 disabled:cursor-not-allowed transition-colors rounded-lg px-3 sm:px-4 lg:px-6 py-2 sm:py-2.5 lg:py-3 flex items-center justify-center gap-1.5 sm:gap-2 font-medium text-white text-xs sm:text-sm lg:text-base"
         >
           Share on
-          {isExporting ? (
+          {exportingAction === 'share' ? (
             <Loader2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 animate-spin" />
           ) : (
             <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="currentColor">
