@@ -18,13 +18,21 @@
     <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
 
     <!-- Google Analytics 4 -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H8PYQF0RGT"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-H8PYQF0RGT');
+
+      window.__ga4_inited = false;
+      function initGA4() {
+        if (window.__ga4_inited) return;
+        window.__ga4_inited = true;
+        gtag('js', new Date());
+        gtag('config', 'G-H8PYQF0RGT');
+        gtag('event', 'ga_test_event');
+        console.log('[GA4] Event fired:', 'ga_test_event');
+      }
     </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H8PYQF0RGT" onload="initGA4()"></script>
   </head>
 
   <body class="dark">

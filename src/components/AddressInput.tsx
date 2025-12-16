@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { ClipboardList, Sparkles, X } from "lucide-react";
-import { trackGA4Event, GA_EVENTS } from "@/lib/analytics";
 
 interface AddressInputProps {
   onGenerate: (addresses: string[], twitterHandle?: string) => void;
@@ -46,7 +45,6 @@ const AddressInput = ({
       setError("Address already added");
       return;
     }
-    trackGA4Event(GA_EVENTS.ADD_MORE_WALLETS);
     setAddresses([...addresses, trimmedAddress]);
     setAddress("");
     setError("");
@@ -72,7 +70,6 @@ const AddressInput = ({
       setError("Please add at least one address");
       return;
     }
-    trackGA4Event(GA_EVENTS.GENERATE_WRAP);
     console.log("Submitting addresses:", allAddresses);
     onGenerate(allAddresses, twitterHandle.trim() || undefined);
   };
@@ -114,12 +111,24 @@ const AddressInput = ({
       {/* Buttons row */}
       <div className="flex flex-col lg:flex-row gap-2 mt-[3px] mb-0">
         {/* Add button - only show if there's input */}
-        {address.trim() && <button onClick={handleAddAddress} disabled={isLoading} className="border border-[#3b82f6] text-[#60a5fa] hover:bg-[#1d4ed8]/20 font-medium py-2.5 sm:py-3 lg:py-[1.2vh] px-3 sm:px-4 lg:px-[1.5vw] rounded-lg transition-colors text-xs sm:text-sm lg:text-[1vw] whitespace-nowrap mx-2 sm:mx-0 sm:ml-[20px]">
+        {address.trim() && <button onClick={() => {
+        if (window.gtag) {
+          window.gtag('event', 'add_more_wallets');
+          console.log('[GA4] Event fired:', 'add_more_wallets');
+        }
+        handleAddAddress();
+      }} disabled={isLoading} className="border border-[#3b82f6] text-[#60a5fa] hover:bg-[#1d4ed8]/20 font-medium py-2.5 sm:py-3 lg:py-[1.2vh] px-3 sm:px-4 lg:px-[1.5vw] rounded-lg transition-colors text-xs sm:text-sm lg:text-[1vw] whitespace-nowrap mx-2 sm:mx-0 sm:ml-[20px]">
             + Add more wallets
           </button>}
 
         {/* Generate button */}
-        <button onClick={handleSubmit} disabled={isLoading} className="flex-1 bg-[#3B82F6] hover:bg-[#2563EB] text-white font-semibold py-2.5 sm:py-3 lg:py-[1.2vh] px-3 sm:px-4 rounded-lg transition-all duration-200 flex items-center justify-center gap-1.5 sm:gap-2 lg:gap-[0.5vw] disabled:opacity-50 disabled:cursor-not-allowed text-xs sm:text-sm lg:text-[1vw] mx-2 sm:mx-[20px]">
+        <button onClick={() => {
+        if (window.gtag) {
+          window.gtag('event', 'generate_wrap');
+          console.log('[GA4] Event fired:', 'generate_wrap');
+        }
+        handleSubmit();
+      }} disabled={isLoading} className="flex-1 bg-[#3B82F6] hover:bg-[#2563EB] text-white font-semibold py-2.5 sm:py-3 lg:py-[1.2vh] px-3 sm:px-4 rounded-lg transition-all duration-200 flex items-center justify-center gap-1.5 sm:gap-2 lg:gap-[0.5vw] disabled:opacity-50 disabled:cursor-not-allowed text-xs sm:text-sm lg:text-[1vw] mx-2 sm:mx-[20px]">
           <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 lg:w-[1.2vw] lg:h-[1.2vw]" />
           {isLoading ? "Generating..." : (() => {
           const inputValid = address.trim() && isValidAddress(address.trim()) && !addresses.includes(address.trim());

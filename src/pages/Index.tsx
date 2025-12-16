@@ -7,7 +7,6 @@ import WrapCard, { WrapStats } from "@/components/WrapCard";
 import { fetchWrapStats } from "@/services/api";
 import { toast } from "@/hooks/use-toast";
 import { trackEvent, EVENTS } from "@/lib/posthog";
-import { trackGA4Event, GA_EVENTS } from "@/lib/analytics";
 
 type AppState = "input" | "loading" | "result";
 
@@ -32,12 +31,6 @@ const Index = () => {
         hasTwitterHandle: !!twitterHandle,
         pnlPositive: result.pnlPositive,
       });
-      trackGA4Event(GA_EVENTS.GENERATE_WRAP, {
-        archetype: result.archetype,
-        address_count: addresses.length,
-        has_twitter: !!twitterHandle,
-        pnl_positive: result.pnlPositive,
-      });
     } catch (error) {
       console.error("Failed to fetch stats:", error);
       toast({
@@ -51,7 +44,6 @@ const Index = () => {
 
   const handleReset = () => {
     trackEvent(EVENTS.TRY_ANOTHER_WALLET);
-    trackGA4Event(GA_EVENTS.TRY_ANOTHER_WALLET);
     setStats(null);
     setAppState("input");
   };
