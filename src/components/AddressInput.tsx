@@ -111,9 +111,11 @@ const AddressInput = ({
       {/* Buttons row */}
       <div className="flex flex-col lg:flex-row gap-2 mt-[3px] mb-0">
         {/* Add button - only show if there's input */}
-        {address.trim() && <button onClick={() => {
+        {address.trim() && <button onClick={(e) => {
+        e.preventDefault();
         if (window.gtag) {
           window.gtag('event', 'add_more_wallets', {
+            transport_type: 'beacon',
             event_callback: () => {
               console.log('[GA4] Event fired:', 'add_more_wallets');
               handleAddAddress();
