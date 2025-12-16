@@ -1,11 +1,11 @@
 import posthog from 'posthog-js';
 
 // Initialize PostHog - replace with your actual host if using EU cloud
-const POSTHOG_KEY = 'YOUR_POSTHOG_KEY'; // Replace with your phc_... key
+const POSTHOG_KEY = 'phc_EhQHDuXte4KaqsQF8ucLO5CwHiXLLGYvLqS8JV0dJM2';
 const POSTHOG_HOST = 'https://us.i.posthog.com'; // or 'https://eu.i.posthog.com' for EU
 
 export const initPostHog = () => {
-  if (typeof window !== 'undefined' && POSTHOG_KEY !== 'YOUR_POSTHOG_KEY') {
+  if (typeof window !== 'undefined') {
     posthog.init(POSTHOG_KEY, {
       api_host: POSTHOG_HOST,
       person_profiles: 'identified_only',
@@ -17,7 +17,7 @@ export const initPostHog = () => {
 
 // Track custom events
 export const trackEvent = (eventName: string, properties?: Record<string, unknown>) => {
-  if (typeof window !== 'undefined' && POSTHOG_KEY !== 'YOUR_POSTHOG_KEY') {
+  if (typeof window !== 'undefined') {
     posthog.capture(eventName, properties);
   }
 };
