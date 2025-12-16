@@ -6,10 +6,14 @@ import LoaderScreen from "@/components/LoaderScreen";
 import WrapCard, { WrapStats } from "@/components/WrapCard";
 import { fetchWrapStats } from "@/services/api";
 import { toast } from "@/hooks/use-toast";
+import { trackEvent, EVENTS } from "@/lib/posthog";
+
 type AppState = "input" | "loading" | "result";
+
 const Index = () => {
   const [appState, setAppState] = useState<AppState>("input");
   const [stats, setStats] = useState<WrapStats | null>(null);
+
   const handleGenerate = async (addresses: string[], twitterHandle?: string) => {
     setAppState("loading");
     try {
@@ -19,6 +23,14 @@ const Index = () => {
       }
       setStats(result);
       setAppState("result");
+      
+      // Track wrap generation
+      trackEvent(EVENTS.WRAP_GENERATED, {
+        archetype: result.archetype,
+        addressCount: addresses.length,
+        hasTwitterHandle: !!twitterHandle,
+        pnlPositive: result.pnlPositive,
+      });
     } catch (error) {
       console.error("Failed to fetch stats:", error);
       toast({
@@ -29,7 +41,9 @@ const Index = () => {
       setAppState("input");
     }
   };
+
   const handleReset = () => {
+    trackEvent(EVENTS.TRY_ANOTHER_WALLET);
     setStats(null);
     setAppState("input");
   };

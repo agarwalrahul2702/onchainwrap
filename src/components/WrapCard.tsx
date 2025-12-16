@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { captureElementAsBlob, downloadBlob, copyBlobToClipboard, shareOnTwitter, uploadImageToBackend } from "@/utils/imageExport";
 import copyIcon from "@/assets/copy-icon.png";
+import { trackEvent, EVENTS } from "@/lib/posthog";
 
 // Backend endpoint (use dev server until Cloudflare is configured for production)
 const UPLOAD_ENDPOINT = "https://api.0xppl.com/api/ipfs/upload-image";
@@ -120,6 +121,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
       const blob = await captureElementAsBlob(cardRef.current);
       const shortAddress = stats.address.slice(0, 8);
       downloadBlob(blob, `onchain_wrap_${shortAddress}.png`);
+      trackEvent(EVENTS.CARD_DOWNLOADED, { archetype: stats.archetype });
       toast({
         title: "Image downloaded!",
         description: "Your wrap card has been saved.",
@@ -134,6 +136,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
       if (!cardRef.current) return;
       const blob = await captureElementAsBlob(cardRef.current);
       await copyBlobToClipboard(blob);
+      trackEvent(EVENTS.CARD_COPIED, { archetype: stats.archetype });
       toast({
         title: "Image copied!",
         description: "Your wrap card has been copied to clipboard.",
@@ -150,6 +153,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
       const imageUrl = await uploadImageToBackend(blob, UPLOAD_ENDPOINT);
       const shareText = "Got my 2025 onchain wrap from @0xPPL_. Check yours!";
       shareOnTwitter(shareText, imageUrl);
+      trackEvent(EVENTS.CARD_SHARED_X, { archetype: stats.archetype });
       toast({
         title: "Opening Twitter...",
         description: "Your wrap image is ready to share!",
