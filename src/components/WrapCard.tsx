@@ -123,7 +123,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
       const shortAddress = stats.address.slice(0, 8);
       downloadBlob(blob, `onchain_wrap_${shortAddress}.png`);
       trackEvent(EVENTS.CARD_DOWNLOADED, { archetype: stats.archetype });
-      trackGA4Event(GA_EVENTS.CARD_DOWNLOADED, { archetype: stats.archetype });
+      trackGA4Event(GA_EVENTS.DOWNLOAD_IMAGE, { archetype: stats.archetype });
       toast({
         title: "Image downloaded!",
         description: "Your wrap card has been saved.",
@@ -139,7 +139,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
       const blob = await captureElementAsBlob(cardRef.current);
       await copyBlobToClipboard(blob);
       trackEvent(EVENTS.CARD_COPIED, { archetype: stats.archetype });
-      trackGA4Event(GA_EVENTS.CARD_COPIED, { archetype: stats.archetype });
+      trackGA4Event(GA_EVENTS.COPY_WRAP, { archetype: stats.archetype });
       toast({
         title: "Image copied!",
         description: "Your wrap card has been copied to clipboard.",
@@ -157,7 +157,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
       const shareText = "Got my 2025 onchain wrap from @0xPPL_. Check yours!";
       shareOnTwitter(shareText, imageUrl);
       trackEvent(EVENTS.CARD_SHARED_X, { archetype: stats.archetype });
-      trackGA4Event(GA_EVENTS.CARD_SHARED_X, { archetype: stats.archetype });
+      trackGA4Event(GA_EVENTS.SHARE_X, { archetype: stats.archetype });
       toast({
         title: "Opening Twitter...",
         description: "Your wrap image is ready to share!",
@@ -395,7 +395,10 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
       {/* Action buttons - outside the card */}
       <div className="flex flex-col sm:flex-row lg:flex-row items-center gap-2 sm:gap-2 lg:gap-3 mt-3 sm:mt-4 lg:mt-6 w-full lg:w-auto px-2 sm:px-4 lg:px-0">
         <button
-          onClick={onReset}
+          onClick={() => {
+            trackGA4Event(GA_EVENTS.TRY_ANOTHER_WALLET);
+            onReset();
+          }}
           className="w-full sm:w-auto lg:w-auto border border-[#3b82f6] text-[#60a5fa] hover:bg-[#1d4ed8]/20 transition-colors rounded-lg px-3 sm:px-4 lg:px-6 py-2 sm:py-2.5 lg:py-3 font-medium text-xs sm:text-sm lg:text-base"
         >
           Try another wallet
@@ -453,6 +456,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           href="https://0xppl.com/"
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => trackGA4Event(GA_EVENTS.TRY_0XPPL)}
           className="bg-white inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 lg:px-6 py-2 sm:py-2.5 lg:py-3 rounded-xl font-semibold hover:bg-white/90 transition-colors text-primary-foreground text-xs sm:text-sm lg:text-base"
         >
           Try <img src="/logo-0xppl.svg" alt="0xPPL" className="h-[16px] sm:h-[18px] lg:h-[21px] w-auto object-cover" /> 0xPPL

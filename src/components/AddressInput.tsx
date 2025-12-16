@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { ClipboardList, Sparkles, X, Twitter } from "lucide-react";
+import { ClipboardList, Sparkles, X } from "lucide-react";
+import { trackGA4Event, GA_EVENTS } from "@/lib/analytics";
+
 interface AddressInputProps {
   onGenerate: (addresses: string[], twitterHandle?: string) => void;
   isLoading: boolean;
@@ -44,6 +46,7 @@ const AddressInput = ({
       setError("Address already added");
       return;
     }
+    trackGA4Event(GA_EVENTS.ADD_MORE_WALLETS);
     setAddresses([...addresses, trimmedAddress]);
     setAddress("");
     setError("");
@@ -69,6 +72,7 @@ const AddressInput = ({
       setError("Please add at least one address");
       return;
     }
+    trackGA4Event(GA_EVENTS.GENERATE_WRAP);
     console.log("Submitting addresses:", allAddresses);
     onGenerate(allAddresses, twitterHandle.trim() || undefined);
   };

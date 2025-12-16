@@ -32,7 +32,7 @@ const Index = () => {
         hasTwitterHandle: !!twitterHandle,
         pnlPositive: result.pnlPositive,
       });
-      trackGA4Event(GA_EVENTS.WRAP_GENERATED, {
+      trackGA4Event(GA_EVENTS.GENERATE_WRAP, {
         archetype: result.archetype,
         address_count: addresses.length,
         has_twitter: !!twitterHandle,
