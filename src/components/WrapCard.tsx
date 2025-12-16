@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { captureElementAsBlob, downloadBlob, copyBlobToClipboard, shareOnTwitter, uploadImageToBackend } from "@/utils/imageExport";
 import copyIcon from "@/assets/copy-icon.png";
 import { trackEvent, EVENTS } from "@/lib/posthog";
-import { trackGA4Event, GA_EVENTS } from "@/lib/analytics";
 
 // Backend endpoint (use dev server until Cloudflare is configured for production)
 const UPLOAD_ENDPOINT = "https://api.0xppl.com/api/ipfs/upload-image";
@@ -123,7 +122,10 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
       const shortAddress = stats.address.slice(0, 8);
       downloadBlob(blob, `onchain_wrap_${shortAddress}.png`);
       trackEvent(EVENTS.CARD_DOWNLOADED, { archetype: stats.archetype });
-      trackGA4Event(GA_EVENTS.DOWNLOAD_IMAGE, { archetype: stats.archetype });
+      if (window.gtag) {
+        window.gtag('event', 'download_image');
+        console.log('[GA4] Event fired:', 'download_image');
+      }
       toast({
         title: "Image downloaded!",
         description: "Your wrap card has been saved.",
@@ -139,7 +141,10 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
       const blob = await captureElementAsBlob(cardRef.current);
       await copyBlobToClipboard(blob);
       trackEvent(EVENTS.CARD_COPIED, { archetype: stats.archetype });
-      trackGA4Event(GA_EVENTS.COPY_WRAP, { archetype: stats.archetype });
+      if (window.gtag) {
+        window.gtag('event', 'copy_wrap');
+        console.log('[GA4] Event fired:', 'copy_wrap');
+      }
       toast({
         title: "Image copied!",
         description: "Your wrap card has been copied to clipboard.",
@@ -157,7 +162,10 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
       const shareText = "Got my 2025 onchain wrap from @0xPPL_. Check yours!";
       shareOnTwitter(shareText, imageUrl);
       trackEvent(EVENTS.CARD_SHARED_X, { archetype: stats.archetype });
-      trackGA4Event(GA_EVENTS.SHARE_X, { archetype: stats.archetype });
+      if (window.gtag) {
+        window.gtag('event', 'share_x');
+        console.log('[GA4] Event fired:', 'share_x');
+      }
       toast({
         title: "Opening Twitter...",
         description: "Your wrap image is ready to share!",
@@ -396,7 +404,10 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
       <div className="flex flex-col sm:flex-row lg:flex-row items-center gap-2 sm:gap-2 lg:gap-3 mt-3 sm:mt-4 lg:mt-6 w-full lg:w-auto px-2 sm:px-4 lg:px-0">
         <button
           onClick={() => {
-            trackGA4Event(GA_EVENTS.TRY_ANOTHER_WALLET);
+            if (window.gtag) {
+              window.gtag('event', 'try_another_wallet');
+              console.log('[GA4] Event fired:', 'try_another_wallet');
+            }
             onReset();
           }}
           className="w-full sm:w-auto lg:w-auto border border-[#3b82f6] text-[#60a5fa] hover:bg-[#1d4ed8]/20 transition-colors rounded-lg px-3 sm:px-4 lg:px-6 py-2 sm:py-2.5 lg:py-3 font-medium text-xs sm:text-sm lg:text-base"
@@ -456,7 +467,12 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           href="https://0xppl.com/"
           target="_blank"
           rel="noopener noreferrer"
-          onClick={() => trackGA4Event(GA_EVENTS.TRY_0XPPL)}
+          onClick={() => {
+            if (window.gtag) {
+              window.gtag('event', 'try_0xppl');
+              console.log('[GA4] Event fired:', 'try_0xppl');
+            }
+          }}
           className="bg-white inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 lg:px-6 py-2 sm:py-2.5 lg:py-3 rounded-xl font-semibold hover:bg-white/90 transition-colors text-primary-foreground text-xs sm:text-sm lg:text-base"
         >
           Try <img src="/logo-0xppl.svg" alt="0xPPL" className="h-[16px] sm:h-[18px] lg:h-[21px] w-auto object-cover" /> 0xPPL
