@@ -175,6 +175,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           src={templateImage}
           alt={`${archetype} card template`}
           className="absolute inset-0 w-full h-full object-cover"
+          crossOrigin="anonymous"
           draggable={false}
         />
 
@@ -226,6 +227,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
                 <img
                   src={stats.biggestProfitToken.logo || defaultTokenImage}
                   alt={stats.biggestProfitToken.symbol || "token"}
+                  crossOrigin="anonymous"
                   style={{
                     width: `${scaleFactor < 0.6 ? Math.max(5, 10 * scaleFactor) : Math.max(8, 16 * scaleFactor)}px`,
                     height: `${scaleFactor < 0.6 ? Math.max(5, 10 * scaleFactor) : Math.max(8, 16 * scaleFactor)}px`,
@@ -273,6 +275,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
                 <img
                   src={stats.biggestLossToken.logo || defaultTokenImage}
                   alt={stats.biggestLossToken.symbol || "token"}
+                  crossOrigin="anonymous"
                   style={{
                     width: `${scaleFactor < 0.6 ? Math.max(5, 10 * scaleFactor) : Math.max(8, 16 * scaleFactor)}px`,
                     height: `${scaleFactor < 0.6 ? Math.max(5, 10 * scaleFactor) : Math.max(8, 16 * scaleFactor)}px`,

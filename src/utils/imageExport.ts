@@ -1,12 +1,18 @@
-import { toPng } from 'html-to-image';
+import html2canvas from 'html2canvas';
 
 export interface ExportOptions {
   pixelRatio?: number;
   backgroundColor?: string;
 }
 
+// Detect iOS
+const isIOS = (): boolean => {
+  return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+    (navigator.maxTouchPoints > 1 && /Macintosh/.test(navigator.userAgent));
+};
+
 /**
- * Captures a DOM element as a PNG blob
+ * Captures a DOM element as a PNG blob using html2canvas (iOS compatible)
  */
 export const captureElementAsBlob = async (
   element: HTMLElement,
@@ -14,25 +20,36 @@ export const captureElementAsBlob = async (
 ): Promise<Blob> => {
   const { pixelRatio = 2, backgroundColor = '#0a1628' } = options;
 
-  const dataUrl = await toPng(element, {
-    pixelRatio,
+  // Use html2canvas which has better iOS support
+  const canvas = await html2canvas(element, {
+    scale: isIOS() ? 1.5 : pixelRatio,
     backgroundColor,
-    cacheBust: true,
-    skipAutoScale: true,
-    filter: (node) => {
-      // Skip any elements that might cause issues
-      if (node instanceof HTMLElement) {
-        const tagName = node.tagName?.toLowerCase();
-        // Skip video elements if any
-        if (tagName === 'video') return false;
-      }
-      return true;
+    useCORS: true,
+    allowTaint: true,
+    logging: false,
+    imageTimeout: 15000,
+    onclone: (clonedDoc) => {
+      // Ensure cloned images have crossOrigin set
+      const images = clonedDoc.querySelectorAll('img');
+      images.forEach((img) => {
+        img.crossOrigin = 'anonymous';
+      });
     },
   });
 
-  // Convert data URL to blob
-  const response = await fetch(dataUrl);
-  return response.blob();
+  return new Promise((resolve, reject) => {
+    canvas.toBlob(
+      (blob) => {
+        if (blob) {
+          resolve(blob);
+        } else {
+          reject(new Error('Failed to create blob'));
+        }
+      },
+      'image/png',
+      1.0
+    );
+  });
 };
 
 /**
@@ -117,9 +134,25 @@ export const generateTwitterShareUrl = (text: string, url?: string): string => {
 };
 
 /**
- * Opens Twitter share intent in a new tab
+ * Opens Twitter share intent (iOS compatible with twitter:// deep link)
  */
 export const shareOnTwitter = (text: string, url?: string): void => {
-  const shareUrl = generateTwitterShareUrl(text, url);
-  window.open(shareUrl, '_blank', 'noopener,noreferrer');
+  const webUrl = generateTwitterShareUrl(text, url);
+
+  if (isIOS()) {
+    // iOS: Use twitter:// deep link to open X app directly
+    const fullMessage = url ? `${text}\n${url}` : text;
+    const twitterAppUrl = `twitter://post?message=${encodeURIComponent(fullMessage)}`;
+
+    // Try to open X app
+    window.location.href = twitterAppUrl;
+
+    // Fallback to web after delay if app doesn't open
+    setTimeout(() => {
+      window.location.href = webUrl;
+    }, 1500);
+  } else {
+    // Android/Desktop: open in new tab
+    window.open(webUrl, '_blank', 'noopener,noreferrer');
+  }
 };
