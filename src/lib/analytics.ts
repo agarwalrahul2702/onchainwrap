@@ -11,11 +11,11 @@ declare global {
 export const trackGA4Event = (eventName: string, parameters?: Record<string, unknown>) => {
   if (typeof window === 'undefined') return;
   
-  try {
+  if (window.gtag) {
     window.gtag('event', eventName, parameters);
-    console.log('[GA4] Event:', eventName, parameters);
-  } catch (e) {
-    console.warn('[GA4] Failed to send event:', eventName, e);
+    console.log('[GA4] Event fired:', eventName, parameters);
+  } else {
+    console.warn('[GA4] gtag not available, event not sent:', eventName);
   }
 };
 
