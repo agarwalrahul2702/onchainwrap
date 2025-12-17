@@ -251,7 +251,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
         <div
           className="absolute font-general-sans"
           style={{
-            top: scaleFactor < 0.6 ? "48%" : "57.5%",
+            top: scaleFactor < 0.6 ? "45v%" : "57.5%",
             left: "46.14%",
           }}
         >
@@ -259,7 +259,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
             <span
               style={{
                 color: "#22c55e",
-                fontSize: scaleFactor < 0.6 ? `${Math.max(6,16 * scaleFactor)}px` : `${Math.max(9, 20 * scaleFactor)}px`,
+                fontSize: scaleFactor < 0.6 ? `${Math.max(4,16 * scaleFactor)}px` : `${Math.max(9, 20 * scaleFactor)}px`,
                 fontWeight: 500,
                 lineHeight: 1,
                 display: 'inline-block',
@@ -306,7 +306,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
         <div
           className="absolute font-general-sans"
           style={{
-            top: scaleFactor < 0.6 ? "48%" : "57.5%",
+            top: scaleFactor < 0.6 ? "45%" : "57.5%",
             left: "72%",
           }}
         >
@@ -314,7 +314,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
             <span
               style={{
                 color: "#ef4444",
-                fontSize: scaleFactor < 0.6 ? `${Math.max(6,16 * scaleFactor)}px` : `${Math.max(9, 20 * scaleFactor)}px`,
+                fontSize: scaleFactor < 0.6 ? `${Math.max(4, 16 * scaleFactor)}px` : `${Math.max(9, 20 * scaleFactor)}px`,
                 fontWeight: 500,
                 lineHeight: 1,
                 display: 'inline-block',
@@ -361,14 +361,14 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
         <div
           className="absolute font-general-sans"
           style={{
-            top: scaleFactor < 0.6 ? "64%" : "72.57%",
+            top: scaleFactor < 0.6 ? "62%" : "72.57%",
             left: "46.14%",
           }}
         >
           <span
             style={{
               color: "#ffffff",
-              fontSize: scaleFactor < 0.6 ? `${Math.max(9,16 * scaleFactor)}px` : `${Math.max(9, 20 * scaleFactor)}px`,
+              fontSize: scaleFactor < 0.6 ? `${Math.max(4, 16 * scaleFactor)}px` : `${Math.max(9, 20 * scaleFactor)}px`,
               fontWeight: 500,
               lineHeight: 1,
             }}
@@ -381,14 +381,14 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
         <div
           className="absolute font-general-sans"
           style={{
-            top: scaleFactor < 0.6 ? "64%" : "72.57%",
+            top: scaleFactor < 0.6 ? "62%" : "72.57%",
             left: "72%",
           }}
         >
           <span
             style={{
               color: "#ffffff",
-              fontSize: scaleFactor < 0.6 ? `${Math.max(9,16 * scaleFactor)}px` : `${Math.max(9, 20 * scaleFactor)}px`,
+              fontSize: scaleFactor < 0.6 ? `${Math.max(4, 16 * scaleFactor)}px` : `${Math.max(9, 20 * scaleFactor)}px`,
               fontWeight: 500,
               lineHeight: 1,
             }}
@@ -438,7 +438,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
           <span
             style={{
               color: "#60a5fa",
-              fontSize: `${Math.max(12, 3 * scaleFactor)}px`,
+              fontSize: `${Math.max(4, 3 * scaleFactor)}px`,
               fontWeight: 500,
               lineHeight: 1,
               marginRight: `${3 * scaleFactor}px`,
