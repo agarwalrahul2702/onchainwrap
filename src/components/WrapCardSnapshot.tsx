@@ -85,160 +85,127 @@ const WrapCardSnapshot = forwardRef<HTMLDivElement, WrapCardSnapshotProps>(
           }}
         />
 
-        {/* Overall PnL value - top right */}
-        <div
+        {/* Overall PnL value - top right - pixel-locked for html2canvas */}
+        <span
           style={{
             position: "absolute",
-            top: 102,
+            top: 99,
             right: 45,
-            height: 22,
-            display: "flex",
-            alignItems: "center",
+            color: stats.pnlPositive ? "#22c55e" : "#ef4444",
+            fontSize: 22,
+            fontWeight: 600,
             fontFamily: "'General Sans', sans-serif",
+            lineHeight: "22px",
           }}
         >
-          <span
-            style={{
-              color: stats.pnlPositive ? "#22c55e" : "#ef4444",
-              fontSize: 22,
-              fontWeight: 600,
-              lineHeight: 1,
-              fontFamily: "'General Sans', sans-serif",
-            }}
-          >
-            {stats.pnlPositive ? "+" : ""}
-            {stats.overallPnL}
-          </span>
-        </div>
+          {stats.pnlPositive ? "+" : ""}
+          {stats.overallPnL}
+        </span>
 
-        {/* Biggest profit value */}
-        <div
+        {/* Biggest profit value - pixel-locked for html2canvas */}
+        <span
           style={{
             position: "absolute",
-            top: 269,
+            top: 272,
             left: 360,
-            height: 20,
-            display: "flex",
-            alignItems: "center",
-            gap: 6,
+            color: "#22c55e",
+            fontSize: 20,
+            fontWeight: 500,
             fontFamily: "'General Sans', sans-serif",
+            lineHeight: "20px",
           }}
         >
-          <span
-            style={{
-              color: "#22c55e",
-              fontSize: 20,
-              fontWeight: 500,
-              lineHeight: 1,
-              fontFamily: "'General Sans', sans-serif",
-            }}
-          >
-            {stats.biggestProfit !== "No data" && "+"}
-            {stats.biggestProfit}
-          </span>
-
-          {stats.biggestProfitToken && (
-            <span
+          {stats.biggestProfit !== "No data" && "+"}
+          {stats.biggestProfit}
+        </span>
+        {stats.biggestProfitToken && (
+          <>
+            <img
+              src={stats.biggestProfitToken.logo || defaultTokenImage}
+              alt={stats.biggestProfitToken.symbol || "token"}
+              crossOrigin="anonymous"
+              width={16}
+              height={16}
               style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 4,
+                position: "absolute",
+                top: 274,
+                left: stats.biggestProfit.length > 6 ? 448 : 420,
+                width: 16,
+                height: 16,
+                borderRadius: 8,
+                objectFit: "cover",
               }}
-            >
-              <img
-                src={stats.biggestProfitToken.logo || defaultTokenImage}
-                alt={stats.biggestProfitToken.symbol || "token"}
-                crossOrigin="anonymous"
-                width={16}
-                height={16}
+            />
+            {stats.biggestProfitToken.symbol && (
+              <span
                 style={{
-                  width: 16,
-                  height: 16,
-                  borderRadius: 8,
-                  objectFit: "cover",
-                  flexShrink: 0,
+                  position: "absolute",
+                  top: 276,
+                  left: stats.biggestProfit.length > 6 ? 468 : 440,
+                  color: "#9CA3AF",
+                  fontSize: 13,
+                  fontWeight: 500,
+                  fontFamily: "'General Sans', sans-serif",
+                  lineHeight: "13px",
                 }}
-              />
-              {stats.biggestProfitToken.symbol && (
-                <span
-                  style={{
-                    color: "#9CA3AF",
-                    fontSize: 13,
-                    fontWeight: 500,
-                    lineHeight: 1,
-                    fontFamily: "'General Sans', sans-serif",
-                  }}
-                >
-                  {stats.biggestProfitToken.symbol}
-                </span>
-              )}
-            </span>
-          )}
-        </div>
+              >
+                {stats.biggestProfitToken.symbol}
+              </span>
+            )}
+          </>
+        )}
 
-        {/* Biggest loss value */}
-        <div
+        {/* Biggest loss value - pixel-locked for html2canvas */}
+        <span
           style={{
             position: "absolute",
-            top: 269,
+            top: 272,
             left: 562,
-            height: 20,
-            display: "flex",
-            alignItems: "center",
-            gap: 6,
+            color: "#ef4444",
+            fontSize: 20,
+            fontWeight: 500,
             fontFamily: "'General Sans', sans-serif",
+            lineHeight: "20px",
           }}
         >
-          <span
-            style={{
-              color: "#ef4444",
-              fontSize: 20,
-              fontWeight: 500,
-              lineHeight: 1,
-              fontFamily: "'General Sans', sans-serif",
-            }}
-          >
-            {stats.biggestLoss}
-          </span>
-
-          {stats.biggestLossToken && (
-            <span
+          {stats.biggestLoss}
+        </span>
+        {stats.biggestLossToken && (
+          <>
+            <img
+              src={stats.biggestLossToken.logo || defaultTokenImage}
+              alt={stats.biggestLossToken.symbol || "token"}
+              crossOrigin="anonymous"
+              width={16}
+              height={16}
               style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 4,
+                position: "absolute",
+                top: 274,
+                left: stats.biggestLoss.length > 6 ? 650 : 622,
+                width: 16,
+                height: 16,
+                borderRadius: 8,
+                objectFit: "cover",
               }}
-            >
-              <img
-                src={stats.biggestLossToken.logo || defaultTokenImage}
-                alt={stats.biggestLossToken.symbol || "token"}
-                crossOrigin="anonymous"
-                width={16}
-                height={16}
+            />
+            {stats.biggestLossToken.symbol && (
+              <span
                 style={{
-                  width: 16,
-                  height: 16,
-                  borderRadius: 8,
-                  objectFit: "cover",
-                  flexShrink: 0,
+                  position: "absolute",
+                  top: 276,
+                  left: stats.biggestLoss.length > 6 ? 670 : 642,
+                  color: "#9CA3AF",
+                  fontSize: 13,
+                  fontWeight: 500,
+                  fontFamily: "'General Sans', sans-serif",
+                  lineHeight: "13px",
                 }}
-              />
-              {stats.biggestLossToken.symbol && (
-                <span
-                  style={{
-                    color: "#9CA3AF",
-                    fontSize: 13,
-                    fontWeight: 500,
-                    lineHeight: 1,
-                    fontFamily: "'General Sans', sans-serif",
-                  }}
-                >
-                  {stats.biggestLossToken.symbol}
-                </span>
-              )}
-            </span>
-          )}
-        </div>
+              >
+                {stats.biggestLossToken.symbol}
+              </span>
+            )}
+          </>
+        )}
 
         {/* Win rate value */}
         <div
