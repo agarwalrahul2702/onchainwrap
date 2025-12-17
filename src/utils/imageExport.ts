@@ -12,7 +12,36 @@ const isIOS = (): boolean => {
 };
 
 /**
+ * Waits for all fonts to be fully loaded
+ */
+const waitForFonts = async (): Promise<void> => {
+  if (document.fonts && document.fonts.ready) {
+    await document.fonts.ready;
+  }
+  // Additional small delay to ensure fonts are rendered
+  await new Promise(resolve => setTimeout(resolve, 100));
+};
+
+/**
+ * Waits for all images in an element to be fully loaded
+ */
+const waitForImages = async (element: HTMLElement): Promise<void> => {
+  const images = element.querySelectorAll('img');
+  const imagePromises = Array.from(images).map((img) => {
+    if (img.complete && img.naturalHeight !== 0) {
+      return Promise.resolve();
+    }
+    return new Promise<void>((resolve) => {
+      img.onload = () => resolve();
+      img.onerror = () => resolve(); // Don't fail on broken images
+    });
+  });
+  await Promise.all(imagePromises);
+};
+
+/**
  * Captures a DOM element as a PNG blob using html2canvas (iOS compatible)
+ * This function expects a snapshot element with fixed absolute positioning.
  */
 export const captureElementAsBlob = async (
   element: HTMLElement,
@@ -20,7 +49,11 @@ export const captureElementAsBlob = async (
 ): Promise<Blob> => {
   const { pixelRatio = 3, backgroundColor = '#0a1628' } = options;
 
-  // Use html2canvas which has better iOS support
+  // Wait for fonts and images to load before capture
+  await waitForFonts();
+  await waitForImages(element);
+
+  // Use html2canvas with settings optimized for fixed-layout snapshot
   const canvas = await html2canvas(element, {
     scale: isIOS() ? 2 : pixelRatio,
     backgroundColor,
@@ -28,18 +61,10 @@ export const captureElementAsBlob = async (
     allowTaint: false,
     logging: false,
     imageTimeout: 15000,
-    windowWidth: element.scrollWidth,
-    windowHeight: element.scrollHeight,
-    onclone: (clonedDoc, clonedElement) => {
-      // Ensure cloned images have crossOrigin set
-      const images = clonedDoc.querySelectorAll('img');
-      images.forEach((img) => {
-        img.crossOrigin = 'anonymous';
-      });
-      // Force the cloned element to have consistent dimensions
-      clonedElement.style.width = `${element.offsetWidth}px`;
-      clonedElement.style.height = `${element.offsetHeight}px`;
-    },
+    width: element.offsetWidth,
+    height: element.offsetHeight,
+    windowWidth: element.offsetWidth,
+    windowHeight: element.offsetHeight,
   });
 
   return new Promise((resolve, reject) => {
