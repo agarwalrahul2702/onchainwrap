@@ -68,8 +68,25 @@ export const downloadBlob = (blob: Blob, filename: string): void => {
 
 /**
  * Copies a blob to clipboard as an image
+ * Falls back to native share on iOS where clipboard API doesn't support images
  */
 export const copyBlobToClipboard = async (blob: Blob): Promise<void> => {
+  // iOS Safari doesn't support clipboard.write() with images
+  // Use Web Share API as fallback
+  if (isIOS()) {
+    if (navigator.share && navigator.canShare) {
+      const file = new File([blob], 'wrap-card.png', { type: 'image/png' });
+      const shareData = { files: [file] };
+      
+      if (navigator.canShare(shareData)) {
+        await navigator.share(shareData);
+        return;
+      }
+    }
+    // If share API not available, throw with helpful message
+    throw new Error('iOS_NOT_SUPPORTED');
+  }
+
   try {
     await navigator.clipboard.write([
       new ClipboardItem({

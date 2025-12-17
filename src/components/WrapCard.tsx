@@ -135,12 +135,29 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
     return runExportAction('copy', async () => {
       if (!cardRef.current) return;
       const blob = await captureElementAsBlob(cardRef.current);
-      await copyBlobToClipboard(blob);
-      trackEvent(EVENTS.CARD_COPIED, { archetype: stats.archetype });
-      toast({
-        title: "Image copied!",
-        description: "Your wrap card has been copied to clipboard.",
-      });
+      try {
+        await copyBlobToClipboard(blob);
+        trackEvent(EVENTS.CARD_COPIED, { archetype: stats.archetype });
+        toast({
+          title: "Image copied!",
+          description: "Your wrap card has been copied to clipboard.",
+        });
+      } catch (error: any) {
+        if (error?.message === 'iOS_NOT_SUPPORTED') {
+          // iOS Share API was used or not available - show appropriate message
+          trackEvent(EVENTS.CARD_COPIED, { archetype: stats.archetype, method: 'share' });
+          toast({
+            title: "Shared!",
+            description: "Use the share sheet to save or share your card.",
+          });
+        } else {
+          toast({
+            title: "Copy failed",
+            description: "Try downloading the image instead.",
+            variant: "destructive",
+          });
+        }
+      }
     });
   };
 
