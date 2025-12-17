@@ -182,6 +182,19 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
 
   return (
     <>
+      {/* Hidden snapshot container for pixel-perfect export */}
+      <div
+        style={{
+          position: "absolute",
+          left: "-9999px",
+          top: "-9999px",
+          pointerEvents: "none",
+        }}
+        aria-hidden="true"
+      >
+        <WrapCardSnapshot ref={snapshotRef} stats={stats} />
+      </div>
+
       <div className="w-full flex-col animate-scale-in flex items-center justify-end mt-4 sm:mt-8 lg:mt-[60px]">
       {/* Main card container - fixed aspect ratio matching template (780x468 = 1.667:1) */}
       <div
@@ -425,14 +438,6 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
         </div>
       </div>
 
-
-      {/* Snapshot container (visible for debugging) */}
-      <div className="w-full flex justify-center mt-4" aria-label="Snapshot debug preview">
-        <div>
-          <div className="text-sm text-muted-foreground mb-2">Snapshot (export source)</div>
-          <WrapCardSnapshot ref={snapshotRef} stats={stats} />
-        </div>
-      </div>
 
       {/* Action buttons - outside the card */}
       <div className="flex flex-col sm:flex-row lg:flex-row items-center gap-2 sm:gap-2 lg:gap-3 mt-3 sm:mt-4 lg:mt-6 w-full lg:w-auto px-2 sm:px-4 lg:px-0">

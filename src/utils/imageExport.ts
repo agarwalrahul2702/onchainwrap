@@ -47,7 +47,7 @@ export const captureElementAsBlob = async (
   element: HTMLElement,
   options: ExportOptions = {}
 ): Promise<Blob> => {
-  const { pixelRatio = 3, backgroundColor = null } = options;
+  const { pixelRatio = 3, backgroundColor = '#0a1628' } = options;
 
   // Wait for fonts and images to load before capture
   await waitForFonts();
@@ -66,6 +66,7 @@ export const captureElementAsBlob = async (
     windowWidth: element.offsetWidth,
     windowHeight: element.offsetHeight,
   });
+
 
 
   return new Promise((resolve, reject) => {

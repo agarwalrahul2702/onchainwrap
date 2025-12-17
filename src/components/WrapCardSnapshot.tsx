@@ -59,8 +59,6 @@ const WrapCardSnapshot = forwardRef<HTMLDivElement, WrapCardSnapshotProps>(
       <div
         ref={ref}
         style={{
-          // Reset inherited/global styles (Tailwind, etc.)
-          all: "initial",
           position: "relative",
           width: SNAPSHOT_WIDTH,
           height: SNAPSHOT_HEIGHT,
