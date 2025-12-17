@@ -91,7 +91,9 @@ const WrapCardSnapshot = forwardRef<HTMLDivElement, WrapCardSnapshotProps>(
             position: "absolute",
             top: 102,
             right: 45,
-            whiteSpace: "nowrap",
+            height: 22,
+            display: "flex",
+            alignItems: "center",
             fontFamily: "'General Sans', sans-serif",
           }}
         >
@@ -100,7 +102,7 @@ const WrapCardSnapshot = forwardRef<HTMLDivElement, WrapCardSnapshotProps>(
               color: stats.pnlPositive ? "#22c55e" : "#ef4444",
               fontSize: 22,
               fontWeight: 600,
-              lineHeight: "22px",
+              lineHeight: 1,
               fontFamily: "'General Sans', sans-serif",
             }}
           >
@@ -115,7 +117,10 @@ const WrapCardSnapshot = forwardRef<HTMLDivElement, WrapCardSnapshotProps>(
             position: "absolute",
             top: 269,
             left: 360,
-            whiteSpace: "nowrap",
+            height: 20,
+            display: "flex",
+            alignItems: "center",
+            gap: 6,
             fontFamily: "'General Sans', sans-serif",
           }}
         >
@@ -124,10 +129,8 @@ const WrapCardSnapshot = forwardRef<HTMLDivElement, WrapCardSnapshotProps>(
               color: "#22c55e",
               fontSize: 20,
               fontWeight: 500,
-              lineHeight: "20px",
+              lineHeight: 1,
               fontFamily: "'General Sans', sans-serif",
-              display: "inline-block",
-              verticalAlign: "middle",
             }}
           >
             {stats.biggestProfit !== "No data" && "+"}
@@ -135,7 +138,13 @@ const WrapCardSnapshot = forwardRef<HTMLDivElement, WrapCardSnapshotProps>(
           </span>
 
           {stats.biggestProfitToken && (
-            <>
+            <span
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 4,
+              }}
+            >
               <img
                 src={stats.biggestProfitToken.logo || defaultTokenImage}
                 alt={stats.biggestProfitToken.symbol || "token"}
@@ -143,32 +152,27 @@ const WrapCardSnapshot = forwardRef<HTMLDivElement, WrapCardSnapshotProps>(
                 width={16}
                 height={16}
                 style={{
-                  display: "inline-block",
-                  verticalAlign: "middle",
                   width: 16,
                   height: 16,
-                  marginLeft: 8,
                   borderRadius: 8,
                   objectFit: "cover",
+                  flexShrink: 0,
                 }}
               />
               {stats.biggestProfitToken.symbol && (
                 <span
                   style={{
-                    display: "inline-block",
-                    verticalAlign: "middle",
-                    marginLeft: 4,
                     color: "#9CA3AF",
                     fontSize: 13,
                     fontWeight: 500,
-                    lineHeight: "13px",
+                    lineHeight: 1,
                     fontFamily: "'General Sans', sans-serif",
                   }}
                 >
                   {stats.biggestProfitToken.symbol}
                 </span>
               )}
-            </>
+            </span>
           )}
         </div>
 
@@ -178,7 +182,10 @@ const WrapCardSnapshot = forwardRef<HTMLDivElement, WrapCardSnapshotProps>(
             position: "absolute",
             top: 269,
             left: 562,
-            whiteSpace: "nowrap",
+            height: 20,
+            display: "flex",
+            alignItems: "center",
+            gap: 6,
             fontFamily: "'General Sans', sans-serif",
           }}
         >
@@ -187,17 +194,21 @@ const WrapCardSnapshot = forwardRef<HTMLDivElement, WrapCardSnapshotProps>(
               color: "#ef4444",
               fontSize: 20,
               fontWeight: 500,
-              lineHeight: "20px",
+              lineHeight: 1,
               fontFamily: "'General Sans', sans-serif",
-              display: "inline-block",
-              verticalAlign: "middle",
             }}
           >
             {stats.biggestLoss}
           </span>
 
           {stats.biggestLossToken && (
-            <>
+            <span
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 4,
+              }}
+            >
               <img
                 src={stats.biggestLossToken.logo || defaultTokenImage}
                 alt={stats.biggestLossToken.symbol || "token"}
@@ -205,32 +216,27 @@ const WrapCardSnapshot = forwardRef<HTMLDivElement, WrapCardSnapshotProps>(
                 width={16}
                 height={16}
                 style={{
-                  display: "inline-block",
-                  verticalAlign: "middle",
                   width: 16,
                   height: 16,
-                  marginLeft: 8,
                   borderRadius: 8,
                   objectFit: "cover",
+                  flexShrink: 0,
                 }}
               />
               {stats.biggestLossToken.symbol && (
                 <span
                   style={{
-                    display: "inline-block",
-                    verticalAlign: "middle",
-                    marginLeft: 4,
                     color: "#9CA3AF",
                     fontSize: 13,
                     fontWeight: 500,
-                    lineHeight: "13px",
+                    lineHeight: 1,
                     fontFamily: "'General Sans', sans-serif",
                   }}
                 >
                   {stats.biggestLossToken.symbol}
                 </span>
               )}
-            </>
+            </span>
           )}
         </div>
 
