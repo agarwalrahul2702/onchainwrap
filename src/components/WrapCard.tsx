@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { captureElementAsBlob, downloadBlob, copyBlobToClipboard, shareOnTwitter, uploadImageToBackend } from "@/utils/imageExport";
 import copyIcon from "@/assets/copy-icon.png";
 import { trackEvent, EVENTS } from "@/lib/posthog";
+import WrapCardSnapshot from "./WrapCardSnapshot";
 
 // Backend endpoint (use dev server until Cloudflare is configured for production)
 const UPLOAD_ENDPOINT = "https://api.0xppl.com/api/ipfs/upload-image";
@@ -69,6 +70,7 @@ const templateImages: Record<string, string> = {
 
 const WrapCard = ({ stats, onReset }: WrapCardProps) => {
   const cardRef = useRef<HTMLDivElement>(null);
+  const snapshotRef = useRef<HTMLDivElement>(null);
   const [exportingAction, setExportingAction] = useState<'download' | 'copy' | 'share' | null>(null);
   const [cardWidth, setCardWidth] = useState(780);
   const { toast } = useToast();
@@ -117,8 +119,8 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
     e?.preventDefault();
     e?.stopPropagation();
     return runExportAction('download', async () => {
-      if (!cardRef.current) return;
-      const blob = await captureElementAsBlob(cardRef.current);
+      if (!snapshotRef.current) return;
+      const blob = await captureElementAsBlob(snapshotRef.current);
       const shortAddress = stats.address.slice(0, 8);
       downloadBlob(blob, `onchain_wrap_${shortAddress}.png`);
       trackEvent(EVENTS.CARD_DOWNLOADED, { archetype: stats.archetype });
@@ -133,8 +135,8 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
     e?.preventDefault();
     e?.stopPropagation();
     return runExportAction('copy', async () => {
-      if (!cardRef.current) return;
-      const blob = await captureElementAsBlob(cardRef.current);
+      if (!snapshotRef.current) return;
+      const blob = await captureElementAsBlob(snapshotRef.current);
       try {
         await copyBlobToClipboard(blob);
         trackEvent(EVENTS.CARD_COPIED, { archetype: stats.archetype });
@@ -165,8 +167,8 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
     e?.preventDefault();
     e?.stopPropagation();
     return runExportAction('share', async () => {
-      if (!cardRef.current) return;
-      const blob = await captureElementAsBlob(cardRef.current);
+      if (!snapshotRef.current) return;
+      const blob = await captureElementAsBlob(snapshotRef.current);
       const imageUrl = await uploadImageToBackend(blob, UPLOAD_ENDPOINT);
       const shareText = "Got my 2025 onchain wrap from @0xPPL_. Check yours!";
       shareOnTwitter(shareText, imageUrl);
@@ -179,6 +181,20 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
   };
 
   return (
+    <>
+      {/* Hidden snapshot container for pixel-perfect export */}
+      <div
+        style={{
+          position: "absolute",
+          left: "-9999px",
+          top: "-9999px",
+          pointerEvents: "none",
+        }}
+        aria-hidden="true"
+      >
+        <WrapCardSnapshot ref={snapshotRef} stats={stats} />
+      </div>
+      
     <div className="w-full flex-col animate-scale-in flex items-center justify-end mt-4 sm:mt-8 lg:mt-[60px]">
       {/* Main card container - fixed aspect ratio matching template (780x468 = 1.667:1) */}
       <div
@@ -565,6 +581,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
         </a>
       </div>
     </div>
+    </>
   );
 };
 
