@@ -1,14 +1,19 @@
 import html2canvas from 'html2canvas';
+import { toPng } from 'html-to-image';
 
 export interface ExportOptions {
   pixelRatio?: number;
   backgroundColor?: string | null;
 }
 
-// Detect iOS
+// Detect iOS/mobile
 const isIOS = (): boolean => {
   return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
     (navigator.maxTouchPoints > 1 && /Macintosh/.test(navigator.userAgent));
+};
+
+export const isMobile = (): boolean => {
+  return isIOS() || /Android/i.test(navigator.userAgent);
 };
 
 /**
@@ -40,20 +45,40 @@ const waitForImages = async (element: HTMLElement): Promise<void> => {
 };
 
 /**
- * Captures a DOM element as a PNG blob using html2canvas (iOS compatible)
- * This function expects a snapshot element with fixed absolute positioning.
+ * Captures a DOM element as a PNG blob using html-to-image (for web)
  */
-export const captureElementAsBlob = async (
+const captureWithHtmlToImage = async (
   element: HTMLElement,
   options: ExportOptions = {}
 ): Promise<Blob> => {
   const { pixelRatio = 3, backgroundColor = '#0a1628' } = options;
 
-  // Wait for fonts and images to load before capture
   await waitForFonts();
   await waitForImages(element);
 
-  // Capture ONLY the provided node at the final resolution (no post-resize)
+  const dataUrl = await toPng(element, {
+    pixelRatio,
+    backgroundColor: backgroundColor || undefined,
+    cacheBust: true,
+  });
+
+  // Convert data URL to blob
+  const response = await fetch(dataUrl);
+  return response.blob();
+};
+
+/**
+ * Captures a DOM element as a PNG blob using html2canvas (for mobile)
+ */
+const captureWithHtml2Canvas = async (
+  element: HTMLElement,
+  options: ExportOptions = {}
+): Promise<Blob> => {
+  const { pixelRatio = 3, backgroundColor = '#0a1628' } = options;
+
+  await waitForFonts();
+  await waitForImages(element);
+
   const canvas = await html2canvas(element, {
     scale: pixelRatio,
     backgroundColor,
@@ -66,8 +91,6 @@ export const captureElementAsBlob = async (
     windowWidth: element.offsetWidth,
     windowHeight: element.offsetHeight,
   });
-
-
 
   return new Promise((resolve, reject) => {
     canvas.toBlob(
@@ -82,6 +105,21 @@ export const captureElementAsBlob = async (
       1.0
     );
   });
+};
+
+/**
+ * Captures a DOM element as a PNG blob
+ * Uses html-to-image for web (better CSS support)
+ * Uses html2canvas for mobile (better compatibility)
+ */
+export const captureElementAsBlob = async (
+  element: HTMLElement,
+  options: ExportOptions = {}
+): Promise<Blob> => {
+  if (isMobile()) {
+    return captureWithHtml2Canvas(element, options);
+  }
+  return captureWithHtmlToImage(element, options);
 };
 
 /**

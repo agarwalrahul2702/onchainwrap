@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { captureElementAsBlob, downloadBlob, copyBlobToClipboard, shareOnTwitter, uploadImageToBackend } from "@/utils/imageExport";
+import { captureElementAsBlob, downloadBlob, copyBlobToClipboard, shareOnTwitter, uploadImageToBackend, isMobile } from "@/utils/imageExport";
 import copyIcon from "@/assets/copy-icon.png";
 import { trackEvent, EVENTS } from "@/lib/posthog";
 import WrapCardSnapshot from "./WrapCardSnapshot";
@@ -115,12 +115,21 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
     }
   };
 
+  // Get the appropriate ref for export - cardRef for web, snapshotRef for mobile
+  const getExportElement = () => {
+    if (isMobile()) {
+      return snapshotRef.current;
+    }
+    return cardRef.current;
+  };
+
   const handleDownload = async (e?: React.MouseEvent) => {
     e?.preventDefault();
     e?.stopPropagation();
     return runExportAction('download', async () => {
-      if (!snapshotRef.current) return;
-      const blob = await captureElementAsBlob(snapshotRef.current);
+      const element = getExportElement();
+      if (!element) return;
+      const blob = await captureElementAsBlob(element);
       const shortAddress = stats.address.slice(0, 8);
       downloadBlob(blob, `onchain_wrap_${shortAddress}.png`);
       trackEvent(EVENTS.CARD_DOWNLOADED, { archetype: stats.archetype });
@@ -135,8 +144,9 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
     e?.preventDefault();
     e?.stopPropagation();
     return runExportAction('copy', async () => {
-      if (!snapshotRef.current) return;
-      const blob = await captureElementAsBlob(snapshotRef.current);
+      const element = getExportElement();
+      if (!element) return;
+      const blob = await captureElementAsBlob(element);
       try {
         await copyBlobToClipboard(blob);
         trackEvent(EVENTS.CARD_COPIED, { archetype: stats.archetype });
@@ -167,8 +177,9 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
     e?.preventDefault();
     e?.stopPropagation();
     return runExportAction('share', async () => {
-      if (!snapshotRef.current) return;
-      const blob = await captureElementAsBlob(snapshotRef.current);
+      const element = getExportElement();
+      if (!element) return;
+      const blob = await captureElementAsBlob(element);
       const imageUrl = await uploadImageToBackend(blob, UPLOAD_ENDPOINT);
       const shareText = "Got my 2025 onchain wrap from @0xPPL_. Check yours!";
       shareOnTwitter(shareText, imageUrl);
@@ -240,7 +251,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
         <div
           className="absolute font-general-sans"
           style={{
-            top: scaleFactor < 0.6 ? "55%" : "57.5%",
+            top: scaleFactor < 0.6 ? "48%" : "57.5%",
             left: "46.14%",
           }}
         >
@@ -248,7 +259,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
             <span
               style={{
                 color: "#22c55e",
-                fontSize: scaleFactor < 0.6 ? `${Math.max(9,16 * scaleFactor)}px` : `${Math.max(9, 20 * scaleFactor)}px`,
+                fontSize: scaleFactor < 0.6 ? `${Math.max(6,16 * scaleFactor)}px` : `${Math.max(9, 20 * scaleFactor)}px`,
                 fontWeight: 500,
                 lineHeight: 1,
                 display: 'inline-block',
@@ -295,7 +306,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
         <div
           className="absolute font-general-sans"
           style={{
-            top: scaleFactor < 0.6 ? "55%" : "57.5%",
+            top: scaleFactor < 0.6 ? "48%" : "57.5%",
             left: "72%",
           }}
         >
@@ -303,7 +314,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
             <span
               style={{
                 color: "#ef4444",
-                fontSize: scaleFactor < 0.6 ? `${Math.max(9,16 * scaleFactor)}px` : `${Math.max(9, 20 * scaleFactor)}px`,
+                fontSize: scaleFactor < 0.6 ? `${Math.max(6,16 * scaleFactor)}px` : `${Math.max(9, 20 * scaleFactor)}px`,
                 fontWeight: 500,
                 lineHeight: 1,
                 display: 'inline-block',
