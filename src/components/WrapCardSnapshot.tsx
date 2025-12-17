@@ -110,114 +110,132 @@ const WrapCardSnapshot = forwardRef<HTMLDivElement, WrapCardSnapshotProps>(
           </span>
         </div>
 
-        {/* Biggest profit row - using flex for alignment */}
+        {/* Biggest profit row - inline-block for html2canvas */}
         <div
           style={{
             position: "absolute",
             top: 269,
             left: 360,
-            display: "flex",
-            alignItems: "center",
-            gap: 6,
             height: 20,
+            lineHeight: "20px",
+            whiteSpace: "nowrap",
           }}
         >
           <span
             style={{
+              display: "inline-block",
+              verticalAlign: "baseline",
               color: "#22c55e",
               fontSize: 20,
               fontWeight: 500,
               fontFamily: "'General Sans', sans-serif",
               lineHeight: "20px",
+              position: "relative",
+              top: -10,
             }}
           >
             {stats.biggestProfit !== "No data" && "+"}
             {stats.biggestProfit}
           </span>
           {stats.biggestProfitToken && (
-            <>
-              <img
-                src={stats.biggestProfitToken.logo || defaultTokenImage}
-                alt={stats.biggestProfitToken.symbol || "token"}
-                crossOrigin="anonymous"
-                width={16}
-                height={16}
-                style={{
-                  width: 16,
-                  height: 16,
-                  borderRadius: 8,
-                  objectFit: "cover",
-                }}
-              />
-              {stats.biggestProfitToken.symbol && (
-                <span
-                  style={{
-                    color: "#9CA3AF",
-                    fontSize: 13,
-                    fontWeight: 500,
-                    fontFamily: "'General Sans', sans-serif",
-                    lineHeight: "13px",
-                  }}
-                >
-                  {stats.biggestProfitToken.symbol}
-                </span>
-              )}
-            </>
+            <img
+              src={stats.biggestProfitToken.logo || defaultTokenImage}
+              alt={stats.biggestProfitToken.symbol || "token"}
+              crossOrigin="anonymous"
+              width={16}
+              height={16}
+              style={{
+                display: "inline-block",
+                verticalAlign: "baseline",
+                width: 16,
+                height: 16,
+                borderRadius: 8,
+                objectFit: "cover",
+                marginLeft: 6,
+              }}
+            />
+          )}
+          {stats.biggestProfitToken?.symbol && (
+            <span
+              style={{
+                display: "inline-block",
+                verticalAlign: "baseline",
+                color: "#9CA3AF",
+                fontSize: 13,
+                fontWeight: 500,
+                fontFamily: "'General Sans', sans-serif",
+                lineHeight: "20px",
+                marginLeft: 6,
+                position: "relative",
+                top: -10,
+              }}
+            >
+              {stats.biggestProfitToken.symbol}
+            </span>
           )}
         </div>
 
-        {/* Biggest loss row - using flex for alignment */}
+        {/* Biggest loss row - inline-block for html2canvas */}
         <div
           style={{
             position: "absolute",
             top: 269,
             left: 562,
-            display: "flex",
-            alignItems: "center",
-            gap: 6,
             height: 20,
+            lineHeight: "20px",
+            whiteSpace: "nowrap",
           }}
         >
           <span
             style={{
+              display: "inline-block",
+              verticalAlign: "baseline",
               color: "#ef4444",
               fontSize: 20,
               fontWeight: 500,
               fontFamily: "'General Sans', sans-serif",
               lineHeight: "20px",
+              position: "relative",
+              top: -10,
             }}
           >
             {stats.biggestLoss}
           </span>
           {stats.biggestLossToken && (
-            <>
-              <img
-                src={stats.biggestLossToken.logo || defaultTokenImage}
-                alt={stats.biggestLossToken.symbol || "token"}
-                crossOrigin="anonymous"
-                width={16}
-                height={16}
-                style={{
-                  width: 16,
-                  height: 16,
-                  borderRadius: 8,
-                  objectFit: "cover",
-                }}
-              />
-              {stats.biggestLossToken.symbol && (
-                <span
-                  style={{
-                    color: "#9CA3AF",
-                    fontSize: 13,
-                    fontWeight: 500,
-                    fontFamily: "'General Sans', sans-serif",
-                    lineHeight: "13px",
-                  }}
-                >
-                  {stats.biggestLossToken.symbol}
-                </span>
-              )}
-            </>
+            <img
+              src={stats.biggestLossToken.logo || defaultTokenImage}
+              alt={stats.biggestLossToken.symbol || "token"}
+              crossOrigin="anonymous"
+              width={16}
+              height={16}
+              style={{
+                display: "inline-block",
+                verticalAlign: "baseline",
+                width: 16,
+                height: 16,
+                borderRadius: 8,
+                objectFit: "cover",
+                marginLeft: 6,
+              }}
+            />
+          )}
+          {stats.biggestLossToken?.symbol && (
+            <span
+              style={{
+                display: "inline-block",
+                verticalAlign: "baseline",
+                color: "#9CA3AF",
+                fontSize: 13,
+                fontWeight: 500,
+                fontFamily: "'General Sans', sans-serif",
+                lineHeight: "20px",
+                marginLeft: 6,
+                position: "relative",
+                top: -10,
+              }}
+            >
+              {stats.biggestLossToken.symbol}
+            </span>
           )}
         </div>
 

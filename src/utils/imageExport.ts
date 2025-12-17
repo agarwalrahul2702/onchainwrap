@@ -56,10 +56,23 @@ const captureWithHtmlToImage = async (
   await waitForFonts();
   await waitForImages(element);
 
+  // Get the actual dimensions to prevent clipping
+  const rect = element.getBoundingClientRect();
+  const width = element.offsetWidth || element.scrollWidth || rect.width;
+  const height = element.offsetHeight || element.scrollHeight || rect.height;
+
   const dataUrl = await toPng(element, {
     pixelRatio,
     backgroundColor: backgroundColor || undefined,
     cacheBust: true,
+    width,
+    height,
+    style: {
+      transform: 'none',
+      transformOrigin: 'top left',
+    },
+    canvasWidth: width * pixelRatio,
+    canvasHeight: height * pixelRatio,
   });
 
   // Convert data URL to blob

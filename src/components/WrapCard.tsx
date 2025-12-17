@@ -251,7 +251,7 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
         <div
           className="absolute font-general-sans"
           style={{
-            top: scaleFactor < 0.6 ? "45v%" : "57.5%",
+            top: scaleFactor < 0.6 ? "45%" : "57.5%",
             left: "46.14%",
           }}
         >
