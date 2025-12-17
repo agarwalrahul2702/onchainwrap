@@ -260,7 +260,7 @@ export const fetchWrapStats = async (addresses: string[]): Promise<WrapStats> =>
     : 0;
 
   const stats: WrapStats = {
-    totalVolume: formatCurrency(volume),
+    totalVolume: data.volume?.display_value || formatCurrency(volume),
     biggestProfit: biggestProfitDisplay,
     biggestProfitToken,
     biggestProfitPnlPercent,
@@ -268,7 +268,7 @@ export const fetchWrapStats = async (addresses: string[]): Promise<WrapStats> =>
     biggestLossToken,
     biggestLossPnlPercent,
     winRate: `${aggregatedWinRate}%`,
-    overallPnL: formatCurrency(overallPnl),
+    overallPnL: data.overall_pnl?.display_value || formatCurrency(overallPnl),
     pnlPositive,
     oneliner: archetypeTaglines[detectedArchetype],
     archetype: detectedArchetype,
