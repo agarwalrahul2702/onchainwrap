@@ -228,19 +228,21 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
             left: "46.14%",
           }}
         >
-          <div className="flex items-center" style={{ gap: `${Math.max(2, 6 * scaleFactor)}px` }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: `${Math.max(2, 6 * scaleFactor)}px` }}>
             <span
               style={{
                 color: "#22c55e",
                 fontSize: scaleFactor < 0.6 ? `${Math.max(9,16 * scaleFactor)}px` : `${Math.max(9, 20 * scaleFactor)}px`,
                 fontWeight: 500,
                 lineHeight: 1,
+                display: 'inline-block',
+                verticalAlign: 'middle',
               }}
             >
               {stats.biggestProfit !== "No data" && "+"}{stats.biggestProfit}
             </span>
             {stats.biggestProfitToken && (
-              <div className="flex items-center" style={{ gap: `${scaleFactor < 0.6 ? Math.max(1, 2 * scaleFactor) : Math.max(2, 4 * scaleFactor)}px` }}>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: `${scaleFactor < 0.6 ? Math.max(1, 2 * scaleFactor) : Math.max(2, 4 * scaleFactor)}px`, verticalAlign: 'middle' }}>
                 <img
                   src={stats.biggestProfitToken.logo || defaultTokenImage}
                   alt={stats.biggestProfitToken.symbol || "token"}
@@ -248,8 +250,11 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
                   style={{
                     width: `${scaleFactor < 0.6 ? Math.max(5, 10 * scaleFactor) : Math.max(8, 16 * scaleFactor)}px`,
                     height: `${scaleFactor < 0.6 ? Math.max(5, 10 * scaleFactor) : Math.max(8, 16 * scaleFactor)}px`,
+                    borderRadius: '50%',
+                    objectFit: 'cover',
+                    display: 'inline-block',
+                    verticalAlign: 'middle',
                   }}
-                  className="rounded-full object-cover"
                 />
                 {stats.biggestProfitToken.symbol && (
                   <span
@@ -258,12 +263,14 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
                       fontSize: `${scaleFactor < 0.6 ? Math.max(4, 8 * scaleFactor) : Math.max(7, 13 * scaleFactor)}px`,
                       fontWeight: 500,
                       lineHeight: 1,
+                      display: 'inline-block',
+                      verticalAlign: 'middle',
                     }}
                   >
                     {stats.biggestProfitToken.symbol}
                   </span>
                 )}
-              </div>
+              </span>
             )}
           </div>
         </div>
@@ -276,19 +283,21 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
             left: "72%",
           }}
         >
-          <div className="flex items-center" style={{ gap: `${Math.max(2, 6 * scaleFactor)}px` }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: `${Math.max(2, 6 * scaleFactor)}px` }}>
             <span
               style={{
                 color: "#ef4444",
                 fontSize: scaleFactor < 0.6 ? `${Math.max(9,16 * scaleFactor)}px` : `${Math.max(9, 20 * scaleFactor)}px`,
                 fontWeight: 500,
                 lineHeight: 1,
+                display: 'inline-block',
+                verticalAlign: 'middle',
               }}
             >
               {stats.biggestLoss}
             </span>
             {stats.biggestLossToken && (
-              <div className="flex items-center" style={{ gap: `${scaleFactor < 0.6 ? Math.max(1, 2 * scaleFactor) : Math.max(2, 4 * scaleFactor)}px` }}>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: `${scaleFactor < 0.6 ? Math.max(1, 2 * scaleFactor) : Math.max(2, 4 * scaleFactor)}px`, verticalAlign: 'middle' }}>
                 <img
                   src={stats.biggestLossToken.logo || defaultTokenImage}
                   alt={stats.biggestLossToken.symbol || "token"}
@@ -296,8 +305,11 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
                   style={{
                     width: `${scaleFactor < 0.6 ? Math.max(5, 10 * scaleFactor) : Math.max(8, 16 * scaleFactor)}px`,
                     height: `${scaleFactor < 0.6 ? Math.max(5, 10 * scaleFactor) : Math.max(8, 16 * scaleFactor)}px`,
+                    borderRadius: '50%',
+                    objectFit: 'cover',
+                    display: 'inline-block',
+                    verticalAlign: 'middle',
                   }}
-                  className="rounded-full object-cover"
                 />
                 {stats.biggestLossToken.symbol && (
                   <span
@@ -306,12 +318,14 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
                       fontSize: `${scaleFactor < 0.6 ? Math.max(4, 8 * scaleFactor) : Math.max(7, 13 * scaleFactor)}px`,
                       fontWeight: 500,
                       lineHeight: 1,
+                      display: 'inline-block',
+                      verticalAlign: 'middle',
                     }}
                   >
                     {stats.biggestLossToken.symbol}
                   </span>
                 )}
-              </div>
+              </span>
             )}
           </div>
         </div>
