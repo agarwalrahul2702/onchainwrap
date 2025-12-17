@@ -18,22 +18,27 @@ export const captureElementAsBlob = async (
   element: HTMLElement,
   options: ExportOptions = {}
 ): Promise<Blob> => {
-  const { pixelRatio = 2, backgroundColor = '#0a1628' } = options;
+  const { pixelRatio = 3, backgroundColor = '#0a1628' } = options;
 
   // Use html2canvas which has better iOS support
   const canvas = await html2canvas(element, {
-    scale: isIOS() ? 1.5 : pixelRatio,
+    scale: isIOS() ? 2 : pixelRatio,
     backgroundColor,
     useCORS: true,
-    allowTaint: true,
+    allowTaint: false,
     logging: false,
     imageTimeout: 15000,
-    onclone: (clonedDoc) => {
+    windowWidth: element.scrollWidth,
+    windowHeight: element.scrollHeight,
+    onclone: (clonedDoc, clonedElement) => {
       // Ensure cloned images have crossOrigin set
       const images = clonedDoc.querySelectorAll('img');
       images.forEach((img) => {
         img.crossOrigin = 'anonymous';
       });
+      // Force the cloned element to have consistent dimensions
+      clonedElement.style.width = `${element.offsetWidth}px`;
+      clonedElement.style.height = `${element.offsetHeight}px`;
     },
   });
 
