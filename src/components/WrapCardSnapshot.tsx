@@ -59,12 +59,15 @@ const WrapCardSnapshot = forwardRef<HTMLDivElement, WrapCardSnapshotProps>(
       <div
         ref={ref}
         style={{
+          // Reset inherited/global styles (Tailwind, etc.)
+          all: "initial",
           position: "relative",
           width: SNAPSHOT_WIDTH,
           height: SNAPSHOT_HEIGHT,
           overflow: "hidden",
           backgroundColor: "#0a1628",
           fontFamily: "'General Sans', sans-serif",
+          boxSizing: "border-box",
         }}
       >
         {/* Background template image */}
@@ -72,6 +75,8 @@ const WrapCardSnapshot = forwardRef<HTMLDivElement, WrapCardSnapshotProps>(
           src={templateImage}
           alt={`${archetype} card template`}
           crossOrigin="anonymous"
+          width={SNAPSHOT_WIDTH}
+          height={SNAPSHOT_HEIGHT}
           style={{
             position: "absolute",
             top: 0,
@@ -88,6 +93,8 @@ const WrapCardSnapshot = forwardRef<HTMLDivElement, WrapCardSnapshotProps>(
             position: "absolute",
             top: 102,
             right: 45,
+            whiteSpace: "nowrap",
+            fontFamily: "'General Sans', sans-serif",
           }}
         >
           <span
@@ -95,7 +102,8 @@ const WrapCardSnapshot = forwardRef<HTMLDivElement, WrapCardSnapshotProps>(
               color: stats.pnlPositive ? "#22c55e" : "#ef4444",
               fontSize: 22,
               fontWeight: 600,
-              lineHeight: 1,
+              lineHeight: "22px",
+              fontFamily: "'General Sans', sans-serif",
             }}
           >
             {stats.pnlPositive ? "+" : ""}
@@ -109,6 +117,8 @@ const WrapCardSnapshot = forwardRef<HTMLDivElement, WrapCardSnapshotProps>(
             position: "absolute",
             top: 269,
             left: 360,
+            whiteSpace: "nowrap",
+            fontFamily: "'General Sans', sans-serif",
           }}
         >
           <span
@@ -116,24 +126,30 @@ const WrapCardSnapshot = forwardRef<HTMLDivElement, WrapCardSnapshotProps>(
               color: "#22c55e",
               fontSize: 20,
               fontWeight: 500,
-              lineHeight: 1,
+              lineHeight: "20px",
+              fontFamily: "'General Sans', sans-serif",
+              display: "inline-block",
+              verticalAlign: "middle",
             }}
           >
             {stats.biggestProfit !== "No data" && "+"}
             {stats.biggestProfit}
           </span>
+
           {stats.biggestProfitToken && (
             <>
               <img
                 src={stats.biggestProfitToken.logo || defaultTokenImage}
                 alt={stats.biggestProfitToken.symbol || "token"}
                 crossOrigin="anonymous"
+                width={16}
+                height={16}
                 style={{
-                  position: "absolute",
-                  top: 2,
-                  left: stats.biggestProfit.length * 11 + 8,
+                  display: "inline-block",
+                  verticalAlign: "middle",
                   width: 16,
                   height: 16,
+                  marginLeft: 8,
                   borderRadius: 8,
                   objectFit: "cover",
                 }}
@@ -141,13 +157,14 @@ const WrapCardSnapshot = forwardRef<HTMLDivElement, WrapCardSnapshotProps>(
               {stats.biggestProfitToken.symbol && (
                 <span
                   style={{
-                    position: "absolute",
-                    top: 4,
-                    left: stats.biggestProfit.length * 11 + 28,
+                    display: "inline-block",
+                    verticalAlign: "middle",
+                    marginLeft: 4,
                     color: "#9CA3AF",
                     fontSize: 13,
                     fontWeight: 500,
-                    lineHeight: 1,
+                    lineHeight: "13px",
+                    fontFamily: "'General Sans', sans-serif",
                   }}
                 >
                   {stats.biggestProfitToken.symbol}
@@ -163,6 +180,8 @@ const WrapCardSnapshot = forwardRef<HTMLDivElement, WrapCardSnapshotProps>(
             position: "absolute",
             top: 269,
             left: 562,
+            whiteSpace: "nowrap",
+            fontFamily: "'General Sans', sans-serif",
           }}
         >
           <span
@@ -170,23 +189,29 @@ const WrapCardSnapshot = forwardRef<HTMLDivElement, WrapCardSnapshotProps>(
               color: "#ef4444",
               fontSize: 20,
               fontWeight: 500,
-              lineHeight: 1,
+              lineHeight: "20px",
+              fontFamily: "'General Sans', sans-serif",
+              display: "inline-block",
+              verticalAlign: "middle",
             }}
           >
             {stats.biggestLoss}
           </span>
+
           {stats.biggestLossToken && (
             <>
               <img
                 src={stats.biggestLossToken.logo || defaultTokenImage}
                 alt={stats.biggestLossToken.symbol || "token"}
                 crossOrigin="anonymous"
+                width={16}
+                height={16}
                 style={{
-                  position: "absolute",
-                  top: 2,
-                  left: stats.biggestLoss.length * 11 + 8,
+                  display: "inline-block",
+                  verticalAlign: "middle",
                   width: 16,
                   height: 16,
+                  marginLeft: 8,
                   borderRadius: 8,
                   objectFit: "cover",
                 }}
@@ -194,13 +219,14 @@ const WrapCardSnapshot = forwardRef<HTMLDivElement, WrapCardSnapshotProps>(
               {stats.biggestLossToken.symbol && (
                 <span
                   style={{
-                    position: "absolute",
-                    top: 4,
-                    left: stats.biggestLoss.length * 11 + 28,
+                    display: "inline-block",
+                    verticalAlign: "middle",
+                    marginLeft: 4,
                     color: "#9CA3AF",
                     fontSize: 13,
                     fontWeight: 500,
-                    lineHeight: 1,
+                    lineHeight: "13px",
+                    fontFamily: "'General Sans', sans-serif",
                   }}
                 >
                   {stats.biggestLossToken.symbol}
@@ -216,6 +242,8 @@ const WrapCardSnapshot = forwardRef<HTMLDivElement, WrapCardSnapshotProps>(
             position: "absolute",
             top: 340,
             left: 360,
+            whiteSpace: "nowrap",
+            fontFamily: "'General Sans', sans-serif",
           }}
         >
           <span
@@ -223,7 +251,8 @@ const WrapCardSnapshot = forwardRef<HTMLDivElement, WrapCardSnapshotProps>(
               color: "#ffffff",
               fontSize: 20,
               fontWeight: 500,
-              lineHeight: 1,
+              lineHeight: "20px",
+              fontFamily: "'General Sans', sans-serif",
             }}
           >
             {stats.winRate}
@@ -236,6 +265,8 @@ const WrapCardSnapshot = forwardRef<HTMLDivElement, WrapCardSnapshotProps>(
             position: "absolute",
             top: 340,
             left: 562,
+            whiteSpace: "nowrap",
+            fontFamily: "'General Sans', sans-serif",
           }}
         >
           <span
@@ -243,7 +274,8 @@ const WrapCardSnapshot = forwardRef<HTMLDivElement, WrapCardSnapshotProps>(
               color: "#ffffff",
               fontSize: 20,
               fontWeight: 500,
-              lineHeight: 1,
+              lineHeight: "20px",
+              fontFamily: "'General Sans', sans-serif",
             }}
           >
             {stats.totalVolume}
@@ -257,6 +289,8 @@ const WrapCardSnapshot = forwardRef<HTMLDivElement, WrapCardSnapshotProps>(
               src={xLogo}
               alt="X"
               crossOrigin="anonymous"
+              width={16}
+              height={16}
               style={{
                 position: "absolute",
                 bottom: 19,
@@ -273,7 +307,8 @@ const WrapCardSnapshot = forwardRef<HTMLDivElement, WrapCardSnapshotProps>(
                 color: "#60a5fa",
                 fontSize: 14.4,
                 fontWeight: 500,
-                lineHeight: 1,
+                lineHeight: "14.4px",
+                fontFamily: "'General Sans', sans-serif",
                 whiteSpace: "nowrap",
               }}
             >
@@ -291,7 +326,9 @@ const WrapCardSnapshot = forwardRef<HTMLDivElement, WrapCardSnapshotProps>(
             color: "#60a5fa",
             fontSize: 14.4,
             fontWeight: 500,
-            lineHeight: 1,
+            lineHeight: "14.4px",
+            fontFamily: "'General Sans', sans-serif",
+            whiteSpace: "nowrap",
           }}
         >
           {formatAddress(stats.address, stats.addressCount)}

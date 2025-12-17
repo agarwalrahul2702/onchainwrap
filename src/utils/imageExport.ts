@@ -2,7 +2,7 @@ import html2canvas from 'html2canvas';
 
 export interface ExportOptions {
   pixelRatio?: number;
-  backgroundColor?: string;
+  backgroundColor?: string | null;
 }
 
 // Detect iOS
@@ -47,15 +47,15 @@ export const captureElementAsBlob = async (
   element: HTMLElement,
   options: ExportOptions = {}
 ): Promise<Blob> => {
-  const { pixelRatio = 3, backgroundColor = '#0a1628' } = options;
+  const { pixelRatio = 3, backgroundColor = null } = options;
 
   // Wait for fonts and images to load before capture
   await waitForFonts();
   await waitForImages(element);
 
-  // Use html2canvas with settings optimized for fixed-layout snapshot
+  // Capture ONLY the provided node at the final resolution (no post-resize)
   const canvas = await html2canvas(element, {
-    scale: isIOS() ? 2 : pixelRatio,
+    scale: pixelRatio,
     backgroundColor,
     useCORS: true,
     allowTaint: false,
@@ -66,6 +66,7 @@ export const captureElementAsBlob = async (
     windowWidth: element.offsetWidth,
     windowHeight: element.offsetHeight,
   });
+
 
   return new Promise((resolve, reject) => {
     canvas.toBlob(
