@@ -7,13 +7,10 @@ import WrapCard, { WrapStats } from "@/components/WrapCard";
 import { fetchWrapStats } from "@/services/api";
 import { toast } from "@/hooks/use-toast";
 import { trackEvent, EVENTS } from "@/lib/posthog";
-
 type AppState = "input" | "loading" | "result";
-
 const Index = () => {
   const [appState, setAppState] = useState<AppState>("input");
   const [stats, setStats] = useState<WrapStats | null>(null);
-
   const handleGenerate = async (addresses: string[], twitterHandle?: string) => {
     setAppState("loading");
     try {
@@ -23,13 +20,13 @@ const Index = () => {
       }
       setStats(result);
       setAppState("result");
-      
+
       // Track wrap generation
       trackEvent(EVENTS.WRAP_GENERATED, {
         archetype: result.archetype,
         addressCount: addresses.length,
         hasTwitterHandle: !!twitterHandle,
-        pnlPositive: result.pnlPositive,
+        pnlPositive: result.pnlPositive
       });
     } catch (error) {
       console.error("Failed to fetch stats:", error);
@@ -41,7 +38,6 @@ const Index = () => {
       setAppState("input");
     }
   };
-
   const handleReset = () => {
     trackEvent(EVENTS.TRY_ANOTHER_WALLET);
     setStats(null);
@@ -62,9 +58,7 @@ const Index = () => {
         {appState === "input" && <>
             {/* Title - responsive on mobile, fixed on desktop */}
             <h1 className="font-sans font-bold text-center mb-3 sm:mb-4 lg:mb-6 animate-fade-in text-2xl sm:text-3xl lg:text-[48px] lg:leading-[72px] leading-tight lg:w-[489px] lg:h-[72px] px-2">
-              <span className="bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] bg-clip-text text-transparent">
-                2025 Onchain Wrap
-              </span>
+              <span className="bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] bg-clip-text text-transparent">Base Onchain Wrap 2025 </span>
             </h1>
 
             {/* Card - responsive on mobile, fixed vw/vh on desktop */}
