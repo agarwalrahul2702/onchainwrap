@@ -57,7 +57,7 @@ const Index = () => {
       <div className="relative z-10 flex-1 pb-4 sm:pb-8 flex-col px-0 flex items-center justify-start my-4 sm:my-6 lg:my-[60px] lg:scale-[0.94] lg:origin-top">
         {appState === "input" && <>
             {/* Title - responsive on mobile, fixed on desktop */}
-            <h1 className="font-sans font-bold text-center mb-3 sm:mb-4 lg:mb-6 animate-fade-in text-xl sm:text-2xl lg:text-[41px] lg:leading-[61px] leading-tight lg:w-[416px] lg:h-[61px] px-2">
+            <h1 className="font-sans font-bold text-center mb-3 sm:mb-4 lg:mb-6 animate-fade-in text-base sm:text-lg lg:text-[33px] lg:leading-[49px] leading-tight lg:w-[333px] lg:h-[49px] px-2">
               <span className="bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] bg-clip-text text-transparent">Base Onchain Wrap 2025 </span>
             </h1>
 
