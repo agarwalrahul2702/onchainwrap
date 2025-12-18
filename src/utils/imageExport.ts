@@ -135,6 +135,68 @@ export const captureElementAsBlob = async (
   return captureWithHtmlToImage(element, options);
 };
 
+const loadBlobAsImage = async (blob: Blob): Promise<HTMLImageElement> => {
+  const url = URL.createObjectURL(blob);
+  try {
+    const img = new Image();
+    img.decoding = 'async';
+    img.loading = 'eager';
+    const loaded = new Promise<HTMLImageElement>((resolve, reject) => {
+      img.onload = () => resolve(img);
+      img.onerror = () => reject(new Error('Failed to load image blob'));
+    });
+    img.src = url;
+    return await loaded;
+  } finally {
+    URL.revokeObjectURL(url);
+  }
+};
+
+/**
+ * Downscales + JPEG-compresses an image blob to improve X/Twitter link-preview reliability.
+ * Kept intentionally simple: fixed defaults tuned for fast unfurling.
+ */
+export const optimizeImageForShare = async (
+  blob: Blob
+): Promise<Blob> => {
+  const SKIP_IF_UNDER_BYTES = 450_000; // ~450KB
+  const MAX_DIMENSION = 1600;
+  const QUALITY = 0.88;
+  const BACKGROUND = '#0a1628';
+
+  if (blob.size > 0 && blob.size <= SKIP_IF_UNDER_BYTES) {
+    return blob;
+  }
+
+  const img = await loadBlobAsImage(blob);
+  const srcW = img.naturalWidth || img.width;
+  const srcH = img.naturalHeight || img.height;
+  if (!srcW || !srcH) return blob;
+
+  const scale = Math.min(1, MAX_DIMENSION / srcW, MAX_DIMENSION / srcH);
+  const outW = Math.max(1, Math.round(srcW * scale));
+  const outH = Math.max(1, Math.round(srcH * scale));
+
+  const canvas = document.createElement('canvas');
+  canvas.width = outW;
+  canvas.height = outH;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return blob;
+
+  // Flatten transparency onto a solid background for JPEG.
+  ctx.fillStyle = BACKGROUND;
+  ctx.fillRect(0, 0, outW, outH);
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
+  ctx.drawImage(img, 0, 0, outW, outH);
+
+  const outBlob = await new Promise<Blob | null>((resolve) => {
+    canvas.toBlob((b) => resolve(b), 'image/jpeg', QUALITY);
+  });
+
+  return outBlob ?? blob;
+};
+
 /**
  * Downloads a blob as a file
  */

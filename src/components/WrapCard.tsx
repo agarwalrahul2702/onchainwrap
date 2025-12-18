@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { captureElementAsBlob, downloadBlob, copyBlobToClipboard, shareOnTwitter, uploadImageToBackend, isMobile } from "@/utils/imageExport";
+import { captureElementAsBlob, downloadBlob, copyBlobToClipboard, optimizeImageForShare, shareOnTwitter, uploadImageToBackend, isMobile } from "@/utils/imageExport";
 import copyIcon from "@/assets/copy-icon.png";
 import { trackEvent, EVENTS } from "@/lib/posthog";
 import WrapCardSnapshot from "./WrapCardSnapshot";
@@ -179,7 +179,10 @@ const WrapCard = ({ stats, onReset }: WrapCardProps) => {
     return runExportAction('share', async () => {
       const element = getExportElement();
       if (!element) return;
-      const blob = await captureElementAsBlob(element);
+      // Important: keep the uploaded preview reasonably sized for X link cards.
+      // Very large images often fail to unfurl in the composer.
+      const rawBlob = await captureElementAsBlob(element, { pixelRatio: 2 });
+      const blob = await optimizeImageForShare(rawBlob);
       const imageUrl = await uploadImageToBackend(blob, UPLOAD_ENDPOINT);
       const shareText = "Got my 2025 onchain wrap from @0xPPL_. Check yours!";
       shareOnTwitter(shareText, imageUrl);
