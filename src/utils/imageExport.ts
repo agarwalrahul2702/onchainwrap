@@ -160,8 +160,7 @@ export const optimizeImageForShare = async (
   blob: Blob
 ): Promise<Blob> => {
   const SKIP_IF_UNDER_BYTES = 450_000; // ~450KB
-  const MAX_DIMENSION = 1600;
-  const QUALITY = 0.88;
+  const MAX_DIMENSION = 1200;
   const BACKGROUND = '#0a1628';
 
   if (blob.size > 0 && blob.size <= SKIP_IF_UNDER_BYTES) {
@@ -183,7 +182,7 @@ export const optimizeImageForShare = async (
   const ctx = canvas.getContext('2d');
   if (!ctx) return blob;
 
-  // Flatten transparency onto a solid background for JPEG.
+  // Flatten transparency onto a solid background (helps keep output deterministic).
   ctx.fillStyle = BACKGROUND;
   ctx.fillRect(0, 0, outW, outH);
   ctx.imageSmoothingEnabled = true;
@@ -191,7 +190,8 @@ export const optimizeImageForShare = async (
   ctx.drawImage(img, 0, 0, outW, outH);
 
   const outBlob = await new Promise<Blob | null>((resolve) => {
-    canvas.toBlob((b) => resolve(b), 'image/jpeg', QUALITY);
+    // Keep PNG to avoid backend conversion surprises; we rely on downscaling for size reduction.
+    canvas.toBlob((b) => resolve(b), 'image/png');
   });
 
   return outBlob ?? blob;
