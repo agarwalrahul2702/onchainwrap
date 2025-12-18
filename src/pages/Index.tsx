@@ -26,14 +26,14 @@ const Index = () => {
         archetype: result.archetype,
         addressCount: addresses.length,
         hasTwitterHandle: !!twitterHandle,
-        pnlPositive: result.pnlPositive
+        pnlPositive: result.pnlPositive,
       });
     } catch (error) {
       console.error("Failed to fetch stats:", error);
       toast({
         title: "Error",
         description: "Invalid address or no data found",
-        variant: "destructive"
+        variant: "destructive",
       });
       setAppState("input");
     }
@@ -43,22 +43,28 @@ const Index = () => {
     setStats(null);
     setAppState("input");
   };
-  return <main className="relative w-full lg:w-[1440px] min-h-screen lg:h-[932px] mx-auto flex-col overflow-hidden flex items-center justify-center px-4 lg:px-0">
+  return (
+    <main className="relative w-full lg:w-[1440px] min-h-screen lg:h-[932px] mx-auto flex-col overflow-hidden flex items-center justify-center px-4 lg:px-0">
       <BackgroundVideo />
 
       {/* Header - hidden when card is generated */}
-      {appState !== "result" && <header className="relative z-10 pt-4 sm:pt-6 lg:pt-8 pb-2 sm:pb-4">
+      {appState !== "result" && (
+        <header className="relative z-10 pt-4 sm:pt-6 lg:pt-8 pb-2 sm:pb-4">
           <div className="container px-0 flex items-center justify-center py-0 mt-2 sm:mt-4 lg:mt-[30px]">
             <Logo />
           </div>
-        </header>}
+        </header>
+      )}
 
       {/* Main content */}
       <div className="relative z-10 flex-1 pb-4 sm:pb-8 flex-col px-0 flex items-center justify-start my-4 sm:my-6 lg:my-[60px] lg:scale-[0.94] lg:origin-top">
-        {appState === "input" && <>
+        {appState === "input" && (
+          <>
             {/* Title - responsive on mobile, fixed on desktop */}
-            <h1 className="font-sans font-bold text-center mb-3 sm:mb-4 lg:mb-6 animate-fade-in text-base sm:text-lg lg:text-[33px] lg:leading-[49px] leading-tight lg:w-[333px] lg:h-[49px] px-2">
-              <span className="bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] bg-clip-text text-transparent">Base Onchain Wrap 2025 </span>
+            <h1 className="font-sans font-bold text-center mb-3 sm:mb-4 lg:mb-6 animate-fade-in text-base sm:text-lg lg:text-[33px] lg:leading-[49px] leading-tight lg:w-[400px] lg:h-[49px] px-2">
+              <span className="bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] bg-clip-text text-transparent">
+                Base Onchain Wrap 2025{" "}
+              </span>
             </h1>
 
             {/* Card - responsive on mobile, fixed vw/vh on desktop */}
@@ -73,16 +79,22 @@ const Index = () => {
                 <AddressInput onGenerate={handleGenerate} isLoading={false} />
               </div>
             </div>
-          </>}
+          </>
+        )}
 
-        {appState === "loading" && <div className="glass-card p-4 sm:p-6 lg:p-8 w-full max-w-[90vw] sm:max-w-md">
+        {appState === "loading" && (
+          <div className="glass-card p-4 sm:p-6 lg:p-8 w-full max-w-[90vw] sm:max-w-md">
             <LoaderScreen />
-          </div>}
+          </div>
+        )}
 
-        {appState === "result" && stats && <div className="w-full max-w-[95vw] sm:max-w-[90vw] lg:w-[780px] px-2 sm:px-0">
+        {appState === "result" && stats && (
+          <div className="w-full max-w-[95vw] sm:max-w-[90vw] lg:w-[780px] px-2 sm:px-0">
             <WrapCard stats={stats} onReset={handleReset} />
-          </div>}
+          </div>
+        )}
       </div>
-    </main>;
+    </main>
+  );
 };
 export default Index;
