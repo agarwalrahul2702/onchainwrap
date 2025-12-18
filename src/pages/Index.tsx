@@ -61,7 +61,7 @@ const Index = () => {
         {appState === "input" && (
           <>
             {/* Title - responsive on mobile, fixed on desktop */}
-            <h1 className="font-sans font-bold text-center mb-3 sm:mb-4 lg:mb-6 animate-fade-in text-base sm:text-lg lg:text-[33px] lg:leading-[49px] leading-tight lg:w-[400px] lg:h-[49px] px-2">
+            <h1 className="font-sans font-bold text-center mb-3 sm:mb-4 lg:mb-6 animate-fade-in text-base sm:text-lg lg:text-[33px] lg:leading-[49px] leading-tight lg:w-[400px] lg:h-[49px] px-2 whitespace-nowrap">
               <span className="bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] bg-clip-text text-transparent">
                 Base Onchain Wrap 2025{" "}
               </span>
