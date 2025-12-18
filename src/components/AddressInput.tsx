@@ -38,7 +38,7 @@ const AddressInput = ({
       return;
     }
     if (!isValidAddress(trimmedAddress)) {
-      setError("Please enter a valid EVM or Solana address");
+      setError("Please enter a valid EVM address");
       return;
     }
     if (addresses.includes(trimmedAddress)) {
@@ -59,7 +59,7 @@ const AddressInput = ({
     if (address.trim()) {
       const trimmedAddress = address.trim();
       if (!isValidAddress(trimmedAddress)) {
-        setError("Please enter a valid EVM or Solana address");
+        setError("Please enter a valid EVM address");
         return;
       }
       if (!allAddresses.includes(trimmedAddress)) {
